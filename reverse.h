@@ -9,7 +9,8 @@
  * 	length, length of string not including NULL
  * 
  * OUT - 0, o.k, -1 error
- *       str pointer will contain reversed string.
+ *       0 - str pointer will contain reversed string
+ *   error - str pointer will contain original string
  */
 
 char reverse(char *str, int length);
