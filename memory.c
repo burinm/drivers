@@ -1,6 +1,8 @@
 #include "memory.h"
 
 int8_t my_memmove(uint8_t *src, uint8_t *dst, uint32_t length) {
+
+//if > DATA_MAX error...
 return 0;
 }
 
