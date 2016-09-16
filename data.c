@@ -20,11 +20,16 @@ if (base < 2 || base > 255) { mylib_errno = MYLIB_ERR_ARGS; return 0;}
  *   
  *   The longest string of digits would be base2
  *      32 bit number = 32 digits     
+ *
+ *   +1 digit for the sign = 33
  */
 
 uint8_t alpha[8] = { 'a','b','c','d','e','f'};
 
-int counter=0;
+ //Since integer will overflow when counting to 2^31
+uint32_t data_hold=data;
+
+uint32_t counter=0;
 int highest_digit=0;
 int current_digit=0;
  
@@ -33,7 +38,15 @@ int current_digit=0;
      * read up on some number theory, I know there
      * is a better way to do this
      */
-    for(counter = 0; counter < data; counter++) {
+
+    if (data < 0) {
+        //TODO Check to make sure this is true for data == -2^31
+        data_hold = -data; //because -(-2^31) == -2^31
+        *str='-';
+        str++;
+     }
+
+    for(counter = 0; counter < data_hold; counter++) {
         *str +=1; 
         while ( *(str + current_digit) == base) {
                 *(str + current_digit + 1)+=1;
@@ -51,7 +64,7 @@ int current_digit=0;
     do {
             if ( *(str + highest_digit) > 9) {
                 *(str + highest_digit) = alpha[*(str + highest_digit) - 10];
-            } else {
+            } else if (  *(str + highest_digit) < 16 ) {
                 *(str + highest_digit) = ASCII_0 + *(str + highest_digit);
             }
     } while (highest_digit--); 
@@ -79,7 +92,7 @@ uint32_t multiplier=1;
         if (*str >= ASCII_0 && *str <= ASCII_9) {
 
             /*
-             *  Since the representations for the ascii
+             * Since the representations for the ascii
              * number characters are in order and
              * continuous, we can just use that offset
              * to get the value of that digit
