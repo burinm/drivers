@@ -2,6 +2,7 @@
 #define __TEST_SUITE_H__
 #include <stdio.h>
 #include <assert.h>
+#include "mylib.h"
 
 typedef char(*fpType)(void);
 typedef struct {fpType test; char* name;} testType;

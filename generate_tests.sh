@@ -2,7 +2,9 @@
 
 echo "#include \"stdlib.h\""
 echo "testType tests_to_run[] = {"
-objdump -t test_suites.o | grep "F .text" | awk '{print "{ &"$6",\""$6"\"},"}'
+for i in suite*.o; do
+objdump -t $i | grep "F .text" | awk '{print "{ &"$6",\""$6"\"},"}';
+done
 echo "{NULL,NULL}"
 echo "};"
 
