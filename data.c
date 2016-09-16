@@ -18,10 +18,10 @@ uint32_t multiplier=1;
     for(str--;i>0;i--,str--) {
         if (*str >= ASCII_0 && *str <=ASCII_9) {
 //printf("val: %.1s %d %d\n",str, (*str-ASCII_0),   multiplier);
-            result+=(*str-ASCII_0) *  multiplier;
+            result += (*str-ASCII_0) * multiplier;
             multiplier*=10;
         } else {
-            result=0; //need to fix this with something
+            mylib_errno=MYLIB_ERR_GARBAGE_IN; //need to fix this with something
             break;
         }
     }
