@@ -22,4 +22,4 @@ test_suites.o: $(SOURCES)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $^ 
 
 clean:
-	-rm -f test_suites.o test_functions.c $(OBJS) run_tests core
+	-rm -f driver.o test_suites.o test_functions.c test_functions.o $(OBJS) run_tests core
