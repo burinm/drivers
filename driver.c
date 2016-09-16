@@ -13,8 +13,11 @@ printf("Number tests found=%d\n",num_tests_to_run);
 int i=0;
 for (i=0;i<num_tests_to_run;i++) {
 int error;
+    printf("------------------------------\n");
     printf("Running test %s\n",tests_to_run[i].name);
+    printf("------------------------------\n");
     error = (tests_to_run[i].test)();
+    printf("\n");
 }
 
 
