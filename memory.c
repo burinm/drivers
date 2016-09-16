@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "memory.h"
 
 int8_t my_memmove(uint8_t *src, uint8_t *dst, uint32_t length) {
@@ -45,6 +46,10 @@ return 0;
 }
 
 int8_t my_memzero(uint8_t *src, uint32_t length) {
+mylib_errno = MYLIB_ERR_OK;
+    for (int i=0; i<length;i++) {
+        *(src+i)=0;
+    }
 return 0;
 }
 
@@ -53,5 +58,13 @@ int8_t my_reverse(uint8_t *src, uint32_t length) {
     reverse(src,length);
 return 0;
 }
+
+int32_t my_strlen(uint8_t * src) {
+    int32_t length=0;
+    if (*src == NULL) { return length; }
+    while (*src++) { length++; }
+return length;
+}
+
 
 

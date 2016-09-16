@@ -113,7 +113,9 @@ uint32_t multiplier=1;
 return result;
 }
 
-void dump_memory(uint8_t *start, uint32_t length) {
+#define DUMP_FORMAT_HEX 0
+#define DUMP_FORMAT_INT 1
+void _dump_memory(uint8_t *start, uint32_t length, uint8_t format) {
 mylib_errno = MYLIB_ERR_OK;
 
 int i=0;
@@ -123,37 +125,56 @@ int j=0;
 #define ASCII_MIN_PRINTABLE 32 
 #define ASCII_MAX_PRINTABLE 126 
 
-    printf("Address  ");
-    for (i=0; i<MEMORY_DUMP_COL; i++) {
-        printf("%.2x ", i); 
+    if (format == DUMP_FORMAT_HEX) {
+        printf("Address  ");
+        for (i=0; i<MEMORY_DUMP_COL; i++) {
+            printf("%.2x ", i); 
+        }
+        printf("\n\n"); 
     }
-    printf("\n\n"); 
 
     for (i=0; i<length; i++) {
         printf("%.8x ",(uint8_t *)start+i);
         for (j=0; j<MEMORY_DUMP_COL; j++) {
             if (i+j >= length) {
-                printf("   ");
+                if (format == DUMP_FORMAT_INT) {
+                    printf("    ");
+                } else { //print hex by default
+                    printf("   ");
+                }
             } else {
-                printf("%.2x ",*(start+i+j));
-            }
-        }
-        printf(" ");
-        for (j=0; j<MEMORY_DUMP_COL; j++) {
-            if (i+j >= length) {
-                break;
-            } else {
-                if (*(start+i+j) >=ASCII_MIN_PRINTABLE \
-                        && (*(start+i+j) <= ASCII_MAX_PRINTABLE)) {
-                    printf("%c",*(start+i+j));
-                } else {
-                    printf(".");
+                if (format == DUMP_FORMAT_INT) {
+                    printf("%.3d ",*(start+i+j));
+                } else { // print hex by default
+                    printf("%.2x ",*(start+i+j));
                 }
             }
         }
-        printf("\n");
-        i=i+j-1;
+        if (format == DUMP_FORMAT_HEX) {
+            printf(" ");
+            for (j=0; j<MEMORY_DUMP_COL; j++) {
+                if (i+j >= length) {
+                    break;
+                } else {
+                    if (*(start+i+j) >=ASCII_MIN_PRINTABLE \
+                            && (*(start+i+j) <= ASCII_MAX_PRINTABLE)) {
+                        printf("%c",*(start+i+j));
+                    } else {
+                        printf(".");
+                    }
+                }
+            }
     }
+            printf("\n");
+            i=i+j-1;
+        }
+}
+void dump_memory(uint8_t *start, uint32_t length) {
+    _dump_memory(start, length,DUMP_FORMAT_HEX);
+}
+
+void dump_memory_int(uint8_t *start, uint32_t length) {
+    _dump_memory(start,length,DUMP_FORMAT_INT);
 }
 
 uint32_t big_to_little(uint32_t data) {
