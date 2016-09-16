@@ -4,6 +4,7 @@ int8_t my_memmove(uint8_t *src, uint8_t *dst, uint32_t length) {
 mylib_errno = MYLIB_ERR_OK;
 
 //TODO if > DATA_MAX error...
+//TODO  wild pointers?
 /* memmove will have 4 basic cases
  * define slength = length -1
  * 1) same region
@@ -29,7 +30,7 @@ mylib_errno = MYLIB_ERR_OK;
     if ( (src + slength < dst) || (dst + slength < src) //case 2)
                | ((dst + slength > src) && (dst < src)) ) //case 4)
     {
-        while (length --) {
+        while (length--) {
             *dst++ = *src++;
         }
     } else { //Must be cast 3)
@@ -48,6 +49,8 @@ return 0;
 }
 
 int8_t my_reverse(uint8_t *src, uint32_t length) {
+//TODO add unittests from HW1 to here
+    reverse(src,length);
 return 0;
 }
 

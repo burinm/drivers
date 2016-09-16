@@ -7,7 +7,7 @@
 
 int8_t * my_itoa(int8_t *str, int32_t data, int32_t base) {
 //TODO negative numbers
-mylib_errno=MYLIB_ERR_OK;
+mylib_errno = MYLIB_ERR_OK;
 if (str == NULL) { mylib_errno = MYLIB_ERR_NULL; return 0;}
 if (base < 2 || base > 255) { mylib_errno = MYLIB_ERR_ARGS; return 0;}
 
@@ -114,12 +114,63 @@ return result;
 }
 
 void dump_memory(uint8_t *start, uint32_t length) {
+mylib_errno = MYLIB_ERR_OK;
+
+int i=0;
+int j=0;
+
+#define MEMORY_DUMP_COL 16
+#define ASCII_MIN_PRINTABLE 32 
+#define ASCII_MAX_PRINTABLE 126 
+
+    printf("Address  ");
+    for (i=0; i<MEMORY_DUMP_COL; i++) {
+        printf("%.2x ", i); 
+    }
+    printf("\n\n"); 
+
+    for (i=0; i<length; i++) {
+        printf("%.8x ",(uint8_t *)start+i);
+        for (j=0; j<MEMORY_DUMP_COL; j++) {
+            if (i+j >= length) {
+                printf("   ");
+            } else {
+                printf("%.2x ",*(start+i+j));
+            }
+        }
+        printf(" ");
+        for (j=0; j<MEMORY_DUMP_COL; j++) {
+            if (i+j >= length) {
+                break;
+            } else {
+                if (*(start+i+j) >=ASCII_MIN_PRINTABLE \
+                        && (*(start+i+j) <= ASCII_MAX_PRINTABLE)) {
+                    printf("%c",*(start+i+j));
+                } else {
+                    printf(".");
+                }
+            }
+        }
+        printf("\n");
+        i=i+j-1;
+    }
 }
 
 uint32_t big_to_little(uint32_t data) {
-return 0;
+    uint32_t value=0;
+    value= ( 0xff000000 & data) >> 24;
+    value+=( 0x00ff0000 & data) >> 8;
+    value+=( 0x0000ff00 & data) << 8;
+    value+=( 0x000000ff & data) << 24;
+return value;
 }
 
 uint32_t little_to_big(uint32_t data){
-return 0;
+/*
+ * These both do the same swap,
+ * however the code using them
+ * is easier to understand if
+ * we have both
+ */
+return big_to_little(data);
 }
