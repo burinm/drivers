@@ -5,6 +5,7 @@ SOURCES = $(wildcard suite*.c)
 OBJS := $(SOURCES:%.c=%.o)
 
 CC = gcc
+CFLAGS += -std=c99
 LIBS = ../mylib/mylib.a
 
 run_tests: test_functions.o driver.o | test_suites.o
