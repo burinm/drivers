@@ -3,5 +3,7 @@
 
 #include "myerrno.h"
 
+#define MYLIB_MAX_DIGITS 32
+
 #endif
 
