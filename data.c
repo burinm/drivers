@@ -1,7 +1,13 @@
 #include <stdlib.h>
 #include "data.h"
 
+//Probably not portable
+#define ASCII_0 48
+#define ASCII_9 57
+
 int8_t * my_itoa(int8_t *str, int32_t data, int32_t base) {
+//TODO negative numbers
+mylib_errno=MYLIB_ERR_OK;
 
 
 /*
@@ -13,48 +19,47 @@ int8_t * my_itoa(int8_t *str, int32_t data, int32_t base) {
  *   The longest string of digits would be base2
  *      32 bit number = 32 digits     
  */
-if (str==NULL) { mylib_errno=MYLIB_ERR_NULL; return 0;}
-if (base < 2 || base > 255) { mylib_errno=MYLIB_ERR_ARGS; return 0;}
+if (str == NULL) { mylib_errno = MYLIB_ERR_NULL; return 0;}
+if (base < 2 || base > 255) { mylib_errno = MYLIB_ERR_ARGS; return 0;}
 
-uint8_t digits[32] = {0};
 uint8_t alpha[8] = { 'a','b','c','d','e','f'};
 
-int i=0;
-int j=0;
-int k=0;
+int counter=0;
+int highest_digit=0;
+int current_digit=0;
  
-    for(i=0;i<data;i++) {
-        digits[0]+=1; 
-        while (digits[k] == base) {
-                digits[k+1]+=1;
-                digits[k]=0;
-                k++;
-                if (k > j) { j=k; }
+    /* Brute force method of counting up to base
+     * in each digit. Horribly slow. Need to go
+     * read up on some number theory, I know there
+     * is a better way to do this
+     */
+    for(counter = 0; counter < data; counter++) {
+        *str +=1; 
+        while ( *(str + current_digit) == base) {
+                *(str + current_digit + 1)+=1;
+                *(str + current_digit)=0;
+                current_digit++;
+                if (current_digit > highest_digit) {
+                     highest_digit=current_digit;
+                 }
         }
-        k=0;
+        current_digit=0;
     }
 
-    
-    printf("j=%d\n",j);
-    do {
-            if (digits[j] > 9) {
-                printf("[%c]",alpha[digits[j]-10]);
-            } else {
-                printf("[%d]",digits[j]);
-            }
-    } while (j--); 
-    printf("\n");
+   reverse(str, highest_digit + 1);  
 
-    
+    do {
+            if ( *(str + highest_digit) > 9) {
+                *(str + highest_digit) = alpha[*(str + highest_digit) - 10];
+            } else {
+                *(str + highest_digit) = ASCII_0 + *(str + highest_digit);
+            }
+    } while (highest_digit--); 
     
 return 0;
 }
 
 int32_t my_atoi(int8_t *str) {
-//Probably not portable
-#define ASCII_0 48
-#define ASCII_9 57
-
 mylib_errno=MYLIB_ERR_OK;
 
 int i=1;
