@@ -50,5 +50,4 @@ char test_my_memmove_overlapping_case3(){
     my_memmove(&alphabet[0],&alphabet[5],10);
     printf("result is: %s\n",&alphabet[0]);
     ASSERT(strcmp(&alphabet[0],"abcdeabcdefghijpqrstuvwxyz") == 0);
-                                abcdeabcdeabcdepqrstuvwxyz
 }

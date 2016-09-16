@@ -33,3 +33,35 @@ char test_my_dump_memory_random(){
     ASSERT(mylib_errno == MYLIB_ERR_OK);
     free(memory);
 }
+
+char test_my_memzero(){
+    SETUP;
+    
+    uint8_t *memory=malloc(10);
+    for(int i=0;i<10;i++) {
+        memory[i] = random();
+    }
+    dump_memory(memory,10);
+    my_memzero(memory,10);
+    dump_memory(memory,10);
+    for (int i=0;i<10;i++) {
+        ASSERT(*(memory+i) == 0);
+    }
+    free(memory);
+}
+
+char test_my_strlen_1(){
+
+    uint8_t string[] = "Hello.";
+    int32_t result=my_strlen(string);
+    printf("result is: %x\n",result);
+    ASSERT(strlen(string) == result);
+}
+
+char test_my_strlen_0(){
+
+    uint8_t string[] = "";
+    int32_t result=my_strlen(string);
+    printf("result is: %x\n",result);
+    ASSERT(strlen(string) == result);
+}

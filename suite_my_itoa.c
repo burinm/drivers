@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "test_suite.h"
 #include "data.h"
 
@@ -31,7 +32,7 @@ char test_itoa_max_base16(){
 
     my_itoa(result,2147483647,16);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"1ffffff") == 0);
+    ASSERT(strcmp(result,"1fffffff") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
 }
 
