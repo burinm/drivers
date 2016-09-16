@@ -8,6 +8,8 @@
 int8_t * my_itoa(int8_t *str, int32_t data, int32_t base) {
 //TODO negative numbers
 mylib_errno=MYLIB_ERR_OK;
+if (str == NULL) { mylib_errno = MYLIB_ERR_NULL; return 0;}
+if (base < 2 || base > 255) { mylib_errno = MYLIB_ERR_ARGS; return 0;}
 
 
 /*
@@ -19,8 +21,6 @@ mylib_errno=MYLIB_ERR_OK;
  *   The longest string of digits would be base2
  *      32 bit number = 32 digits     
  */
-if (str == NULL) { mylib_errno = MYLIB_ERR_NULL; return 0;}
-if (base < 2 || base > 255) { mylib_errno = MYLIB_ERR_ARGS; return 0;}
 
 uint8_t alpha[8] = { 'a','b','c','d','e','f'};
 
