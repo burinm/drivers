@@ -27,7 +27,7 @@ char test_my_dump_memory_random(){
     
     uint8_t *memory=malloc(256);
     for(int i=0;i<256;i++) {
-        memory[i] = random();
+        memory[i] = rand();
     }
     dump_memory(memory,256);
     ASSERT(mylib_errno == MYLIB_ERR_OK);
@@ -39,7 +39,7 @@ char test_my_memzero(){
     
     uint8_t *memory=malloc(10);
     for(int i=0;i<10;i++) {
-        memory[i] = random();
+        memory[i] = rand();
     }
     dump_memory(memory,10);
     my_memzero(memory,10);
