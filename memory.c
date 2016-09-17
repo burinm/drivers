@@ -4,8 +4,7 @@
 int8_t my_memmove(uint8_t *src, uint8_t *dst, uint32_t length) {
 mylib_errno = MYLIB_ERR_OK;
 
-//TODO if > DATA_MAX error...
-//TODO  wild pointers?
+//TODO The best we could do is check for wild pointers
 /* memmove will have 4 basic cases
  * define slength = length -1
  * 1) same region
@@ -25,16 +24,16 @@ mylib_errno = MYLIB_ERR_OK;
  * Cases 2, and 4 use the same method
  */
 
-    if (src == dst) { return 0; } //case 1)
+    if (src == dst) { return 0; } // case 1)
 
     uint32_t slength = length - 1; // 0 based length
-    if ( (src + slength < dst) || (dst + slength < src) //case 2)
-               | ((dst + slength > src) && (dst < src)) ) //case 4)
+    if ( (src + slength < dst) || (dst + slength < src) // case 2)
+               | ((dst + slength > src) && (dst < src)) ) // case 4)
     {
         while (length--) {
             *dst++ = *src++;
         }
-    } else { //Must be cast 3)
+    } else { // Must be case 3)
         dst= dst + slength;
         src= src + slength;
         while (length --) {
@@ -47,14 +46,14 @@ return 0;
 
 int8_t my_memzero(uint8_t *src, uint32_t length) {
 mylib_errno = MYLIB_ERR_OK;
-    for (int i=0; i<length;i++) {
+    for (int i=0; i<length; i++) {
         *(src+i)=0;
     }
 return 0;
 }
 
 int8_t my_reverse(uint8_t *src, uint32_t length) {
-//TODO add unittests from HW1 to here
+//TODO add unittests from HW1
     reverse(src,length);
 return 0;
 }
@@ -65,6 +64,3 @@ int32_t my_strlen(uint8_t * src) {
     while (*src++) { length++; }
 return length;
 }
-
-
-

@@ -3,7 +3,7 @@
 
 char reverse(char *str, int length) {
 
-if (length<0 || str==NULL) return -1;
+if (length < 0 || str == NULL) return -1;
 
 char* end=str+length-1;
 char* start=str;

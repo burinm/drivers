@@ -1,5 +1,5 @@
-#ifndef DEFINE_H
-#define DEFINE_H
+#ifndef __REVERSE_H__
+#define __REVERSE_H__
 /*
  * Reverse a string up to length
  * Warning, currently doesn't check

@@ -1,9 +1,13 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "data.h"
 
 //Probably not portable
 #define ASCII_0 48
 #define ASCII_9 57
+
+// Internal function for dump_memory
+void _dump_memory(uint8_t *start, uint32_t length, uint8_t format);
 
 int8_t * my_itoa(int8_t *str, int32_t data, int32_t base) {
 mylib_errno = MYLIB_ERR_OK;
@@ -59,11 +63,14 @@ int current_digit=0;
     }
 
    reverse(str, highest_digit + 1);  
-
+#define DATA_C_HIGH_DIGIT_NUMERAL 9
+#define DATA_C_HIGH_DIGIT_ALPHA   16
     do {
-            if ( *(str + highest_digit) > 9) {
-                *(str + highest_digit) = alpha[*(str + highest_digit) - 10];
-            } else if (  *(str + highest_digit) < 16 ) {
+            if ( *(str + highest_digit) > DATA_C_HIGH_DIGIT_NUMERAL) {
+                // TODO This will currently blow up on bases > 16
+                *(str + highest_digit) =
+                 alpha[*(str + highest_digit) - (DATA_C_HIGH_DIGIT_NUMERAL +1)];
+            } else if (  *(str + highest_digit) < DATA_C_HIGH_DIGIT_ALPHA ) {
                 *(str + highest_digit) = ASCII_0 + *(str + highest_digit);
             }
     } while (highest_digit--); 
@@ -138,7 +145,7 @@ int j=0;
 #define ASCII_MAX_PRINTABLE 126 
 
     if (format == DUMP_FORMAT_HEX) {
-        printf("Address  ");
+        printf("Address    ");
         for (i=0; i<MEMORY_DUMP_COL; i++) {
             printf("%.2x ", i); 
         }
@@ -146,7 +153,7 @@ int j=0;
     }
 
     for (i=0; i<length; i++) {
-        printf("%.8x ",(uint8_t *)start+i);
+        printf("0x%.8x ",(uint32_t )(start+i));
         for (j=0; j<MEMORY_DUMP_COL; j++) {
             if (i+j >= length) {
                 if (format == DUMP_FORMAT_INT) {
@@ -191,10 +198,10 @@ void dump_memory_int(uint8_t *start, uint32_t length) {
 
 uint32_t big_to_little(uint32_t data) {
     uint32_t value=0;
-    value= ( 0xff000000 & data) >> 24;
-    value+=( 0x00ff0000 & data) >> 8;
-    value+=( 0x0000ff00 & data) << 8;
-    value+=( 0x000000ff & data) << 24;
+    value= ( 0xff000000 & data) >> 24; // shift right 3 bytes
+    value+=( 0x00ff0000 & data) >> 8;  // shift right 2 bytes
+    value+=( 0x0000ff00 & data) << 8;  // shift left  2 bytes
+    value+=( 0x000000ff & data) << 24; // shift left 3 bytes
 return value;
 }
 
@@ -203,7 +210,7 @@ uint32_t little_to_big(uint32_t data){
  * These both do the same swap,
  * however the code using them
  * is easier to understand if
- * we have both
+ * we have both versions
  */
 return big_to_little(data);
 }

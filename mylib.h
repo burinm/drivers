@@ -2,8 +2,18 @@
 #define __MYLIB_H__
 
 #include "myerrno.h"
+#include "data.h"
+#include "memory.h"
+#include "reverse.h"
 
 #define MYLIB_MAX_DIGITS 33
+
+/* New library modules must include the following:
+ *
+ * module.h
+ *   extern uint8_t mylib_errno=0;
+ *
+ */
 
 #endif
 
