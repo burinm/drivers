@@ -1,5 +1,7 @@
 #ifndef __REVERSE_H__
 #define __REVERSE_H__
+
+#include <stdint.h>
 /*
  * Reverse a string up to length
  * Warning, currently doesn't check
@@ -13,5 +15,5 @@
  *   error - str pointer will contain original string
  */
 
-char reverse(char *str, int length);
+uint8_t reverse(uint8_t *str, int length);
 #endif

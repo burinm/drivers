@@ -60,7 +60,7 @@ return 0;
 
 int32_t my_strlen(uint8_t * src) {
     int32_t length=0;
-    if (*src == NULL) { return length; }
+    if (*src == '\0') { return length; }
     while (*src++) { length++; }
 return length;
 }
