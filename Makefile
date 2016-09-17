@@ -1,4 +1,28 @@
-VPATH = ../mylib
+#Makefile for unit tests
+#
+# This makefile is seperate from the rest of the build even though
+# it can(and is) called from another directory. However because of
+# the way it functions, dependencies are not built in, and it
+# blindly rebuilds mylib
+#
+# Makefile gathers all files named suite*.c and concatenates the
+# source code into a temporary source called test_functions.c
+# Then, the names of the test functions in all the suites are
+# found by using objump, and then added to a structure of function
+# pointers that is compiled into the source (see generate_tests.sh).
+#
+# This way one can add any amount of suiteXXX.c files for new test
+# suites, and they will be compiled and run. Be aware it will run
+# any function that gets compiled into the .text section, so helper
+# functions in the suiteXXX.c files are not allowed.
+#
+# FYI - this was a quick hack to put a rudimenatary unit test
+# framework together. The idea was that it was quicker than
+# re-learning C-unit. My mileage varied... 
+#
+# 
+
+VPATH = ../project1
 
 INCLUDES = -I../mylib
 SOURCES = $(wildcard suite*.c)
@@ -9,7 +33,9 @@ CFLAGS += -std=c99
 LIBS = ../mylib/mylib.a
 
 run_tests: test_functions.o driver.o | test_suites.o
-	$(CC) $(CFLAGS) $(INCLUDES) -L../mylib/  $^ -o $@ ../mylib/mylib.a
+	make clean-lib -C ../project1
+	make mylib.a -C ../project1
+	$(CC) $(CFLAGS) $(INCLUDES) -L../mylib/  $^ -o $@ $(LIBS) 
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $^ -o $@ 
