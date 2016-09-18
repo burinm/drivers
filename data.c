@@ -157,14 +157,6 @@ int j=0;
 #define ASCII_MIN_PRINTABLE 32 
 #define ASCII_MAX_PRINTABLE 126 
 
-    if (format == DUMP_FORMAT_HEX) {
-        printf("Address            ");
-        for (i=0; i<MEMORY_DUMP_COL; i++) {
-            printf("%.2x ", i); 
-        }
-        printf("\n\n"); 
-    }
-
     for (i=0; i<length; i++) {
         printf("%p ",(void*)(start + i));
         for (j=0; j<MEMORY_DUMP_COL; j++) {
