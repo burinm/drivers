@@ -134,6 +134,12 @@ return result;
 
 #define DUMP_FORMAT_HEX 0
 #define DUMP_FORMAT_INT 1
+
+#ifdef FRDM_KL25Z
+void _dump_memory(uint8_t *start, uint32_t length, uint8_t format) {
+}
+
+#else
 void _dump_memory(uint8_t *start, uint32_t length, uint8_t format) {
 mylib_errno = MYLIB_ERR_OK;
 
@@ -188,6 +194,8 @@ int j=0;
             i=i+j-1;
         }
 }
+#endif
+
 void dump_memory(uint8_t *start, uint32_t length) {
     _dump_memory(start, length,DUMP_FORMAT_HEX);
 }
