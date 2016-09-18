@@ -9,7 +9,7 @@
 // Internal function for dump_memory
 void _dump_memory(uint8_t *start, uint32_t length, uint8_t format);
 
-int8_t * my_itoa(uint8_t *str, int32_t data, int32_t base) {
+int8_t * my_itoa(int8_t *str, int32_t data, int32_t base) {
 mylib_errno = MYLIB_ERR_OK;
 if (str == NULL) { mylib_errno = MYLIB_ERR_NULL; return 0;}
 if (base < 2 || base > 255) { mylib_errno = MYLIB_ERR_ARGS; return 0;}
@@ -85,7 +85,7 @@ for (int i=0; i<=highest_digit;i++) {
 return 0;
 }
 
-int32_t my_atoi(uint8_t *str) {
+int32_t my_atoi(int8_t *str) {
 mylib_errno=MYLIB_ERR_OK;
 
 int i=1;
@@ -166,7 +166,7 @@ int j=0;
     }
 
     for (i=0; i<length; i++) {
-        printf("0x%.8x ",(uint32_t )(start+i));
+        printf("0x%.8jx ",(size_t)(start + i));
         for (j=0; j<MEMORY_DUMP_COL; j++) {
             if (i+j >= length) {
                 if (format == DUMP_FORMAT_INT) {

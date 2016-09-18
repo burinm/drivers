@@ -8,6 +8,9 @@
 
 #define MYLIB_MAX_DIGITS 33
 
+#ifdef FRDM_KL25Z
+#pragma GCC poison printf
+#endif
 /* New library modules must include the following:
  *
  * module.h
