@@ -153,12 +153,12 @@ mylib_errno = MYLIB_ERR_OK;
 int i=0;
 int j=0;
 
-#define MEMORY_DUMP_COL 16
+#define MEMORY_DUMP_COL 8 
 #define ASCII_MIN_PRINTABLE 32 
 #define ASCII_MAX_PRINTABLE 126 
 
     if (format == DUMP_FORMAT_HEX) {
-        printf("Address    ");
+        printf("Address            ");
         for (i=0; i<MEMORY_DUMP_COL; i++) {
             printf("%.2x ", i); 
         }
@@ -166,7 +166,7 @@ int j=0;
     }
 
     for (i=0; i<length; i++) {
-        printf("0x%.8jx ",(size_t)(start + i));
+        printf("0x%.16jx ",(uintmax_t)(start + i));
         for (j=0; j<MEMORY_DUMP_COL; j++) {
             if (i+j >= length) {
                 if (format == DUMP_FORMAT_INT) {
@@ -183,7 +183,6 @@ int j=0;
             }
         }
         if (format == DUMP_FORMAT_HEX) {
-            printf(" ");
             for (j=0; j<MEMORY_DUMP_COL; j++) {
                 if (i+j >= length) {
                     break;
