@@ -32,15 +32,6 @@ uint8_t alpha[8] = { 'a','b','c','d','e','f'};
  //Since integer will overflow when counting to 2^31
 uint32_t data_hold=data;
 
-uint32_t counter=0;
-int highest_digit=0;
-int current_digit=0;
- 
-    /* Brute force method of counting up to base
-     * in each digit. Horribly slow. Need to go
-     * read up on some number theory, I know there
-     * is a better way to do this
-     */
 
     if (data < 0) {
         //TODO Check to make sure this is true for data == -2^31
@@ -49,20 +40,36 @@ int current_digit=0;
         str++;
      }
 
-    for(counter = 0; counter < data_hold; counter++) {
-        *str +=1; 
-        while ( *(str + current_digit) == base) {
-                *(str + current_digit + 1)+=1;
-                *(str + current_digit)=0;
-                current_digit++;
-                if (current_digit > highest_digit) {
-                     highest_digit=current_digit;
-                 }
-        }
-        current_digit=0;
-    }
+/*
+ * New algorithm
+ *
+ * 1) Find the most significant digit of the input by multiplying
+ *    the base until it doesn't fit anymore   
+ * 2) Subtract each digit(n)'s value base^(n-1) as many times as we can, that
+ *    is the value of digit(n).
+ * 3) Move to the next less significant digit n=n-1, repeat
+ *
+ * Note: We will use the input string as a scratchpad, then replace the
+ *       values with actual ASCII characters when we are done
+ */
 
-   reverse(str, highest_digit + 1);  
+int highest_digit=0;
+uint64_t base_pow=1;
+    while ( (base_pow * base <= data_hold) ) {
+        base_pow *= base;
+        highest_digit++;
+    }
+       
+for (int i=0; i<=highest_digit;i++) {
+    int value_count=0;
+    while (data_hold >= base_pow && (base_pow != 0 )) {
+        data_hold -= base_pow;
+        value_count++;
+    }
+    *(str + i) = value_count;
+    base_pow /= base;
+}
+
 #define DATA_C_HIGH_DIGIT_NUMERAL 9
 #define DATA_C_HIGH_DIGIT_ALPHA   16
     do {
