@@ -8,6 +8,7 @@ char test_my_big_to_little_1(){
     uint32_t result=big_to_little(0xabcdef12); 
     printf("result is: %x\n",result);
     ASSERT(result == 0x12efcdab);
+RETURN;
 }
 
 char test_my_big_to_little_2(){
@@ -16,6 +17,7 @@ char test_my_big_to_little_2(){
     uint32_t result=big_to_little(0x0); 
     printf("result is: %x\n",result);
     ASSERT(result == 0x0);
+RETURN;
 }
 
 char test_my_little_to_big_1(){
@@ -24,6 +26,7 @@ char test_my_little_to_big_1(){
     uint32_t result=big_to_little(0xabcdef12); 
     printf("result is: %x\n",result);
     ASSERT(result == 0x12efcdab);
+RETURN;
 }
 
 char test_my_little_to_big_2(){
@@ -32,6 +35,7 @@ char test_my_little_to_big_2(){
     uint32_t result=big_to_little(0x0); 
     printf("result is: %x\n",result);
     ASSERT(result == 0x0);
+RETURN;
 }
 
 

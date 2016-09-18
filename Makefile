@@ -29,7 +29,7 @@ SOURCES = $(wildcard suite*.c)
 OBJS := $(SOURCES:%.c=%.o)
 
 CC = gcc
-CFLAGS += -std=c99
+CFLAGS += -std=c99 -Wall
 LIBS = ../mylib/mylib.a
 
 ifdef DEBUG

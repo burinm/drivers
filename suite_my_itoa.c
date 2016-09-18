@@ -10,8 +10,9 @@ char test_itoa_0_base2(){
 
     my_itoa(result,0,2);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"0") == 0);
+    ASSERT(strcmp((const char*)result,"0") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_1_base2(){
@@ -21,8 +22,9 @@ char test_itoa_1_base2(){
 
     my_itoa(result,1,2);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"1") == 0);
+    ASSERT(strcmp((const char*)result,"1") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_0_base10(){
@@ -32,8 +34,9 @@ char test_itoa_0_base10(){
 
     my_itoa(result,0,10);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"0") == 0);
+    ASSERT(strcmp((const char*)result,"0") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_1_base10(){
@@ -43,8 +46,9 @@ char test_itoa_1_base10(){
 
     my_itoa(result,1,10);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"1") == 0);
+    ASSERT(strcmp((const char*)result,"1") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_0_base16(){
@@ -54,8 +58,9 @@ char test_itoa_0_base16(){
 
     my_itoa(result,0,16);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"0") == 0);
+    ASSERT(strcmp((const char*)result,"0") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_1_base16(){
@@ -65,8 +70,9 @@ char test_itoa_1_base16(){
 
     my_itoa(result,1,16);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"1") == 0);
+    ASSERT(strcmp((const char*)result,"1") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_12345_base10(){
@@ -76,8 +82,9 @@ char test_itoa_12345_base10(){
 
     my_itoa(result,12345,10);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"12345") == 0);
+    ASSERT(strcmp((const char*)result,"12345") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_max_binary(){
@@ -87,8 +94,9 @@ char test_itoa_max_binary(){
 
     my_itoa(result,2147483647,2);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"1111111111111111111111111111111") == 0);
+    ASSERT(strcmp((const char*)result,"1111111111111111111111111111111") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_max_base10(){
@@ -98,8 +106,9 @@ char test_itoa_max_base10(){
 
     my_itoa(result,2147483647,10);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"2147483647") == 0);
+    ASSERT(strcmp((const char*)result,"2147483647") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_max_base16(){
@@ -109,8 +118,9 @@ char test_itoa_max_base16(){
 
     my_itoa(result,2147483647,16);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"7fffffff") == 0);
+    ASSERT(strcmp((const char*)result,"7fffffff") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 
@@ -122,8 +132,9 @@ char test_itoa_neg_1_base10(){
 
     my_itoa(result,1,10);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"1") == 0);
+    ASSERT(strcmp((const char*)result,"1") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_12345_neg(){
@@ -133,8 +144,9 @@ char test_itoa_12345_neg(){
 
     my_itoa(result,-12345,10);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"-12345") == 0);
+    ASSERT(strcmp((const char*)result,"-12345") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_max_binary_neg(){
@@ -144,8 +156,9 @@ char test_itoa_max_binary_neg(){
 
     my_itoa(result,-2147483648,2);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"-10000000000000000000000000000000") == 0);
+    ASSERT(strcmp((const char*)result,"-10000000000000000000000000000000") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_max_base10_neg(){
@@ -155,8 +168,9 @@ char test_itoa_max_base10_neg(){
 
     my_itoa(result,-2147483648,10);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"-2147483648") == 0);
+    ASSERT(strcmp((const char*)result,"-2147483648") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }
 
 char test_itoa_max_base16_neg(){
@@ -166,6 +180,7 @@ char test_itoa_max_base16_neg(){
 
     my_itoa(result,-2147483648,16);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"-80000000") == 0);
+    ASSERT(strcmp((const char*)result,"-80000000") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+RETURN;
 }

@@ -9,7 +9,8 @@ char test_my_memmove_nonoverlapping_case2(){
 
     my_memmove(&alphabet[0],&alphabet[13],13);
     printf("result is: %s\n",&alphabet[0]);
-    ASSERT(strcmp(&alphabet[0],"abcdefghijklmabcdefghijklm") == 0);
+    ASSERT(strcmp((const char*)&alphabet[0],"abcdefghijklmabcdefghijklm") == 0);
+RETURN;
 }
 
 char test_my_memmove_overlapping_case2_2(){
@@ -19,7 +20,8 @@ char test_my_memmove_overlapping_case2_2(){
 
     my_memmove(&alphabet[13],&alphabet[0],13);
     printf("result is: %s\n",&alphabet[0]);
-    ASSERT(strcmp(&alphabet[0],"nopqrstuvwxyznopqrstuvwxyz") == 0);
+    ASSERT(strcmp((const char*)&alphabet[0],"nopqrstuvwxyznopqrstuvwxyz") == 0);
+RETURN;
 }
 
 char test_my_memmove_overlapping_case4(){
@@ -29,7 +31,8 @@ char test_my_memmove_overlapping_case4(){
 
     my_memmove(&alphabet[5],&alphabet[0],10);
     printf("result is: %s\n",&alphabet[0]);
-    ASSERT(strcmp(&alphabet[0],"fghijklmnoklmnopqrstuvwxyz") == 0);
+    ASSERT(strcmp((const char*)&alphabet[0],"fghijklmnoklmnopqrstuvwxyz") == 0);
+RETURN;
 }
 
 char test_my_memmove_overlapping_case1(){
@@ -39,7 +42,8 @@ char test_my_memmove_overlapping_case1(){
 
     my_memmove(&alphabet[0],&alphabet[0],26);
     printf("result is: %s\n",&alphabet[0]);
-    ASSERT(strcmp(&alphabet[0],"abcdefghijklmnopqrstuvwxyz") == 0);
+    ASSERT(strcmp((const char*)&alphabet[0],"abcdefghijklmnopqrstuvwxyz") == 0);
+RETURN;
 }
 
 char test_my_memmove_overlapping_case3(){
@@ -49,5 +53,6 @@ char test_my_memmove_overlapping_case3(){
 
     my_memmove(&alphabet[0],&alphabet[5],10);
     printf("result is: %s\n",&alphabet[0]);
-    ASSERT(strcmp(&alphabet[0],"abcdeabcdefghijpqrstuvwxyz") == 0);
+    ASSERT(strcmp((const char*)&alphabet[0],"abcdeabcdefghijpqrstuvwxyz") == 0);
+RETURN;
 }
