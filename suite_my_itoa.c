@@ -3,6 +3,83 @@
 #include "test_suite.h"
 #include "data.h"
 
+char test_itoa_0_base2(){
+    SETUP;
+    
+    int8_t *result= calloc(MYLIB_MAX_DIGITS,1);
+
+    my_itoa(result,0,2);
+    printf("result is: %s\n",result);
+    ASSERT(strcmp(result,"0") == 0);
+    if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+}
+
+char test_itoa_1_base2(){
+    SETUP;
+    
+    int8_t *result= calloc(MYLIB_MAX_DIGITS,1);
+
+    my_itoa(result,1,2);
+    printf("result is: %s\n",result);
+    ASSERT(strcmp(result,"1") == 0);
+    if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+}
+
+char test_itoa_0_base10(){
+    SETUP;
+    
+    int8_t *result= calloc(MYLIB_MAX_DIGITS,1);
+
+    my_itoa(result,0,10);
+    printf("result is: %s\n",result);
+    ASSERT(strcmp(result,"0") == 0);
+    if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+}
+
+char test_itoa_1_base10(){
+    SETUP;
+    
+    int8_t *result= calloc(MYLIB_MAX_DIGITS,1);
+
+    my_itoa(result,1,10);
+    printf("result is: %s\n",result);
+    ASSERT(strcmp(result,"1") == 0);
+    if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+}
+
+char test_itoa_0_base16(){
+    SETUP;
+    
+    int8_t *result= calloc(MYLIB_MAX_DIGITS,1);
+
+    my_itoa(result,0,16);
+    printf("result is: %s\n",result);
+    ASSERT(strcmp(result,"0") == 0);
+    if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+}
+
+char test_itoa_1_base16(){
+    SETUP;
+    
+    int8_t *result= calloc(MYLIB_MAX_DIGITS,1);
+
+    my_itoa(result,1,16);
+    printf("result is: %s\n",result);
+    ASSERT(strcmp(result,"1") == 0);
+    if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+}
+
+char test_itoa_12345_base10(){
+    SETUP;
+    
+    int8_t *result= calloc(MYLIB_MAX_DIGITS,1);
+
+    my_itoa(result,12345,10);
+    printf("result is: %s\n",result);
+    ASSERT(strcmp(result,"12345") == 0);
+    if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
+}
+
 char test_itoa_max_binary(){
     SETUP;
     
@@ -36,18 +113,19 @@ char test_itoa_max_base16(){
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
 }
 
-char test_itoa_max_0_base16(){
+
+//Negative number tests
+char test_itoa_neg_1_base10(){
     SETUP;
     
     int8_t *result= calloc(MYLIB_MAX_DIGITS,1);
 
-    my_itoa(result,0,16);
+    my_itoa(result,1,10);
     printf("result is: %s\n",result);
-    ASSERT(strcmp(result,"0") == 0);
+    ASSERT(strcmp(result,"1") == 0);
     if (mylib_errno != MYLIB_ERR_NULL) {free (result);}
 }
 
-//Negative number tests
 char test_itoa_12345_neg(){
     SETUP;
     

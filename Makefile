@@ -32,6 +32,10 @@ CC = gcc
 CFLAGS += -std=c99
 LIBS = ../mylib/mylib.a
 
+ifdef DEBUG
+CFLAGS += -g
+endif
+
 run_tests: test_functions.o driver.o | test_suites.o
 	make clean-lib -C ../project1
 	make mylib.a -C ../project1
