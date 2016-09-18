@@ -28,7 +28,7 @@ INCLUDES = -I../mylib
 SOURCES = $(wildcard suite*.c)
 OBJS := $(SOURCES:%.c=%.o)
 
-#CC = gcc
+CC ?= gcc
 CFLAGS += -std=c99 -Wall
 LIBS = ../mylib/mylib.a
 
