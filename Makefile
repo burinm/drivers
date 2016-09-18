@@ -28,7 +28,7 @@ INCLUDES = -I../mylib
 SOURCES = $(wildcard suite*.c)
 OBJS := $(SOURCES:%.c=%.o)
 
-CC = gcc
+#CC = gcc
 CFLAGS += -std=c99 -Wall
 LIBS = ../mylib/mylib.a
 
@@ -39,7 +39,7 @@ endif
 run_tests: test_functions.o driver.o | test_suites.o
 	make clean-lib -C ../project1
 	make mylib.a -C ../project1
-	$(CC) $(CFLAGS) $(INCLUDES) -L../mylib/  $^ -o $@ $(LIBS) 
+	$(CC) $(LDFLAGS) -L../mylib/  $^ -o $@ $(LIBS) 
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $^ -o $@ 
