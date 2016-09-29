@@ -40,7 +40,7 @@ void circbuf_print(circbuf_t * c) {
 
 uint8_t circbuf_push(circbuf_t * c, uint8_t data) {
     if (!c) { return CBUF_ERROR; }
-    if (c->state != CBUF_OK) { return c->state; }
+    if (c->state == CBUF_FULL) { return c->state; }
     c->state=CBUF_OK;
 
     *((c->buf) + c->head) = data;
@@ -51,15 +51,16 @@ uint8_t circbuf_push(circbuf_t * c, uint8_t data) {
     }
 
     c->size++;
-    /* Set internal flag if buffer is full */
-    if (c->size == c->last_index + 1) { c->state = CBUF_FULL; } /* full */
+
+    /* Full */
+    if (c->size == c->last_index + 1) { c->state = CBUF_FULL; }
 
 return c->state;
 }
 
 uint8_t circbuf_pop(circbuf_t * c, uint8_t *data) {
     if (!c) { return CBUF_ERROR; }
-    if ( c->state != CBUF_OK ) { return c->state; }
+    if ( c->state == CBUF_EMPTY ) { return c->state; }
     c->state=CBUF_OK;
 
     uint8_t *tail_ptr=((c->buf) + c->tail);
@@ -75,8 +76,18 @@ uint8_t circbuf_pop(circbuf_t * c, uint8_t *data) {
     c->size--;
 
     /* Empty */
-    if (c->size == 0) { c->state=CBUF_EMPTY; } /* empty */
+    if (c->size == 0) { c->state=CBUF_EMPTY; }
 
 return c->state;
+}
+
+
+uint8_t circbuf_is_poppable(circbuf_t * c) {
+    return ( c->state == CBUF_OK || c->state == CBUF_FULL) ;
+}
+
+uint8_t circbuf_is_pushable(circbuf_t * c) {
+    return ( c->state == CBUF_OK || c->state == CBUF_EMPTY) ;
+
 }
 
