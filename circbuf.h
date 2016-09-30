@@ -14,14 +14,19 @@
  */
 
 /* enum not used, but this is one idea */
-typedef enum { CBUF_NOTINIT=0, CBUF_OK, CBUF_ERROR, CBUF_EMPTY, CBUF_FULL } buf_state_e;
+typedef enum { CBUF_NOTINIT=0,
+               CBUF_OK,
+               CBUF_ERROR,
+               CBUF_EMPTY,
+               CBUF_FULL } buf_state_e;
 
 typedef struct {
         uint8_t *buf;
         uint32_t size;
-        uint32_t last_index;
-        uint32_t head;
-        uint32_t tail;
+        uint32_t buf_size;
+        uint8_t *last_index;
+        uint8_t *head;
+        uint8_t *tail;
         buf_state_e state; //Not implemented
 } circbuf_t;
 
