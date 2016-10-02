@@ -13,7 +13,6 @@
  * last_index is an indirect way to keep track of allocated size 
  */
 
-/* enum not used, but this is one idea */
 typedef enum { CBUF_NOTINIT=0,
                CBUF_OK,
                CBUF_ERROR,
@@ -27,7 +26,7 @@ typedef struct {
         uint8_t *last_index;
         uint8_t *head;
         uint8_t *tail;
-        buf_state_e state; //Not implemented
+        buf_state_e state;
 } circbuf_t;
 
 /*
@@ -114,6 +113,8 @@ uint8_t circbuf_is_pushable(circbuf_t * c);
  */
 void circbuf_print(circbuf_t * c);
 
+/* Private for testing */
+uint8_t* __circbuf_dump_core(circbuf_t * c);
 
 
 #endif

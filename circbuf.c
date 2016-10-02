@@ -93,3 +93,8 @@ uint8_t circbuf_is_pushable(circbuf_t * c) {
 
 }
 
+/* Private testing functions */
+uint8_t* __circbuf_dump_core(circbuf_t * c) {
+    return (c->buf);
+}
+
