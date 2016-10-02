@@ -9,7 +9,7 @@ circbuf_t *c;
     c->buf=calloc(size,0);
     c->size=0;
     c->buf_size=size;
-    c->last_index=(c->buf)+(size-1);
+    c->last_index=(uint8_t*)((c->buf)+(size-1));
     c->head=c->buf;
     c->tail=c->buf;
     c->state=CBUF_OK;
@@ -66,6 +66,7 @@ uint8_t circbuf_pop(circbuf_t * c, uint8_t *data) {
 
     uint8_t *tail_ptr=c->tail;
     *data = *tail_ptr;
+/* Test value */
     *tail_ptr =255;
 
     if (c->tail == c->last_index) {
