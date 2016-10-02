@@ -15,4 +15,6 @@ test_suite_return_code = ((x) ? 0 : -1)
 
 #define RETURN return test_suite_return_code
 
+void test_print_array(const char* desc, uint8_t *a, size_t s);
+
 #endif

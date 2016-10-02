@@ -22,7 +22,8 @@
 #
 # 
 
-VPATH = ../project1
+PROJECT = ../project2
+VPATH = $(PROJECT) 
 
 INCLUDES = -I../mylib
 SOURCES = $(wildcard suite*.c)
@@ -36,9 +37,9 @@ ifdef DEBUG
 CFLAGS += -g
 endif
 
-run_tests: test_functions.o driver.o | test_suites.o
-	make clean-lib -C ../project1
-	make mylib.a -C ../project1
+run_tests: test_suite.o test_functions.o driver.o | test_suites.o
+	make clean-lib -C  $(PROJECT)
+	make mylib.a -C  $(PROJECT)
 	$(CC) $(LDFLAGS) -L../mylib/  $^ -o $@ $(LIBS) 
 
 %.o: %.c
