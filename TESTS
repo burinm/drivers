@@ -4,3 +4,4 @@
 #suite_my_memmove.o
 #suite_my_memory.o
 suite_my_circbuf.o
+suite_my_ftoa.o
