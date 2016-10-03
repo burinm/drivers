@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "data.h"
+#include "util.h"
 
 //Probably not portable
 #define ASCII_0 48
@@ -219,4 +220,65 @@ uint32_t little_to_big(uint32_t data){
  * we have both versions
  */
 return big_to_little(data);
+}
+
+void my_ftoa(uint32_t f, uint8_t *string) {
+#define SIGN_LSBIT  (31)
+#define SIGN_MASK   (1<<SIGN_LSBIT)
+#define EHAT_LSBIT  (23)    
+#define EHAT_MASK   (0xff<<EHAT_LSBIT)
+#define MANNTISSA_MSBIT (22)
+#define MANNTISSA_MASK ((1<<(MANNTISSA_MSBIT+1))-1 )
+#define E_HAT_OFFSET    (127)
+
+    uint32_t binary=f;
+    uint8_t sign=(binary & SIGN_MASK) >> SIGN_LSBIT;
+    uint8_t e_hat=(uint8_t)(uint32_t)( (binary & EHAT_MASK) >> EHAT_LSBIT);
+    uint32_t mantissa=(binary & MANNTISSA_MASK);
+printf("sign = %#x e^=%d mantissa=" ,sign,e_hat);
+mylib_print_binary(mantissa);
+
+    /* Find 2^n */
+    int8_t power2 =e_hat-=E_HAT_OFFSET;
+printf("Power of two=%d\n",power2);
+
+    uint32_t integral=0;
+    uint32_t fraction=0;
+
+    /* This determines our precision for the fractional part */
+    uint32_t fraction_numerator=FTOA_PRECISION;
+
+    /* Put back hidden bit */
+    mantissa>>=1;
+    mantissa|=(1<<MANNTISSA_MSBIT);
+    #define HIDDEN_BIT  (1)
+    power2+=HIDDEN_BIT;
+
+    /* Count down the bits in the mantissa, 23 in all
+     *  Add to the integral part powers of 2
+     *  When we pass the decimal point, add to the fractional part 
+     *   the fractional_numerator/powers of two
+     *  The negation -, means we are now counting up
+     */
+    for (int i=MANNTISSA_MSBIT + HIDDEN_BIT;i>0;i--) {
+            if (power2>=0) { // Integral
+                if (mantissa & (1<<i) ) {
+                   integral |= (1<<(power2));
+printf("+i %d\n",(1<<(power2)));
+                 }
+            } else { // Fractional
+                if (mantissa & (1<<i) ) {
+                   fraction += (fraction_numerator>>(-power2));
+printf("+f %d\n",  (fraction_numerator>>(-power2)));
+                 }
+            }
+            power2--;
+    }
+
+    printf("%s%d.%d\n",sign ? "-" : " ",integral,fraction);
+    snprintf((char*)string, MAX_FTOA_STRING_LEN, "%s%d.%d",
+                sign ? "-" : " ",
+                integral,
+                fraction );
+
 }
