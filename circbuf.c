@@ -5,6 +5,7 @@
 circbuf_t *circbuf_init(uint32_t size) {
 circbuf_t *c;
 
+    if (size > CBUF_MAX_SIZE) { return NULL; }
     c=malloc(sizeof(circbuf_t));
     c->buf=calloc(size,0);
     c->size=0;
@@ -82,7 +83,6 @@ uint8_t circbuf_pop(circbuf_t * c, uint8_t *data) {
 
 return c->state;
 }
-
 
 uint8_t circbuf_is_poppable(circbuf_t * c) {
     return ( c->state == CBUF_OK || c->state == CBUF_FULL) ;

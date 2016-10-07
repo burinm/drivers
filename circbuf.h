@@ -13,6 +13,8 @@
  * last_index is an indirect way to keep track of allocated size 
  */
 
+#define CBUF_MAX_SIZE   5000
+
 typedef enum { CBUF_NOTINIT=0,
                CBUF_OK,
                CBUF_ERROR,
