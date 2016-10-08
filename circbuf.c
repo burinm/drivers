@@ -28,16 +28,16 @@ void circbuf_print(circbuf_t * c) {
     for (uint8_t *i=c->buf;i<c->last_index +1;i++) {
         printf("%.03d ",*i);
     }
-    printf("\n");
+    printf("\n",NULL);
     for (uint8_t *i=c->buf;i<c->head;i++) {
-        printf("    ");
+        printf("    ",NULL);
     }
-    printf("^__head\n");
+    printf("^__head\n",NULL);
 
     for (uint8_t *i=c->buf;i<c->tail;i++) {
-        printf("    ");
+        printf("    ",NULL);
     }
-    printf("^__tail\n");
+    printf("^__tail\n",NULL);
 }
 
 uint8_t circbuf_push(circbuf_t * c, uint8_t data) {

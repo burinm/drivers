@@ -10,7 +10,7 @@
  *
  */
 void mylib_print_binary(uint32_t n) {
-    if ( n == 0 ) { printf ("0\n"); return; }
+    if ( n == 0 ) { printf ("0\n",NULL); return; }
 
     uint8_t b=32; //number of bits
     while (n<<1>>1 == n) { b--; n<<=1; }
@@ -18,6 +18,6 @@ void mylib_print_binary(uint32_t n) {
         printf("%s", (n<<1>>1 == n) ? "0" : "1");
         n<<=1;
     }
-    printf("\n");
+    printf("\n",NULL);
 }
           

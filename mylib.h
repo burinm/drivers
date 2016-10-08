@@ -11,6 +11,9 @@
 #ifdef FRDM_KL25Z
 #pragma GCC poison printf
 #endif
+
+int printf(const char *format, ...);
+
 /* New library modules must include the following:
  *
  * module.h

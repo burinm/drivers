@@ -163,9 +163,9 @@ int j=0;
         for (j=0; j<MEMORY_DUMP_COL; j++) {
             if (i+j >= length) {
                 if (format == DUMP_FORMAT_INT) {
-                    printf("    ");
+                    printf("    ",NULL);
                 } else { //print hex by default
-                    printf("   ");
+                    printf("   ",NULL);
                 }
             } else {
                 if (format == DUMP_FORMAT_INT) {
@@ -182,14 +182,15 @@ int j=0;
                 } else {
                     if (*(start+i+j) >=ASCII_MIN_PRINTABLE \
                             && (*(start+i+j) <= ASCII_MAX_PRINTABLE)) {
-                        printf("%c",*(start+i+j));
+//This line potential has a bug %c...
+                         printf("%c",*(start+i+j),NULL);
                     } else {
-                        printf(".");
+                        printf(".",NULL);
                     }
                 }
             }
     }
-            printf("\n");
+            printf("\n",NULL);
             i=i+j-1;
         }
 }
