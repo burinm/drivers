@@ -58,17 +58,17 @@ char test_my_circbuf_is_full(){
        circbuf_push(c,i); 
     }
     uint8_t result=circbuf_is_pushable(c);
-    printf("Expected circbuf_is_pushable == 0\n");
+    printf("Expected circbuf_is_pushable == 0\n",NULL);
     printf("Result %d\n",result);
     ASSERT ( result == 0);
 
     result=circbuf_is_poppable(c);
-    printf("Expected circbuf_is_poppable == 1\n");
+    printf("Expected circbuf_is_poppable == 1\n",NULL);
     printf("Result %d\n",result);
     ASSERT ( result == 1);
 
     uint32_t size=c->size;
-    printf("Expected size == 10\n");
+    printf("Expected size == 10\n",NULL);
     printf("Result %d\n",size);
     ASSERT ( size == 10);
         
@@ -89,17 +89,17 @@ char test_my_circbuf_is_empty(){
        circbuf_pop(c,&d); 
     }
     uint8_t result=circbuf_is_pushable(c);
-    printf("Expected circbuf_is_pushable == 1\n");
+    printf("Expected circbuf_is_pushable == 1\n",NULL);
     printf("Result %d\n",result);
     ASSERT ( result == 1);
 
     result=circbuf_is_poppable(c);
-    printf("Expected circbuf_is_poppable == 0\n");
+    printf("Expected circbuf_is_poppable == 0\n",NULL);
     printf("Result %d\n",result);
     ASSERT ( result == 0);
 
     uint32_t size=c->size;
-    printf("Expected size == 0\n");
+    printf("Expected size == 0\n",NULL);
     printf("Result %d\n",size);
     ASSERT ( size == 0);
         
@@ -111,23 +111,22 @@ char test_my_circbuf_is_half_full(){
     SETUP;
 
     circbuf_t *c;
-    uint8_t *d;
     c=circbuf_init(10);
     for (uint8_t i=1;i<=5;i++) {
        circbuf_push(c,i); 
     }
     uint8_t result=circbuf_is_pushable(c);
-    printf("Expected circbuf_is_pushable == 1\n");
+    printf("Expected circbuf_is_pushable == 1\n",NULL);
     printf("Result %d\n",result);
     ASSERT ( result == 1);
 
     result=circbuf_is_poppable(c);
-    printf("Expected circbuf_is_poppable == 1\n");
+    printf("Expected circbuf_is_poppable == 1\n",NULL);
     printf("Result %d\n",result);
     ASSERT ( result == 1);
 
     uint32_t size=c->size;
-    printf("Expected size == 5\n");
+    printf("Expected size == 5\n",NULL);
     printf("Result %d\n",size);
     ASSERT ( size == 5);
         
@@ -179,7 +178,6 @@ RETURN;
 char test_my_circbuf_wraparound_boundry(){
     SETUP;
 
-    uint8_t expected[]={ 11,12,13,255,255,6,7,8,9,10 };
     uint8_t *buf;
     circbuf_t *c;
     uint8_t d;
@@ -212,8 +210,6 @@ RETURN;
 char test_my_circbuf_wraparound_boundry2(){
     SETUP;
 
-    uint8_t expected[]={ 11,12,13,255,255,6,7,8,9,10 };
-    uint8_t *buf;
     circbuf_t *c;
     uint8_t d;
     c=circbuf_init(10);
@@ -224,19 +220,19 @@ circbuf_print(c);
 
     circbuf_pop(c,&d); 
 circbuf_print(c);
-    printf("Expected 1\n");
+    printf("Expected 1\n",NULL);
     printf("Result %d \n",d);
     ASSERT (d == 1);
 
     circbuf_pop(c,&d);
 circbuf_print(c);
-    printf("Expected 2\n");
+    printf("Expected 2\n",NULL);
     printf("Result %d \n",d);
     ASSERT (d == 2);
 
     circbuf_pop(c,&d);
 circbuf_print(c);
-    printf("Expected 3\n");
+    printf("Expected 3\n",NULL);
     printf("Result %d \n",d);
     ASSERT (d == 3);
         
@@ -247,8 +243,6 @@ RETURN;
 char test_my_circbuf_wraparound_boundry2_minus_1(){
     SETUP;
 
-    uint8_t expected[]={ 11,12,13,255,255,6,7,8,9,10 };
-    uint8_t *buf;
     circbuf_t *c;
     uint8_t d;
     c=circbuf_init(10);
@@ -259,19 +253,19 @@ circbuf_print(c);
 
     circbuf_pop(c,&d); 
 circbuf_print(c);
-    printf("Expected 1\n");
+    printf("Expected 1\n",NULL);
     printf("Result %d \n",d);
     ASSERT (d == 1);
 
     circbuf_pop(c,&d);
 circbuf_print(c);
-    printf("Expected 2\n");
+    printf("Expected 2\n",NULL);
     printf("Result %d \n",d);
     ASSERT (d == 2);
 
     circbuf_pop(c,&d);
 circbuf_print(c);
-    printf("Expected 3\n");
+    printf("Expected 3\n",NULL);
     printf("Result %d \n",d);
     ASSERT (d == 3);
         
@@ -282,7 +276,6 @@ RETURN;
 char test_my_circbuf_wraparound_boundry3(){
     SETUP;
 
-    uint8_t expected[]={ 11,12,13,255,255,6,7,8,9,10 };
     uint8_t *buf;
     circbuf_t *c;
     uint8_t d;
@@ -297,13 +290,13 @@ circbuf_print(c);
 
     circbuf_pop(c,&d);
 circbuf_print(c);
-    printf("Expected 2\n");
+    printf("Expected 2\n",NULL);
     printf("Result %d \n",d);
     ASSERT (d == 2);
 
     circbuf_pop(c,&d);
 circbuf_print(c);
-    printf("Expected 3\n");
+    printf("Expected 3\n",NULL);
     printf("Result %d \n",d);
     ASSERT (d == 3);
 
@@ -402,12 +395,12 @@ char test_my_circbuf_push_overflow(){
 
     uint8_t error=0;
     error=circbuf_is_pushable(c);
-    printf("Expected ERROR pushable == 0\n");
+    printf("Expected ERROR pushable == 0\n",NULL);
     ASSERT (error == 0);
     printf("Result %d\n",error);
 
     uint32_t size=c->size;
-    printf("Expected size == 10\n");
+    printf("Expected size == 10\n",NULL);
     printf("Result %d\n",size);
     ASSERT ( size == 10);
         
@@ -436,12 +429,12 @@ char test_my_circbuf_pop_underflow(){
 
     uint8_t error=0;
     error=circbuf_is_poppable(c);
-    printf("Expected ERROR popable == 0\n");
+    printf("Expected ERROR popable == 0\n",NULL);
     ASSERT (error == 0);
     printf("Result %d\n",error);
 
     uint32_t size=c->size;
-    printf("Expected size == 0\n");
+    printf("Expected size == 0\n",NULL);
     printf("Result %d\n",size);
     ASSERT ( size == 0);
         

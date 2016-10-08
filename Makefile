@@ -23,14 +23,15 @@
 # 
 
 PROJECT = ../project2
-VPATH = $(PROJECT) 
+VPATH = $(PROJECT):../mylib
 
 INCLUDES = -I../mylib
 SOURCES = $(wildcard suite*.c)
 OBJS := $(SOURCES:%.c=%.o)
+OBJS += printf.o
 
 CC ?= gcc
-CFLAGS += -std=c99 -Wall
+CFLAGS += -Wno-format-extra-args -std=c99 -Wall
 LIBS = ../mylib/mylib.a
 
 ifdef DEBUG

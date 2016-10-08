@@ -5,5 +5,5 @@ void test_print_array(const char* desc, uint8_t *a, size_t s) {
     for (int i=0;i<s;i++) {
         printf("%d ",*(a+i));
     }
-        printf("\n");
+        printf("\n",NULL);
 }
