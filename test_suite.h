@@ -5,7 +5,7 @@
 #include "mylib.h"
 
 typedef char(*fpType)(void);
-typedef struct {fpType test; char* name;} testType;
+typedef struct {fpType test; const char* name;} testType;
 extern int8_t test_suite_return_code;
 
 #define SETUP     mylib_errno=0

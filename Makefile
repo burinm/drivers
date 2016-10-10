@@ -32,16 +32,28 @@ OBJS += printf.o
 
 CC ?= gcc
 CFLAGS += -Wno-format-extra-args -std=c99 -Wall
-LIBS = ../mylib/mylib.a
+LIBS = ../mylib/libmy.a
 
 ifdef DEBUG
 CFLAGS += -g
 endif
 
-run_tests: test_suite.o test_functions.o driver.o | test_suites.o
-	make clean-lib -C  $(PROJECT)
-	make mylib.a -C  $(PROJECT)
-	$(CC) $(LDFLAGS) -L../mylib/  $^ -o $@ $(LIBS) 
+ifeq ($(TARGET),frdm)
+    DONT_LINK := -c
+    DRIVER :=
+else
+    DRIVER := driver.o
+endif
+
+ 
+
+TARGET ?=host
+export TARGET
+
+run_tests: test_suite.o test_functions.o $(DRIVER) | test_suites.o
+#	make clean-lib -C  $(PROJECT) TARGET=$(TARGET)
+#	make libmy.a -C  $(PROJECT) TARGET=$(TARGET)
+	$(CC) $(LDFLAGS) -L../mylib/ $(DONT_LINK) $^ -o $@ $(LIBS) 
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $^ -o $@ 
