@@ -5,15 +5,9 @@
 /* Print a 32 bit number out in binary. Ignore leading zeros. */
 void mylib_print_binary(uint32_t n);
 
-
-
-void mylib_print_binary(uint32_t n);
-
-
 #ifdef FRDM_KL25Z
 #define LOG0(c) \
     write_uart0(c);
-
 #else
 #define LOG0(c) \
     fprintf(stdout,c);
