@@ -297,10 +297,12 @@ printf("+f %d\n",  (fraction_numerator>>(-power2)));
                  }
             }
             power2--;
+            // We round to zero after 2^-31
+            if (power2<-31) { break; }
     }
 
     printf("%s%d.%d\n",sign ? "-" : " ",integral,fraction);
-    snprintf((char*)string, MAX_FTOA_STRING_LEN, "%s%d.%d",
+    snprintf((char*)string, MAX_FTOA_STRING_LEN, "%s%d.%.7d",
                 sign ? "-" : " ",
                 integral,
                 fraction );
