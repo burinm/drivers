@@ -1,7 +1,9 @@
 #include "printf.h"
 
 #ifdef SILENCE_PRINTF
-int printf(const char *format, ...) {
+int myprintf(const char *format, ...) {
+return 0;
 }
 #endif
+
 
