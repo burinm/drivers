@@ -23,7 +23,7 @@ uint32_t little_to_big(uint32_t data);
                                 MAX_DIGITS_IN_FRACTION + \
                                 MAX_DIGITS_SIGN + \
                                 MAX_DIGITS_NULL
-void my_ftoa(uint32_t f, uint8_t *string);
+void my_ftoa(float f, uint8_t *string);
 
 
 #endif

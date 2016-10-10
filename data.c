@@ -239,7 +239,7 @@ uint32_t little_to_big(uint32_t data){
 return big_to_little(data);
 }
 
-void my_ftoa(uint32_t f, uint8_t *string) {
+void my_ftoa(float f, uint8_t *string) {
 #define SIGN_LSBIT  (31)
 #define SIGN_MASK   (1<<SIGN_LSBIT)
 #define EHAT_LSBIT  (23)    
@@ -248,7 +248,14 @@ void my_ftoa(uint32_t f, uint8_t *string) {
 #define MANNTISSA_MASK ((1<<(MANNTISSA_MSBIT+1))-1 )
 #define E_HAT_OFFSET    (127)
 
-    uint32_t binary=f;
+//TODO: check endianness
+uint32_t binary=0;
+uint8_t * p=(uint8_t *)&f;
+for (int i=3;i>=0;i--) { // 4 bytes
+    binary+=p[i];
+    if (i) { binary<<=8; }
+}
+
     uint8_t sign=(binary & SIGN_MASK) >> SIGN_LSBIT;
     uint8_t e_hat=(uint8_t)(uint32_t)( (binary & EHAT_MASK) >> EHAT_LSBIT);
     uint32_t mantissa=(binary & MANNTISSA_MASK);
