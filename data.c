@@ -9,8 +9,22 @@
 
 // Internal function for dump_memory
 void _dump_memory(uint8_t *start, uint32_t length, uint8_t format);
+// Internal function for itoa 
+int8_t * _my_itoa(int8_t *str, int32_t data, int32_t base, uint8_t is_signed);
 
+#define DATA_SIGNED 1
+#define DATA_UNSIGNED 0
 int8_t * my_itoa(int8_t *str, int32_t data, int32_t base) {
+    _my_itoa(str, data, base, DATA_SIGNED);
+return 0;
+}
+
+int8_t * my_utoa(int8_t *str, int32_t data, int32_t base) {
+    _my_itoa(str, data, base, DATA_UNSIGNED);
+return 0;
+}
+
+int8_t * _my_itoa(int8_t *str, int32_t data, int32_t base, uint8_t is_signed) {
 mylib_errno = MYLIB_ERR_OK;
 if (str == NULL) { mylib_errno = MYLIB_ERR_NULL; return 0;}
 if (base < 2 || base > 255) { mylib_errno = MYLIB_ERR_ARGS; return 0;}
@@ -33,6 +47,7 @@ uint8_t alpha[8] = { 'a','b','c','d','e','f'};
  //Since integer will overflow when counting to 2^31
 uint32_t data_hold=data;
 
+if (is_signed) {
 
     if (data < 0) {
         //TODO Check to make sure this is true for data == -2^31
@@ -40,6 +55,7 @@ uint32_t data_hold=data;
         *str='-';
         str++;
      }
+}
 
 /*
  * New algorithm

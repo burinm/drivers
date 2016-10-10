@@ -5,11 +5,16 @@
 #include "data.h"
 #include "memory.h"
 #include "reverse.h"
+#include "circbuf.h" 
+#include "printf.h"
+
 
 #define MYLIB_MAX_DIGITS 33
 
+#if 0
 #ifdef FRDM_KL25Z
 #pragma GCC poison printf
+#endif
 #endif
 
 int printf(const char *format, ...);
