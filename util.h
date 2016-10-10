@@ -10,7 +10,7 @@ void mylib_print_binary(uint32_t n);
     write_uart0(c);
 #else
 #define LOG0(c) \
-    fprintf(stdout,c);
+    fprintf(stdout,"%s",c);
 #endif
 
 #ifdef FRDM_KL25Z
