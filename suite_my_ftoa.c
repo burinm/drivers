@@ -8,8 +8,8 @@ char test_my_ftoa_1(){
 
     uint8_t *string=calloc(MAX_FTOA_STRING_LEN,1);
     
-    uint32_t n=0xC0F00000; 
-    my_ftoa(n,string);
+    float f =-7.5;
+    my_ftoa(f,string);
     printf("result is: %s\n",string);
     ASSERT(strcmp((const char*)string, "-7.50000000") == 0);
 
