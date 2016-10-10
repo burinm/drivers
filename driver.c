@@ -3,6 +3,7 @@
 #include "../mylib/util.h"
 
 #ifdef FRDM_KL25Z
+#include "../../kl25z/kl25z.arch/MKL25Z4.h"
 #include "../../kl25z/firmware.h"
 #include "../../kl25z/interrupts.h"
 #include "../../kl25z/uart.h"
