@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "circbuf.h"
+#include "util.h"
 
 circbuf_t *circbuf_init(uint32_t size) {
 circbuf_t *c;

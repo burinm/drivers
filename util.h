@@ -21,4 +21,11 @@ void mylib_print_binary(uint32_t n);
       fprintf (stdout,__VA_ARGS__)
 #endif
 
+#ifdef LOGGING_OFF
+#undef LOG0
+#undef LOG1
+#define LOG0(c)
+#define LOG1(...)
+#endif
+
 #endif
