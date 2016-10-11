@@ -103,6 +103,19 @@ uint8_t circbuf_is_poppable(circbuf_t * c);
  */
 uint8_t circbuf_is_pushable(circbuf_t * c);
 
+/*
+ * Check if stack is empty 
+ *
+ * Input - pointer to circbuf_t 
+ *  *pointer* to uint8_t
+ *
+ * return - Is stack empty? 
+ *   1 - yes
+ *   0 - no 
+ */
+uint8_t circbuf_is_empty(circbuf_t * c);
+
+
 
 /* 
  * Print out buffer (small sizes only) for debug

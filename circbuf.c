@@ -89,13 +89,17 @@ uint8_t circbuf_pop(circbuf_t * c, uint8_t *data) {
 return c->state;
 }
 
-uint8_t circbuf_is_poppable(circbuf_t * c) {
+inline uint8_t circbuf_is_poppable(circbuf_t * c) {
     return ( c->state == CBUF_OK || c->state == CBUF_FULL) ;
 }
 
-uint8_t circbuf_is_pushable(circbuf_t * c) {
+inline uint8_t circbuf_is_pushable(circbuf_t * c) {
     return ( c->state == CBUF_OK || c->state == CBUF_EMPTY) ;
 
+}
+
+inline uint8_t circbuf_is_empty(circbuf_t * c) {
+    return ( c->state = CBUF_EMPTY) ;
 }
 
 /* Private testing functions */
