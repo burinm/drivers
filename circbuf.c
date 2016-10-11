@@ -7,7 +7,12 @@ circbuf_t *c;
 
     if (size > CBUF_MAX_SIZE) { return NULL; }
     c=malloc(sizeof(circbuf_t));
+#ifdef FRDM_KL25Z
+    c->buf=malloc(size);
+    my_memzero(c->buf,size);
+#else
     c->buf=calloc(size,0);
+#endif
     c->size=0;
     c->buf_size=size;
     c->last_index=(uint8_t*)((c->buf)+(size-1));

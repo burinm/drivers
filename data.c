@@ -301,7 +301,7 @@ printf("+f %d\n",  (fraction_numerator>>(-power2)));
             if (power2<-31) { break; }
     }
 
-    printf("%s%d.%d\n",sign ? "-" : " ",integral,fraction);
+    printf("%s%d.%.7d\n",sign ? "-" : " ",integral,fraction);
     snprintf((char*)string, MAX_FTOA_STRING_LEN, "%s%d.%.7d",
                 sign ? "-" : " ",
                 integral,
