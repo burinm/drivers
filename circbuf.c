@@ -18,7 +18,7 @@ circbuf_t *c;
     c->last_index=(uint8_t*)((c->buf)+(size-1));
     c->head=c->buf;
     c->tail=c->buf;
-    c->state=CBUF_OK;
+    c->state=CBUF_EMPTY;
 
 return c;
 }
@@ -99,7 +99,11 @@ inline uint8_t circbuf_is_pushable(circbuf_t * c) {
 }
 
 inline uint8_t circbuf_is_empty(circbuf_t * c) {
-    return ( c->state = CBUF_EMPTY) ;
+    return ( c->state == CBUF_EMPTY) ;
+}
+
+inline uint8_t circbuf_is_full(circbuf_t * c) {
+    return ( c->state == CBUF_FULL) ;
 }
 
 /* Private testing functions */

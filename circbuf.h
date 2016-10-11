@@ -115,6 +115,19 @@ uint8_t circbuf_is_pushable(circbuf_t * c);
  */
 uint8_t circbuf_is_empty(circbuf_t * c);
 
+/*
+ * Check if stack is full 
+ *
+ * Input - pointer to circbuf_t 
+ *  *pointer* to uint8_t
+ *
+ * return - Is stack full? 
+ *   1 - yes
+ *   0 - no 
+ */
+uint8_t circbuf_is_full(circbuf_t * c);
+
+
 
 
 /* 
