@@ -32,6 +32,7 @@ char test_my_circbuf_alloc_too_much(){
     c=circbuf_init(5001);
     printf("result is: %p\n",(uint8_t*)c);
     ASSERT(c == NULL);
+
     if (c) { circbuf_destroy(c); }
 RETURN;
 }
@@ -42,6 +43,7 @@ char test_my_circbuf_free(){
     c=circbuf_init(10);
     printf("result is: %p\n",(uint8_t*)c);
     ASSERT(c != NULL);
+
     if (c) { circbuf_destroy(c); }
     //Didn't crash so pass. There is no way to
     // see if free succeeded without
