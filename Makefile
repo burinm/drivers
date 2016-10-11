@@ -50,7 +50,7 @@ endif
 TARGET ?=host
 export TARGET
 
-run_tests: test_suite.o test_functions.o $(DRIVER) | test_suites.o
+run_tests: printf.o test_suite.o test_functions.o $(DRIVER) | test_suites.o
 #	make clean-lib -C  $(PROJECT) TARGET=$(TARGET)
 #	make libmy.a -C  $(PROJECT) TARGET=$(TARGET)
 	$(CC) $(LDFLAGS) -L../mylib/ $(DONT_LINK) $^ -o $@ $(LIBS) 
