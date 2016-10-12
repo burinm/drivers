@@ -184,6 +184,7 @@ char test_my_circbuf_wraparound_boundry(){
     circbuf_t *c;
     uint8_t d;
     c=circbuf_init(10);
+circbuf_print(c);
     for (uint8_t i=1;i<=10;i++) {
        circbuf_push(c,i); 
     }
