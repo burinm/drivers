@@ -12,7 +12,7 @@ circbuf_t *c;
     c->buf=malloc(size);
     my_memzero(c->buf,size);
 #else
-    c->buf=calloc(size,0);
+    c->buf=calloc(size,1);
 #endif
     c->size=0;
     c->buf_size=size;
