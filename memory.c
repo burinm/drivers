@@ -4,6 +4,7 @@
 int8_t my_memmove(uint8_t *src, uint8_t *dst, uint32_t length) {
 mylib_errno = MYLIB_ERR_OK;
 
+
 //TODO The best we could do is check for wild pointers
 /* memmove will have 4 basic cases
  * define slength = length -1
@@ -28,7 +29,7 @@ mylib_errno = MYLIB_ERR_OK;
 
     uint32_t slength = length - 1; // 0 based length
     if ( (src + slength < dst) || (dst + slength < src) // case 2)
-               | ((dst + slength > src) && (dst < src)) ) // case 4)
+               || ((dst + slength > src) && (dst < src)) ) // case 4)
     {
         while (length--) {
             *dst++ = *src++;
