@@ -37,7 +37,7 @@ mylib_errno = MYLIB_ERR_OK;
     } else { // Must be case 3)
         dst= dst + slength;
         src= src + slength;
-        while (length --) {
+        while (length--) {
             *dst-- = *src--;
         }
     }
