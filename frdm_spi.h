@@ -6,7 +6,11 @@
 
 void spi_ss_low();
 void spi_ss_high();
-uint8_t spi_open_device(spi_cpol_e cpol, spi_cpha_e cpha);
+void spi_open_device(spi_mode_e m);
 void spi_send_byte(uint8_t b);
+void spi_read_byte();
+
+void spi_wait_for_SPTEF();
+uint8_t spi_is_SPTEF_set();
 
 #endif
