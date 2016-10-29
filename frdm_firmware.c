@@ -124,7 +124,7 @@ void setup_uart0() {
 
  //39.2.4 UART Control Register 2 (UARTx_C2)
  //UART0_C2 |= UART0_C2_TIE(1); //enable Transmit interrupt
- //UART0_C2 |= UART0_C2_RIE(1); //enable Receive interrupt
+ UART0_C2 |= UART0_C2_RIE(1); //enable Receive interrupt
 
     UART0_C2 |= UART0_C2_TE(1); //enable transmitter
     UART0_C2 |= UART0_C2_RE(1); //enable receiver
@@ -265,6 +265,18 @@ void tpm_setup_duty(color_addr_t *c) {
 
 (c->TPM)->SC |=TPM_SC_TOIE(1); //Enable Timer Overflow Interrupt
 
+if (c->c == RED) {
+    red_tpm_mode();
+}
+
+if (c->c == GREEN) {
+   green_tpm_mode(); 
+}
+
+if (c->c == BLUE) {
+   blue_tpm_mode(); 
+}
+
 }
 
 void tpm_set_duty(color_addr_t* c) {
@@ -288,6 +300,18 @@ void green_gpio_mode() {
 void blue_gpio_mode() {
     PORTD_PCR1 = PORT_PCR_MUX(1); //Set port D, pin 18 to GPIO pin
     PTD_BASE_PTR->PDDR |= 1<<1; //Set port D, pin 18 data direction to output
+}
+
+void red_tpm_mode() {
+    PORTB_PCR18 |= PORT_PCR_MUX(3);
+}
+
+void green_tpm_mode() {
+    PORTB_PCR19 |= PORT_PCR_MUX(3);
+}
+
+void blue_tpm_mode() {
+    PORTD_PCR1 |= PORT_PCR_MUX(4);
 }
 
 inline void blue_led_on() {
@@ -359,13 +383,20 @@ void pit_read_64bit_timer(uint32_t *high, uint32_t *low) {
 //TODO: Move the following into a utility file, not really firmware
 //private functions
 
-void set_leds(uint8_t s) {
+uint8_t set_leds(uint8_t s) {
 
     switch(s) {                 //This isn't frequently hit code...
 
         case 'p':
-            PTD_BASE_PTR->PTOR |= 1<<1;
+            led_brightness_decrease(&COLORS_ADDR[RED]);
+            led_brightness_decrease(&COLORS_ADDR[GREEN]);
+            led_brightness_decrease(&COLORS_ADDR[BLUE]);
+            break;
 
+        case 'P':
+            led_brightness_increase(&COLORS_ADDR[RED]);
+            led_brightness_increase(&COLORS_ADDR[GREEN]);
+            led_brightness_increase(&COLORS_ADDR[BLUE]);
             break;
 
         case 'o':
@@ -411,8 +442,10 @@ void set_leds(uint8_t s) {
             break;
 
         default:
+            return 0;
             break;
     }
+return 1;
 }
 
 void led_brightness_increase(color_addr_t* c) {
