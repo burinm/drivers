@@ -75,9 +75,13 @@ void red_gpio_mode();
 void green_gpio_mode();
 void blue_gpio_mode();
 
+void red_tpm_mode();
+void green_tpm_mode();
+void blue_tpm_mode();
+
 //TODO: Move these to a utility file
 //Put LEDs into GPIO mode for quick use
-void set_leds(uint8_t s);
+uint8_t set_leds(uint8_t s);
 void led_set_color();
 void blue_led_on();
 void blue_led_off();
