@@ -18,6 +18,18 @@ void write_uart0_va(const char* fmt, ...) {
     write_uart0(&s[0]);
 }
 
+void uart0_write_x(uint32_t n) {
+
+    int8_t *result= (int8_t*)calloc(MYLIB_MAX_DIGITS,1);
+    my_itoa(result,n,16);
+
+    for (int i=0;i<MYLIB_MAX_DIGITS;i++) {
+        if (i > 127 ) { i= 32;}
+            uart0_write_byte(*(result + i));
+    }
+    if (result) { free(result); }
+}
+
 void uart0_write_n(uint32_t n) {
 
     int8_t *result= (int8_t*)calloc(MYLIB_MAX_DIGITS,1);

@@ -7,6 +7,7 @@
 
 void write_uart0(const char* c);
 void write_uart0_va(const char* c, ...);
+void uart0_write_x(uint32_t n);
 void uart0_write_n(uint32_t n);
 void uart0_write_f(float f);
 void uart0_write_byte(const char c);
