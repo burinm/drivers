@@ -27,6 +27,7 @@ void uart0_write_n(uint32_t n) {
         if (i > 127 ) { i= 32;}
             uart0_write_byte(*(result + i));
     }
+    if (result) { free(result); }
 }
 
 void uart0_write_f(float f) {
@@ -38,6 +39,7 @@ void uart0_write_f(float f) {
         if (i > 127 ) { i= 32;}
             uart0_write_byte(*(result + i));
     }
+    if (result) { free(result); }
 }
 
 void _newline();

@@ -1,7 +1,5 @@
 #include "spi.h"
 
-
-
 void spi_set_cpol_cpha(spi_cpol_e *cpol, spi_cpha_e *cpha, spi_mode_e m) {
     
 /*
@@ -26,4 +24,8 @@ void spi_set_cpol_cpha(spi_cpol_e *cpol, spi_cpha_e *cpha, spi_mode_e m) {
                 *cpol=CPOL1; *cpha=CPHA1;
                 break;
     }
+}
+
+void spi_set_bitorder(spi_bitorder_e o) {
+    SPI_GLOBAL_BITORDER=o;
 }

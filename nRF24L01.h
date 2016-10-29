@@ -9,10 +9,10 @@
 #define NRF_DATA_BYE_ORDER          LSB 
 
 #define NRF_CMD_R_REGISTER       0x00 
-#define NRF_CMD_R_REGISTER_MASK  0x1f
+    #define NRF_CMD_R_REGISTER_MASK  0x1f
 
 #define NRF_CMD_W_REGISTER       0x20
-#define NRF_CMD_W_REGISTER_MASK  0x3f
+    #define NRF_CMD_W_REGISTER_MASK  0x3f
 
 #define NRF_CMD_R_RX_PAYLOAD     0x61
 #define NRF_CMD_W_TX_PAYLOAD     0xa0
@@ -22,7 +22,7 @@
 #define NRF_CMD_ACTIVATE         0x50
 #define NRF_CMD_R_RX_PL_WID      0x60
 #define NRF_CMD_W_ACK_PAYLOAD    0xa8
-#define NRF_CMD_W_ACK_PAYLOAD_MASK   0xaf
+    #define NRF_CMD_W_ACK_PAYLOAD_MASK   0xaf
 #define NRF_CMD_W_ACK_PAYLOAD_NO_ACK 0x58
 #define NRF_CMD_NOP                  0xff
 
@@ -31,8 +31,6 @@
 #define NRF_REG_CONFIG      0x00
     #define NRF_PRIM_RX         (1) 
     #define NRF_PWR_UP          (1<<1) 
-        #define NRF_POWER_UP            (1)
-        #define NRF_POWER_DOWN          (0)
     #define NRF_CRCO            (1<<2) 
     #define NRF_EN_CRCO         (1<<3) 
     #define NRF_MASK_MAX_RT     (1<<4) 
