@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "mylib.h"
 #ifdef FRDM_KL25Z 
-    #include "../../kl25z/uart.h"
+    #include "../driver/frdm_uart.h"
 #endif
 
 /* classic way to convert to binary
