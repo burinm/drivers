@@ -8,24 +8,46 @@ void mylib_print_binary(uint32_t n);
 #ifdef FRDM_KL25Z
 #define LOG0(c) \
     write_uart0(c);
+
+#define LOG1(...) \
+      write_uart0_va (__VA_ARGS__)
+
+#define LOG2N(c,n) \
+    write_uart0(c); \
+    uart0_write_n(n); \
+    write_uart0("\n");
+
+#define LOG2F(c,f) \
+    write_uart0(c); \
+    uart0_write_f(f); \
+    write_uart0("\n");
+
 #else
 #define LOG0(c) \
     fprintf(stdout,"%s",c);
-#endif
 
-#ifdef FRDM_KL25Z
-#define LOG1(...) \
-      write_uart0_va (__VA_ARGS__)
-#else
 #define LOG1(...) \
       fprintf (stdout,__VA_ARGS__)
+
+#define LOG2N(c,n) \
+    fprintf(stdout,"%s%d",c,n);
+
+#define LOG2F(c,f) \
+    fprintf(stdout,"%s%f",c,f);
 #endif
 
 #ifdef LOGGING_OFF
 #undef LOG0
-#undef LOG1
 #define LOG0(c)
+
+#undef LOG1
 #define LOG1(...)
+
+#undef LOG2N
+#define  LOG2N(c,n)
+
+#undef  LOG2F
+#define LOG2F(c,f)
 #endif
 
 #endif
