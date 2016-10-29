@@ -3,8 +3,6 @@
 #include "kl25z.arch/MKL25Z4.h"
 
 void spi_open_device(spi_mode_e m) {
-uint8_t b=0;
-
 spi_cpol_e cpol;
 spi_cpha_e cpha;
 
@@ -52,12 +50,12 @@ SPI_D_REG(SPI0) = SPI_CMD_DUMMY;
 spi_wait_for_SPRF();
 
 //TODO: make sure this doesn't get optimized out
-b=SPI_D_REG(SPI0);
+(void)SPI_D_REG(SPI0);
 } while ( !spi_is_SPMF_set());
 
 //Read SPMF while set to clear flag
 //TODO: make sure this doesn't get optimized out
-b=SPI_D_REG(SPI0);
+(void)SPI_D_REG(SPI0);
 SPI_D_REG(SPI0) |= SPI_S_SPMF_MASK;
 
 //I think we need an initial read/write
@@ -96,9 +94,8 @@ return b;
 }
 
 void spi_read_byte() {
-uint8_t b;
 
-b = SPI_D_REG(SPI0);
+(void)SPI_D_REG(SPI0);
 
 }
 
