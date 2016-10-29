@@ -12,6 +12,11 @@ void mylib_print_binary(uint32_t n);
 #define LOG1(...) \
       write_uart0_va (__VA_ARGS__)
 
+#define LOG2X(c,x) \
+    write_uart0(c); \
+    uart0_write_x(x); \
+    write_uart0("\n");
+
 #define LOG2N(c,n) \
     write_uart0(c); \
     uart0_write_n(n); \
@@ -29,6 +34,9 @@ void mylib_print_binary(uint32_t n);
 #define LOG1(...) \
       fprintf (stdout,__VA_ARGS__)
 
+#define LOG2X(c,x) \
+    fprintf(stdout,"%s%x",c,x);
+
 #define LOG2N(c,n) \
     fprintf(stdout,"%s%d",c,n);
 
@@ -42,6 +50,9 @@ void mylib_print_binary(uint32_t n);
 
 #undef LOG1
 #define LOG1(...)
+
+#undef LOG2
+#define LOG2X(c,x)
 
 #undef LOG2N
 #define  LOG2N(c,n)
