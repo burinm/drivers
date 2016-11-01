@@ -10,12 +10,11 @@ spi_cpha_e cpha;
 // Turn on port C
 SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;
 // Set up ports for SPI0
-PORTC->PCR[8] |= PORT_PCR_MUX(1); //gpio
+PORTC->PCR[8] |= PORT_PCR_MUX(1); // ss as gpio pin
 PORTC->PCR[5] |= PORT_PCR_MUX(2);
 PORTC->PCR[6] |= PORT_PCR_MUX(2);
 PORTC->PCR[7] |= PORT_PCR_MUX(2);
-// Set up ss pin as GPIO
-//  Setup port C, pin 8 GPIO for ss line
+
 // Set port C, pin 8 data direction to output
 PTC_BASE_PTR->PDDR |= 1<<8;
 
@@ -31,11 +30,6 @@ SPI_C1_REG(SPI0) |= SPI_C1_SPE_MASK |               // SPI system enable
                          
 // prescaler=1, divisor=4 , 24MHz/4 = 6MHz
 SPI_BR_REG(SPI0) |= (0x1 & SPI_BR_SPR_MASK);
-
-// prescaler=1, divisor=512, 24MHZ/512  = 46875Hz
-//SPI_BR_REG(SPI0) |= (0x3 & SPI_BR_SPR_MASK);
-//                   That is 24MHz/4 = 6MHz
-
 
 spi_ss_high();
 
