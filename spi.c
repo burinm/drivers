@@ -11,21 +11,17 @@ void spi_set_cpol_cpha(spi_cpol_e *cpol, spi_cpha_e *cpha, spi_mode_e m) {
 
 */
     switch(m) {
-            case SPI_MODE0:
+            case SPI_MODE_0:
                 *cpol=CPOL0; *cpha=CPHA0;
                 break;
-            case SPI_MODE1:
+            case SPI_MODE_1:
                 *cpol=CPOL0; *cpha=CPHA1;
                 break;
-            case SPI_MODE2:
+            case SPI_MODE_2:
                 *cpol=CPOL1; *cpha=CPHA0;
                 break;
-            case SPI_MODE3:
+            case SPI_MODE_3:
                 *cpol=CPOL1; *cpha=CPHA1;
                 break;
     }
-}
-
-void spi_set_bitorder(spi_bitorder_e o) {
-    SPI_GLOBAL_BITORDER=o;
 }

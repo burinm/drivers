@@ -59,6 +59,14 @@ SPI_D_REG(SPI0) |= SPI_S_SPMF_MASK;
 
 }
 
+void spi_close_device() {
+    //nop for frdm
+}
+
+void spi_set_bitorder(spi_bitorder_e o) {
+    //nop for frdm
+}
+
 void spi_ss_low() {
     PTC_BASE_PTR->PCOR |= 1<<8;
 }
