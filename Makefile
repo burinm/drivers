@@ -45,8 +45,6 @@ else
     DRIVER := driver.o
 endif
 
- 
-
 TARGET ?=host
 export TARGET
 
