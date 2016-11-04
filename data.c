@@ -293,7 +293,7 @@ printf("+i %d\n",(1<<(power2)));
             } else { // Fractional
                 if (mantissa & (1<<i) ) {
                    fraction += (fraction_numerator>>(-power2));
-printf("+f %d\n",  (fraction_numerator>>(-power2)));
+printf("+f %lu\n",  (fraction_numerator>>(-power2)));
                  }
             }
             power2--;
@@ -301,8 +301,8 @@ printf("+f %d\n",  (fraction_numerator>>(-power2)));
             if (power2<-31) { break; }
     }
 
-    printf("%s%d.%.7d\n",sign ? "-" : " ",integral,fraction);
-    snprintf((char*)string, MAX_FTOA_STRING_LEN, "%s%d.%.7d",
+    printf("%s%lu.%.7lu\n",sign ? "-" : " ",integral,fraction);
+    snprintf((char*)string, MAX_FTOA_STRING_LEN, "%s%lu.%.7lu",
                 sign ? "-" : " ",
                 integral,
                 fraction );
