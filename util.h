@@ -2,6 +2,10 @@
 #define __MYLIB_UTIL_H__
 #include <stdarg.h>
 
+#ifdef BBB
+    #include <stdio.h>
+#endif
+
 /* Print a 32 bit number out in binary. Ignore leading zeros. */
 void mylib_print_binary(uint32_t n);
 
