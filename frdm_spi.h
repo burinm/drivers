@@ -14,7 +14,7 @@ void spi_close_device();
 void spi_set_bitorder(spi_bitorder_e o);
 
 uint8_t spi_readwrite_byte(uint8_t b);
-void spi_read_byte();
+uint8_t spi_read_byte();
 
 //end interface
 

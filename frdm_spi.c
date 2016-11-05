@@ -82,7 +82,6 @@ void spi_ss_high() {
 uint8_t spi_readwrite_byte(uint8_t b) {
 
 spi_wait_for_SPTEF();
-
 SPI_D_REG(SPI0) = b;
 spi_wait_for_SPRF();
 b=SPI_D_REG(SPI0);
@@ -90,10 +89,13 @@ b=SPI_D_REG(SPI0);
 return b;
 }
 
-void spi_read_byte() {
+uint8_t spi_read_byte() {
+uint8_t b=0;
 
-(void)SPI_D_REG(SPI0);
-
+//untested
+spi_wait_for_SPRF();
+b=SPI_D_REG(SPI0);
+return b;
 }
 
 void spi_wait_for_SPTEF() {

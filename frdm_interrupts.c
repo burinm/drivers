@@ -61,6 +61,7 @@ extern "C" {
                 //    PTD_BASE_PTR->PCOR |= 1<<1;
                 circbuf_pop(UART0_TX_BUF,&c);
                 UART0_D=c;
+//Bad, but needed to work.. looses last character in buffer...
                 while (!(UART0_S1 & UART0_S1_TC_MASK)) {};
             } else {
                 if (circbuf_is_empty(UART0_TX_BUF)) {
@@ -69,6 +70,7 @@ extern "C" {
             }
         }
     }
+
 
 }
 #ifdef __cplusplus

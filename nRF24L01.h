@@ -84,11 +84,17 @@
 
 void nrf_config();
 uint8_t nrf_read_register(uint8_t r);
+void nrf_write_1(uint8_t r, uint8_t v); 
 uint8_t nrf_read_status();
 void nrf_print_status(uint8_t status);
 uint8_t nrf_read_config();
 void nrf_print_config(uint8_t config);
 void nrf_activate();
+void nrf_set_tx_addr(uint32_t);
+uint32_t nrf_read_tx_addr();
+
+void nfr_power_up();
+void nfr_power_down();
 
 
 #endif

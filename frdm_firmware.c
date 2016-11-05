@@ -33,6 +33,9 @@ SystemCoreClockUpdate();
     // Attach port E - Uart1 test
     SIM_SCGC5 |= SIM_SCGC5_PORTE_MASK;
 
+    // Attach port A - Uart0
+    SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+
     //12.2.8 System Clock Gating Control Register 4 (SIM_SCGC4)
     // Turn on SIM clock for gate for UART0
     SIM_SCGC4 |= SIM_SCGC4_UART0_MASK;
