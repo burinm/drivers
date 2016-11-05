@@ -3,10 +3,12 @@
 #include "../mylib/util.h"
 
 #ifdef FRDM_KL25Z
-#include "../../kl25z/kl25z.arch/MKL25Z4.h"
-#include "../../kl25z/firmware.h"
-#include "../../kl25z/interrupts.h"
-#include "../../kl25z/uart.h"
+#include "../driver/kl25z.arch/MKL25Z4.h"
+#include "../driver/frdm_firmware.h"
+#include "../driver/frdm_interrupts.h"
+#include "../driver/frdm_uart.h"
+
+volatile uint32_t stop_index=0; //remove after testing
 #endif
 
 extern testType tests_to_run[];
@@ -17,8 +19,7 @@ int main(void) {
 
 #ifdef FRDM_KL25Z
     frdm_clocks_init();
-    setup_uart0(9600);
-    enable_interrupts();
+    setup_uart0();
 #endif
 
 LOG1("Number tests found=%d\n",num_tests_to_run);
