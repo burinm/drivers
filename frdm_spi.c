@@ -2,6 +2,8 @@
 #include "frdm_firmware.h"
 #include "kl25z.arch/MKL25Z4.h"
 
+#include "util.h" //debugging remove
+
 void spi_set_mode(spi_mode_e m) {
 
 spi_cpol_e cpol;
@@ -26,6 +28,7 @@ SIM_SCGC4 |= SIM_SCGC4_SPI0_MASK;
 spi_set_cpol_cpha(&cpol, &cpha, m);
 SPI_C1_REG(SPI0) |= SPI_C1_SPE_MASK |               // SPI system enable
              SPI_C1_MSTR_MASK |                     // SPI master
+             //SPI_C1_LSBFE_MASK |                     // transfers LSB first 
              ((cpol == CPOL1) & SPI_C1_CPOL_MASK) | // Active Low, defaule High
              ((cpha == CPHA1) & SPI_C1_CPHA_MASK);  // clock idle-> active
                          
@@ -56,10 +59,11 @@ spi_wait_for_SPRF();
 (void)SPI_D_REG(SPI0);
 SPI_D_REG(SPI0) |= SPI_S_SPMF_MASK;
 
+spi_wait_for_SPRF();
 //I think we need an initial read/write
+//spi_ss_low();
 //spi_readwrite_byte(SPI_CMD_DUMMY);
-//SPI_D_REG(SPI0) = SPI_CMD_DUMMY;
-//b=SPI_D_REG(SPI0);
+//spi_ss_high();
 
 }
 
@@ -68,7 +72,7 @@ void spi_close_device() {
 }
 
 void spi_set_bitorder(spi_bitorder_e o) {
-    //nop for frdm
+    if (o == SPI_MSBit) {SPI_C1_REG(SPI0) |= SPI_C1_LSBFE_MASK;}
 }
 
 void spi_ss_low() {
@@ -79,13 +83,17 @@ void spi_ss_high() {
     PTC_BASE_PTR->PSOR |= 1<<8;
 }
 
-uint8_t spi_readwrite_byte(uint8_t b) {
+uint8_t spi_readwrite_byte(volatile uint8_t b) {
+uint8_t swap;
 
 spi_wait_for_SPTEF();
 SPI_D_REG(SPI0) = b;
-spi_wait_for_SPRF();
-b=SPI_D_REG(SPI0);
+b=spi_wait_for_SPRF();
 
+//Why does this always read least signigicant nibble first?
+swap= (b & 0xf0) >> 4;
+b >>= 4;
+b |=swap;
 return b;
 }
 
@@ -108,10 +116,13 @@ uint8_t spi_is_SPTEF_set() {
     return (SPI_S_REG(SPI0) & SPI_S_SPTEF_MASK);
 }
 
-void spi_wait_for_SPRF() {
-    while( (SPI_S_REG(SPI0) & SPI_S_SPRF_MASK) == 0) {
+uint8_t spi_wait_for_SPRF() {
+uint8_t read=0;
+    do {
+        read = SPI_S_REG(SPI0);
         __asm__("nop;");
-    }
+    } while( (read & SPI_S_SPRF_MASK) == 0);
+return read;
 }
 
 uint8_t spi_is_SPRF_set() {

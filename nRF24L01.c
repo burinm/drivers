@@ -34,7 +34,7 @@ return status;
 }
 
 void nrf_print_status(uint8_t status) {
-    LOG0("Status\n");
+    LOG0("[Status]\n");
     LOG2X("NRF_RX_DX = ",status & NRF_RX_DX);
     LOG2X("NRF_TX_DS = ",status & NRF_TX_DS);
     LOG2X("NRF_MAX_RT = ",status & NRF_MAX_RT);
@@ -52,7 +52,7 @@ return config;
 }
 
 void nrf_print_config(uint8_t config) {
-    LOG0("Config\n");
+    LOG0("[Config]\n");
     LOG2X("MASK_RX_DR = ",config & NRF_PRIM_RX);
     LOG2X("NRF_MASK_TX_DS = ",config & NRF_MASK_TX_DS);
     LOG2X("NRF_MASK_MAX_RT = ",config & NRF_MASK_MAX_RT);
@@ -82,11 +82,16 @@ uint8_t i=0;
 
 uint32_t nrf_read_tx_addr() {
 uint8_t i=0;
+uint8_t temp=0;
+uint8_t temp_status=0;
 uint32_t addy=0;
     spi_start_transaction();
-    (void)spi_readwrite_byte(NRF_CMD_R_REGISTER | NRF_REG_TX_ADDR);
+    temp_status = spi_readwrite_byte(NRF_CMD_R_REGISTER | NRF_REG_TX_ADDR);
+   LOG2X("-->s",temp_status);
     for (i=0;i<5;i++) {
-        addy |= (spi_readwrite_byte(SPI_CMD_DUMMY)) & 0xff;
+        temp = (spi_readwrite_byte(SPI_CMD_DUMMY)) ;
+   LOG2X("-->b",temp);
+        //addy |= (spi_readwrite_byte(SPI_CMD_DUMMY)) & 0xff;
     }
     spi_stop_transaction();
 return addy;
@@ -109,4 +114,44 @@ uint8_t config=0;
 
 void nfr_power_down() {
     nrf_write_1(NRF_REG_CONFIG, nrf_read_register(NRF_REG_CONFIG) & ~NRF_PWR_UP);
+}
+
+uint8_t nrf_get_rf_setup() {
+uint8_t setup;
+    spi_start_transaction();
+    (void)spi_readwrite_byte(NRF_CMD_R_REGISTER | NRF_REG_RF_SETUP);
+    setup = spi_readwrite_byte(SPI_CMD_DUMMY);
+    spi_stop_transaction();
+return setup;
+}
+
+void nrf_set_rf_power(uint8_t power) {
+uint8_t setup;
+    setup = nrf_get_rf_setup();
+    spi_start_transaction();
+    (void)spi_readwrite_byte(NRF_CMD_W_REGISTER | NRF_REG_RF_SETUP);
+    (void)spi_readwrite_byte(setup | ((power <<1) & NRF_RF_PWR_MASK));
+    spi_stop_transaction();
+}
+
+void nrf_print_rf_setup(uint8_t setup) {
+
+    switch((setup & NRF_RF_PWR_MASK) >> 1) {
+        case NRF_POWER_18DB:
+            LOG0("-18dBm\n");
+            break;
+        case NRF_POWER_12DB:
+            LOG0("-12dBm\n");
+            break;
+        case NRF_POWER_6DB:
+            LOG0("-6dBm\n");
+            break;
+        case NRF_POWER_0DB:
+            LOG0("0dBm\n");
+            break;
+        default:
+            LOG0("no power found\n");
+            break;
+    }
+ 
 }

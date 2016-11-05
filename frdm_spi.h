@@ -13,7 +13,7 @@ void spi_close_device();
 
 void spi_set_bitorder(spi_bitorder_e o);
 
-uint8_t spi_readwrite_byte(uint8_t b);
+uint8_t spi_readwrite_byte(volatile uint8_t b);
 uint8_t spi_read_byte();
 
 //end interface
@@ -21,7 +21,7 @@ uint8_t spi_read_byte();
 void spi_wait_for_SPTEF();
 uint8_t spi_is_SPTEF_set();
 
-void spi_wait_for_SPRF();
+uint8_t spi_wait_for_SPRF();
 uint8_t spi_is_SPRF_set();
 
 uint8_t spi_is_SPMF_set();

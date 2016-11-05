@@ -2,9 +2,8 @@
 #include "../../../serbus/include/spidriver.h"
 
 //open file...
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include <stdio.h>
+#include <fcntl.h> //O_WRONLY
 
 
 
@@ -28,7 +27,8 @@ void spi_ss_high() {
 
 void spi_set_mode(spi_mode_e m) {
     SPI_setClockMode(spi_fd, m);
-    SPI_setMaxFrequency(spi_fd,4000000);
+    //SPI_setMaxFrequency(spi_fd,1000000);
+    SPI_setMaxFrequency(spi_fd,2000000);
     SPI_setBitsPerWord(spi_fd,8);
   //  SPI_setCSActiveLow(spi_fd);
     // We are going to drive our own CS from a GPIO pin
@@ -37,16 +37,19 @@ void spi_set_mode(spi_mode_e m) {
 
 void spi_open_device() {
 
+    //Setup GPIO pin interface
+    spi_gpio_fd=open("/sys/class/gpio/gpio48/value",O_WRONLY);
+    spi_ss_high();
+
     // /dev/spidev1.0
     spi_fd = SPI_open(1,0);
 
-    //Setup GPIO pin interface
-    spi_gpio_fd=open("/sys/class/gpio/gpio48/value",O_WRONLY);
 }
 
 void spi_close_device() {
     // /dev/spidev1.0
     SPI_close(spi_fd);
+    close(spi_gpio_fd);
 }
 
 void spi_set_bitorder(spi_bitorder_e o) {

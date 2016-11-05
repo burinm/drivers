@@ -49,6 +49,19 @@
 #define NRF_REG_SETUP_RETR  0x04
 #define NRF_REG_RF_CH       0x05
 #define NRF_REG_RF_SETUP    0x06
+    #define NRF_LNA_HCURR       (1)
+    #define NRF_RF_PWR              (1<<2)
+        #define NRF_RF_PWR_MASK     0x6
+        #define NRF_POWER_18DB      0x0
+        #define NRF_POWER_12DB      0x1
+        #define NRF_POWER_6DB      0x2
+        #define NRF_POWER_0DB       0x3
+    #define RF_DR               (1<<3)
+    #define PLL_LOCK            (1<<4)
+
+
+
+
 #define NRF_REG_STATUS      0x07
     #define NRF_TX_FULL         (1)
     #define NRF_RX_P_NO         (1<<1)
@@ -95,6 +108,12 @@ uint32_t nrf_read_tx_addr();
 
 void nfr_power_up();
 void nfr_power_down();
+
+uint8_t nrf_get_rf_setup();
+void nrf_print_rf_setup(uint8_t setup);
+
+void nrf_set_rf_power(uint8_t power);
+
 
 
 #endif
