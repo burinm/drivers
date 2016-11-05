@@ -39,13 +39,13 @@ void mylib_print_binary(uint32_t n);
       fprintf (stdout,__VA_ARGS__)
 
 #define LOG2X(c,x) \
-    fprintf(stdout,"%s%x",c,x);
+    fprintf(stdout,"%s%x\n",c,x);
 
 #define LOG2N(c,n) \
-    fprintf(stdout,"%s%d",c,n);
+    fprintf(stdout,"%s%d\n",c,n);
 
 #define LOG2F(c,f) \
-    fprintf(stdout,"%s%f",c,f);
+    fprintf(stdout,"%s%f\n",c,f);
 #endif
 
 #ifdef LOGGING_OFF
