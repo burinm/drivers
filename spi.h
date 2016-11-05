@@ -13,20 +13,21 @@ typedef enum { SPI_LSBit = 0, SPI_MSBit = 1 } spi_bitorder_e;
 
 extern void spi_ss_low();
 extern void spi_ss_high();
-extern void spi_open_device(spi_mode_e m);
+void spi_set_mode(spi_mode_e m);
+extern void spi_open_device();
 extern void spi_close_device();
 
 extern void spi_set_bitorder(spi_bitorder_e o);
 
-extern void spi_start_transaction();
-extern void spi_stop_transaction();
-
 extern uint8_t spi_readwrite_byte(uint8_t b);
-extern void spi_read_byte();
+extern uint8_t spi_read_byte();
 
 //End interface
 
 //static uint8_t SPI_GLOBAL_BITORDER=SPI_LSBit;
+void spi_start_transaction();
+void spi_stop_transaction();
+
 
 void spi_set_cpol_cpha(spi_cpol_e *cpol, spi_cpha_e *cpha, spi_mode_e m);
 

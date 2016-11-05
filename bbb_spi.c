@@ -1,29 +1,47 @@
 #include "bbb_spi.h"
 #include "../../../serbus/include/spidriver.h"
 
+//open file...
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+
+
+#include "util.h" //logging remove later
+
 //This is mainly a library wrapper for 
 // https://github.com/graycatlabs/serbus
 
 static int spi_fd;
+static int spi_gpio_fd;
 
 void spi_ss_low() {
-
+    write(spi_gpio_fd,"0",1);
+    //echo 0 > /sys/class/gpio/gpio48/value
 }
+
 void spi_ss_high() {
-
+    write(spi_gpio_fd,"1",1);
+    //echo 0 > /sys/class/gpio/gpio48/value
 }
 
-void spi_open_device(spi_mode_e m) {
-spi_cpol_e cpol;
-spi_cpha_e cpha;
-
-    spi_set_cpol_cpha(&cpol, &cpha, m);
-
+void spi_set_mode(spi_mode_e m) {
     SPI_setClockMode(spi_fd, m);
-    SPI_setCSActiveLow(spi_fd);
+    SPI_setMaxFrequency(spi_fd,4000000);
+    SPI_setBitsPerWord(spi_fd,8);
+  //  SPI_setCSActiveLow(spi_fd);
+    // We are going to drive our own CS from a GPIO pin
+   // if (SPI_disableCS(spi_fd) == -1) { LOG0("couldn't set CS"); }
+}
+
+void spi_open_device() {
 
     // /dev/spidev1.0
     spi_fd = SPI_open(1,0);
+
+    //Setup GPIO pin interface
+    spi_gpio_fd=open("/sys/class/gpio/gpio48/value",O_WRONLY);
 }
 
 void spi_close_device() {
@@ -36,15 +54,6 @@ void spi_set_bitorder(spi_bitorder_e o) {
     if (o == SPI_LSBit) { SPI_setBitOrder(spi_fd, SPI_LSBFIRST); }
 }
 
-void spi_start_transaction() {
-    //nop in this library
-}
-
-void spi_stop_transaction() {
-    //nop in this library
-
-}
-
 uint8_t spi_readwrite_byte(uint8_t b) {
 uint8_t tx_buffer=b;
 uint8_t rx_buffer=0;
@@ -53,7 +62,7 @@ uint8_t rx_buffer=0;
 return rx_buffer;
 }
 
-void spi_read_byte() {
+uint8_t spi_read_byte() {
 uint8_t rx_buffer=0;
     SPI_read(spi_fd, &rx_buffer, 1);
 

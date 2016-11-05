@@ -2,7 +2,8 @@
 #include "frdm_firmware.h"
 #include "kl25z.arch/MKL25Z4.h"
 
-void spi_open_device(spi_mode_e m) {
+void spi_set_mode(spi_mode_e m) {
+
 spi_cpol_e cpol;
 spi_cpha_e cpha;
 
@@ -30,6 +31,9 @@ SPI_C1_REG(SPI0) |= SPI_C1_SPE_MASK |               // SPI system enable
                          
 // prescaler=1, divisor=4 , 24MHz/4 = 6MHz
 SPI_BR_REG(SPI0) |= (0x1 & SPI_BR_SPR_MASK);
+}
+
+void spi_open_device() {
 
 spi_ss_high();
 
@@ -74,15 +78,6 @@ void spi_ss_low() {
 void spi_ss_high() {
     PTC_BASE_PTR->PSOR |= 1<<8;
 }
-
-void spi_start_transaction() {
-    spi_ss_low();
-}
-
-void spi_stop_transaction() {
-    spi_ss_high();
-}
-
 
 uint8_t spi_readwrite_byte(uint8_t b) {
 

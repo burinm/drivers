@@ -1,6 +1,8 @@
 #ifndef __NRF24L01_H__
 #define __NRF24L01_H__
 
+#include <stdint.h>
+
 #define SPI_CPOL            IDLE_LOW 
 #define SPI_CPHA            SECOND_EDGE 
 
@@ -14,12 +16,15 @@
 #define NRF_CMD_W_REGISTER       0x20
     #define NRF_CMD_W_REGISTER_MASK  0x3f
 
+#define NRF_REGISTER_ADDY_MASK  0x1f
+
 #define NRF_CMD_R_RX_PAYLOAD     0x61
 #define NRF_CMD_W_TX_PAYLOAD     0xa0
 #define NRF_CMD_FLUSH_TX         0xe1
 #define NRF_CMD_FLUSH_RX         0xe2
 #define NRF_CMD_REUSER_TX_PL     0xe3
 #define NRF_CMD_ACTIVATE         0x50
+    #define NRF_ACTIVATE_MAGIC          0x73
 #define NRF_CMD_R_RX_PL_WID      0x60
 #define NRF_CMD_W_ACK_PAYLOAD    0xa8
     #define NRF_CMD_W_ACK_PAYLOAD_MASK   0xaf
@@ -45,6 +50,14 @@
 #define NRF_REG_RF_CH       0x05
 #define NRF_REG_RF_SETUP    0x06
 #define NRF_REG_STATUS      0x07
+    #define NRF_TX_FULL         (1)
+    #define NRF_RX_P_NO         (1<<1)
+        #define NRF_RX_P_NO_MASK    0xe
+    #define NRF_MAX_RT          (1<<4)
+    #define NRF_TX_DS           (1<<5)
+    #define NRF_RX_DX           (1<<6)
+    #define NRF_STATUS_BIT_7    (1<<7)
+
 #define NRF_REG_OBSERVE_TX  0x08
 #define NRF_REG_CD          0x09
 #define NRF_REG_RX_ADDR_P0  0x0a
@@ -68,6 +81,14 @@
 
 #define NRF_REG_DYNPD       0x1c
 #define NRF_REG_FEATURE     0x1d
+
+void nrf_config();
+uint8_t nrf_read_register(uint8_t r);
+uint8_t nrf_read_status();
+void nrf_print_status(uint8_t status);
+uint8_t nrf_read_config();
+void nrf_print_config(uint8_t config);
+void nrf_activate();
 
 
 #endif
