@@ -72,7 +72,7 @@ void spi_close_device() {
 }
 
 void spi_set_bitorder(spi_bitorder_e o) {
-    if (o == SPI_MSBit) {SPI_C1_REG(SPI0) |= SPI_C1_LSBFE_MASK;}
+    if (o == SPI_LSBit) {SPI_C1_REG(SPI0) |= SPI_C1_LSBFE_MASK;}
 }
 
 void spi_ss_low() {
@@ -88,12 +88,14 @@ uint8_t swap;
 
 spi_wait_for_SPTEF();
 SPI_D_REG(SPI0) = b;
-b=spi_wait_for_SPRF();
+//SPI_D_REG(SPI0) = ~b;  //Seems that frdm has the MOSI polarity wrong...
+(void)spi_wait_for_SPRF();
+b = SPI_D_REG(SPI0);
 
-//Why does this always read least signigicant nibble first?
-swap= (b & 0xf0) >> 4;
-b >>= 4;
-b |=swap;
+// swap nibbles?
+//swap= (b & 0xf0) >> 4;
+//b >>= 4;
+//b |=swap;
 return b;
 }
 

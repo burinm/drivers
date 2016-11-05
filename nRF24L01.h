@@ -59,9 +59,6 @@
     #define RF_DR               (1<<3)
     #define PLL_LOCK            (1<<4)
 
-
-
-
 #define NRF_REG_STATUS      0x07
     #define NRF_TX_FULL         (1)
     #define NRF_RX_P_NO         (1<<1)

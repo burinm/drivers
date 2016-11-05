@@ -3,7 +3,7 @@
 #include "util.h"
 
 void nrf_config() {
-    spi_set_mode(SPI_MODE_1);
+    spi_set_mode(SPI_MODE_0);
     spi_set_bitorder(SPI_MSBit);
     spi_open_device();
 }
@@ -28,7 +28,9 @@ uint8_t nrf_read_status() {
 uint8_t status=0;
 
     spi_start_transaction();
-    status = spi_readwrite_byte(NRF_CMD_NOP);
+    (void)spi_readwrite_byte(NRF_CMD_R_REGISTER | NRF_REG_STATUS);
+    //The status byte, sent in frame 0, appears in next read...
+    status = spi_readwrite_byte(SPI_CMD_DUMMY);
     spi_stop_transaction();
 return status;
 }
