@@ -77,7 +77,7 @@ void setup_uart0() {
 
  //39.2.4 UART Control Register 2 (UARTx_C2)
  //UART0_C2 |= UART0_C2_TIE(1); //enable Transmit interrupt
- //UART0_C2 |= UART0_C2_RIE(1); //enable Receive interrupt
+ UART0_C2 |= UART0_C2_RIE(1); //enable Receive interrupt
 
     UART0_C2 |= UART0_C2_TE(1); //enable transmitter
     UART0_C2 |= UART0_C2_RE(1); //enable receiver

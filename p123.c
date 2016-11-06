@@ -30,7 +30,6 @@ return NULL;
 }
 
 void p123_send_cmd(p123_msg_t *c) {
-uint8_t i=0;
 uint16_t l=0;
 uint32_t checksum=0;
 
@@ -38,10 +37,12 @@ uint32_t checksum=0;
     checksum=p123_encode_checksum(c);
     
     uart_send_byte(c->cmd);
+LOG2X("command>",c->cmd);
 
     l=c->length;
     uart_send_byte( (l & 0xff00) >> 8 );
     uart_send_byte( l & 0x00ff );
+LOG2X("length>",l);
 
     l=c->length;
     if ( l != 0) {
@@ -49,9 +50,11 @@ uint32_t checksum=0;
             l--;
             // MSByte first
             uart_send_byte (*(uint8_t*)((c->data) + l));
+LOG2X(">",*(uint8_t*)((c->data) + l));
         }
     }
 
+LOG2X("checksum>",checksum);
     for (l=0;l<4;l++) {
         uart_send_byte( (checksum & 0xff000000) >> 24);
         checksum <<= 8;
@@ -88,7 +91,7 @@ p123_msg_t * rcv_c=NULL;
 
     
     cmd = uart_get_byte();
-    LOG2X("command = ",cmd);
+    LOG2X("command:",cmd);
 
     l=0;
     l = uart_get_byte();
@@ -96,7 +99,7 @@ p123_msg_t * rcv_c=NULL;
     l += uart_get_byte();
 
     length = l;
-    LOG2X("length = ",length);
+    LOG2X("length:",length);
 
     data=(uint8_t*)calloc(l,1);
     if (!data) { LOG0("bork!!\n"); return;}
@@ -105,6 +108,7 @@ p123_msg_t * rcv_c=NULL;
             l--;
             // MSByte first
             *(uint8_t*)(data + l) = uart_get_byte();
+LOG2X(":",*(uint8_t*)(data + l));
     }
 
     for (i=0;i<4;i++) {
@@ -138,4 +142,7 @@ p123_msg_t * rcv_c=NULL;
         default:
             LOG0("unknown command");
         }
+
+if (rcv_c) { free (rcv_c); }
+if (data) { free (data); }
 }

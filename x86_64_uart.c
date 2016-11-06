@@ -39,9 +39,18 @@ void uart_open() {
         tcgetattr(uart_fd,&oldtio); /* save current port settings */
         
         bzero(&newtio, sizeof(newtio));
+/*
         newtio.c_cflag = BAUDRATE |  CS8 | CLOCAL | CREAD;
         newtio.c_iflag = IGNPAR;
         newtio.c_oflag = 0;
+*/
+        //raw mode - from man page: tcgetattr
+        newtio.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP
+                           | INLCR | IGNCR | ICRNL | IXON);
+        newtio.c_oflag &= ~OPOST;
+        newtio.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+        newtio.c_cflag &= ~(CSIZE | PARENB);
+        newtio.c_cflag |= CS8; 
         
         /* set input mode (non-canonical, no echo,...) */
         newtio.c_lflag = 0;
@@ -49,7 +58,8 @@ void uart_open() {
         newtio.c_cc[VTIME]    = 0;   /* inter-character timer unused */
         newtio.c_cc[VMIN]     = 1;   /* blocking read until 1 chars received */
         
-        tcflush(uart_fd, TCIFLUSH);
+        //tcflush(uart_fd, TCIFLUSH);
+        tcflush(uart_fd, TCIOFLUSH);
         tcsetattr(uart_fd,TCSANOW,&newtio);
 
 }
@@ -60,13 +70,14 @@ void uart_close() {
 }
 
 void uart_send_byte(uint8_t b) {
+    //usleep(70);
+    usleep(500);
     write(uart_fd, &b,1);
 }
 
 uint8_t uart_get_byte() {
 uint8_t b=0;
-uint8_t err=0;
-err = read(uart_fd,&b,1);
+    read(uart_fd,&b,1);
 
 return b;
 }
