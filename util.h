@@ -6,6 +6,10 @@
     #include <stdio.h>
 #endif
 
+#ifdef X86_64
+    #include <stdio.h>
+#endif
+
 /* Print a 32 bit number out in binary. Ignore leading zeros. */
 void mylib_print_binary(uint32_t n);
 
