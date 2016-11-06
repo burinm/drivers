@@ -49,12 +49,6 @@ color_addr_t COLORS_ADDR[3];
 //Initialize all clocks and turn on gates needed for this project
 void frdm_clocks_init();
 
-void setup_uart0();
-void setup_uart1(uint32_t baud);
-
-void start_uart0();
-void stop_uart0();
-
 // Turn on TPM channel for center aligned PWM
 void setup_tpm_center(TPM_Type* tpm);
 

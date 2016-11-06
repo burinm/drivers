@@ -5,6 +5,21 @@
 #include <stdarg.h>
 #include "mylib.h"
 
+//Interface implementation
+
+void uart_open();
+void uart_close();
+void uart_send_byte(uint8_t);
+uint8_t uart_get_byte();
+
+//end Interface
+
+
+void setup_uart0();
+void setup_uart1(uint32_t baud);
+void start_uart0();
+void stop_uart0();
+
 void write_uart0(const char* c);
 void write_uart0_va(const char* c, ...);
 void uart0_write_x(uint32_t n);
