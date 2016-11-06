@@ -26,6 +26,14 @@ void nrf_write_1(uint8_t r, uint8_t v) {
 
 uint8_t nrf_read_status() {
 uint8_t status=0;
+    spi_start_transaction();
+    status = spi_readwrite_byte(SPI_CMD_DUMMY);
+    spi_stop_transaction();
+return status;
+}
+
+uint8_t nrf_read_status1() {
+uint8_t status=0;
 
     spi_start_transaction();
     (void)spi_readwrite_byte(NRF_CMD_R_REGISTER | NRF_REG_STATUS);
@@ -156,4 +164,26 @@ void nrf_print_rf_setup(uint8_t setup) {
             break;
     }
  
+}
+
+#include "kl25z.arch/MKL25Z4.h"
+uint8_t proffoz_nrf_status_read() {
+#define NRF_CS_ENABLE() (PTC_BASE_PTR->PCOR |= 1<<8)
+#define NRF_CS_DISABLE() (PTC_BASE_PTR->PSOR |= 1<<8)
+#define WAIT_SPTEF ( !(SPI_S_REG(SPI0) & SPI_S_SPTEF_MASK))
+#define WAIT_SPRF ( !(SPI_S_REG(SPI0) & SPI_S_SPRF_MASK))
+        uint8_t rx_ret = 0;
+
+NRF_CS_DISABLE(); //creating edge for analyser triggering
+                  //don't put into final code
+
+        NRF_CS_ENABLE();                // Activate SPI
+     while(WAIT_SPTEF);
+        SPI_D_REG(SPI0) = 0xFF;
+        while(WAIT_SPRF);
+        rx_ret = SPI_D_REG(SPI0);
+
+     NRF_CS_DISABLE();
+
+        return(rx_ret);
 }

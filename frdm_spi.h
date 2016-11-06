@@ -26,4 +26,6 @@ uint8_t spi_is_SPRF_set();
 
 uint8_t spi_is_SPMF_set();
 
+void try_this_spi_setup(); //testing
+
 #endif

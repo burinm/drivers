@@ -3,11 +3,11 @@
 void spi_set_cpol_cpha(spi_cpol_e *cpol, spi_cpha_e *cpha, spi_mode_e m) {
     
 /*
-    CPOL=0 Active high, idle low
-    CPOL=1 Active low, idle high
+    CPOL=0 clock active high, idle low
+    CPOL=1 clock active low, idle high
 
-    CPHA=0 clock data on active->idle egde
-    CPHA=1 clock data on idle->active edge (first edge)
+    CPHA=0 clock data on idle->active edge (first edge)
+    CPHA=1 clock data on active->idle egde
 
 */
     switch(m) {

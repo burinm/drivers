@@ -4,6 +4,34 @@
 
 #include "util.h" //debugging remove
 
+void try_this_spi_setup() {
+
+    // Turn on port C
+    SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;
+    // Turn on SPI0 clock
+    SIM_SCGC4 |= SIM_SCGC4_SPI0_MASK;
+
+    // Set up ports for SPI0
+    PORTC->PCR[8] |= PORT_PCR_MUX(1); // ss as gpio pin
+    PORTC->PCR[5] |= PORT_PCR_MUX(2);
+    PORTC->PCR[6] |= PORT_PCR_MUX(2);
+    PORTC->PCR[7] |= PORT_PCR_MUX(2);
+
+    // Set port C, pin 8 data direction to output
+    PTC_BASE_PTR->PDDR |= 1<<8;
+
+    SPI_C1_REG(SPI0) = SPI_C1_SPE_MASK;
+    SPI_C2_REG(SPI0) = 0x00;
+
+    SPI_C1_REG(SPI0) = SPI_C1_MSTR_MASK | 
+
+                    SPI_C1_SPE_MASK |
+                    SPI_C1_CPHA_MASK;
+                          
+    // prescaler=1, divisor=4 , 24MHz/4 = 6MHz
+    SPI_BR_REG(SPI0) = 0x01;
+}
+
 void spi_set_mode(spi_mode_e m) {
 
 spi_cpol_e cpol;
@@ -29,17 +57,21 @@ spi_set_cpol_cpha(&cpol, &cpha, m);
 SPI_C1_REG(SPI0) |= SPI_C1_SPE_MASK |               // SPI system enable
              SPI_C1_MSTR_MASK |                     // SPI master
              //SPI_C1_LSBFE_MASK |                     // transfers LSB first 
-             ((cpol == CPOL1) & SPI_C1_CPOL_MASK) | // Active Low, defaule High
-             ((cpha == CPHA1) & SPI_C1_CPHA_MASK);  // clock idle-> active
+             ((cpol == CPOL1) ? SPI_C1_CPOL_MASK : 0) | 
+             ((cpha == CPHA1) ? SPI_C1_CPHA_MASK : 0); 
                          
 // prescaler=1, divisor=4 , 24MHz/4 = 6MHz
-SPI_BR_REG(SPI0) |= (0x1 & SPI_BR_SPR_MASK);
+//SPI_BR_REG(SPI0) |= (0x1 & SPI_BR_SPR_MASK);
+
+// prescaler=1, divisor=8 , 24MHz/8 = 3MHz
+SPI_BR_REG(SPI0) |= (0x8 & SPI_BR_SPR_MASK);
 }
 
 void spi_open_device() {
 
 spi_ss_high();
 
+#if 0
 //Initialization dance
 // KL25 Sub-Family Reference manual p686
 do { 
@@ -64,6 +96,7 @@ spi_wait_for_SPRF();
 //spi_ss_low();
 //spi_readwrite_byte(SPI_CMD_DUMMY);
 //spi_ss_high();
+#endif
 
 }
 

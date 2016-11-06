@@ -95,7 +95,8 @@
 void nrf_config();
 uint8_t nrf_read_register(uint8_t r);
 void nrf_write_1(uint8_t r, uint8_t v); 
-uint8_t nrf_read_status();
+uint8_t nrf_read_status();  // default behavior of write/status in one word
+uint8_t nrf_read_status1(); // Actually use STATUS in command 
 void nrf_print_status(uint8_t status);
 uint8_t nrf_read_config();
 void nrf_print_config(uint8_t config);
@@ -111,6 +112,7 @@ void nrf_print_rf_setup(uint8_t setup);
 
 void nrf_set_rf_power(uint8_t power);
 
+uint8_t proffoz_nrf_status_read(); //testing
 
 
 #endif
