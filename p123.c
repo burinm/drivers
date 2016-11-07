@@ -107,6 +107,7 @@ uint32_t checksum=0;
 uint32_t checksum_calculated=0;
 uint8_t cmd=NOP;
 uint8_t *data=NULL;
+uint8_t csum=0;
 
     
     if (! rcv_c) { LOG0("bork2!!\n"); return P123_ALLOC_ERROR;}
@@ -120,7 +121,7 @@ uint8_t *data=NULL;
     l += uart_get_byte();
 
     length = l;
-    LOG2X("length:",length);
+    LOG2X("length:",length); LOG0("\n");
 
     data=(uint8_t*)calloc(l,1);
     if (!data) { LOG0("bork!!\n"); return P123_ALLOC_ERROR;}
@@ -130,16 +131,19 @@ uint8_t *data=NULL;
             l--;
             // MSByte first
             *(uint8_t*)(data + l) = uart_get_byte();
-LOG2X(":",*(uint8_t*)(data + l)); LOG0("\n");
+LOG2X(":",*(uint8_t*)(data + l));
     }
 
+LOG0("\n");
     for (i=0;i<4;i++) {
-        checksum += uart_get_byte();
-LOG2X("c:",checksum); LOG0("\n");
+        csum = uart_get_byte();
+LOG2X("(c):",csum);
+        checksum += csum;
         if (i == 3) { break; }
         checksum <<= 8;
     }
 
+LOG0("\n");
 
     rcv_c->cmd=cmd;
     rcv_c->length=length;
@@ -148,12 +152,15 @@ LOG2X("c:",checksum); LOG0("\n");
     checksum_calculated=p123_encode_checksum(rcv_c);
 
     if (checksum_calculated == checksum) {
-        LOG2X("checksum:",checksum);
+        LOG2X("checksum: ",checksum);
+        LOG0("\n");
         LOG0("Hooray!\n"); 
     } else {
         LOG0("Doh!!\n");
-        LOG2X("expected",checksum_calculated);
-        LOG2X("got",checksum);
+        LOG2X("expected: ",checksum_calculated);
+        LOG0("\n");
+        LOG2X("got: ",checksum);
+        LOG0("\n");
     }
     
 

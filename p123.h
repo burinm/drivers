@@ -10,6 +10,7 @@ typedef enum {
     NOP=0,
     BLINK_RED,
     BLINK_BLUE,
+    TXT_MESSAGE,
     SEND_PNG,
     PING 
 } p123_cmd_e;
