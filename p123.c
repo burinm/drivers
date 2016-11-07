@@ -12,21 +12,41 @@ void p123_open() {
 void p123_close() {
 }
 
-p123_msg_t* p123_alloc_msg(uint8_t m, uint16_t length) {
+p123_msg_t* p123_alloc_msg(uint8_t m) {
 p123_msg_t* p=NULL;
 
     p= (p123_msg_t*)calloc(sizeof(p123_msg_t),1);
     if (p) {
                 p->cmd=m;
-                p->length=length;
-                if (length) {
-                    p->data=(uint8_t*)calloc(sizeof(uint8_t) * length,1);
-                    if (p->data) { return p;}
-                }
+                p->length=0;
+                p->data=NULL;
+                p->checksum=0x78787878;
+                p->alloc_type=P123_NO_ALLOC;
                 return p;
     }
 
 return NULL;
+}
+
+void p123_attach_data(p123_msg_t* p, uint8_t *data, uint16_t length) {
+    if (p) {
+        p->alloc_type=P123_USR_ALLOC;
+        if (data) {
+        p->data=data;
+        p->length=length;
+        }
+    }
+}
+
+void p123_free_msg(p123_msg_t* m) {
+    if (m) {
+        if ( m->alloc_type == P123_AUTO_ALLOC ) {
+            if (m->data) {
+                free(m);
+            }
+        }
+        free (m);
+    }
 }
 
 void p123_send_cmd(p123_msg_t *c) {
@@ -79,7 +99,7 @@ uint16_t l=c->length;
 return checksum;
 }
 
-void p123_rcv_cmd() {
+uint8_t p123_rcv_cmd(p123_msg_t * rcv_c) {
 uint16_t l=0;
 uint16_t length=0;
 uint16_t i=0;
@@ -87,11 +107,12 @@ uint32_t checksum=0;
 uint32_t checksum_calculated=0;
 uint8_t cmd=NOP;
 uint8_t *data=NULL;
-p123_msg_t * rcv_c=NULL;
 
     
+    if (! rcv_c) { LOG0("bork2!!\n"); return P123_ALLOC_ERROR;}
+
     cmd = uart_get_byte();
-    LOG2X("command:",cmd);
+    LOG2X("command:",cmd); LOG0("\n");
 
     l=0;
     l = uart_get_byte();
@@ -102,23 +123,23 @@ p123_msg_t * rcv_c=NULL;
     LOG2X("length:",length);
 
     data=(uint8_t*)calloc(l,1);
-    if (!data) { LOG0("bork!!\n"); return;}
+    if (!data) { LOG0("bork!!\n"); return P123_ALLOC_ERROR;}
+    rcv_c->alloc_type=P123_AUTO_ALLOC;
 
     for (i=0;i<length;i++) {
             l--;
             // MSByte first
             *(uint8_t*)(data + l) = uart_get_byte();
-LOG2X(":",*(uint8_t*)(data + l));
+LOG2X(":",*(uint8_t*)(data + l)); LOG0("\n");
     }
 
     for (i=0;i<4;i++) {
         checksum += uart_get_byte();
+LOG2X("c:",checksum); LOG0("\n");
         if (i == 3) { break; }
         checksum <<= 8;
     }
 
-     rcv_c=(p123_msg_t*)calloc(sizeof(p123_msg_t),1);
-     if (! rcv_c) { LOG0("bork2!!\n"); return;}
 
     rcv_c->cmd=cmd;
     rcv_c->length=length;
@@ -135,14 +156,6 @@ LOG2X(":",*(uint8_t*)(data + l));
         LOG2X("got",checksum);
     }
     
-    switch (cmd) {
-        case BLINK_BLUE:
-            LOG0("blink blink blue\n");
-            break;
-        default:
-            LOG0("unknown command");
-        }
 
-if (rcv_c) { free (rcv_c); }
-if (data) { free (data); }
+return P123_OK;
 }

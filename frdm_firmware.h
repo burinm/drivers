@@ -63,6 +63,9 @@ void stop_pit_timer();
 uint8_t is_pit_timer_running();
 uint32_t pit_read_timer0(); 
 
+void setup_pit_timer1(uint32_t);
+void start_pit_timer1();
+void stop_pit_timer1();
 
 
 void red_gpio_mode();
@@ -79,6 +82,7 @@ uint8_t set_leds(uint8_t s);
 void led_set_color();
 void blue_led_on();
 void blue_led_off();
+void blue_led_toggle();
 
 // colors
 #define NUM_RGB 8

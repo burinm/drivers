@@ -10,6 +10,7 @@ uint8_t uart0_receive_mode=0;
 
 static int8_t current_color=0;
 static uint32_t zero __attribute__((aligned(4))) =0;
+static uint32_t pit_period=0xfffffffe;
 
 color_addr_t COLORS_ADDR[3] = {
 { RED, TPM2, 0, 50, 50},
@@ -162,6 +163,11 @@ inline void blue_led_off() {
     PTD_BASE_PTR->PSOR |= 1<<1;
 }
 
+inline void blue_led_toggle() {
+    PTD_BASE_PTR->PTOR |= 1<<1;
+}
+
+// Pit timer 0, used for profiling. Always set at max
 void setup_pit_timer() {
 //ALL the documentaion conflicts with the API
 // for the PIT module..
@@ -201,6 +207,47 @@ PIT->CHANNEL[0].TCTRL &= ~(PIT_TCTRL_TIE_MASK | PIT_TCTRL_TEN_MASK);
 PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK; 
 
 } 
+
+// Pit timer 1
+void setup_pit_timer1(uint32_t p) {
+pit_period = p;
+
+//Enables pit memory access as well
+SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
+
+// 32.3.1 PIT Module Control Register (PIT_MCR)
+//  Set this to enabled before any other setup
+PIT->MCR &= ~(PIT_MCR_MDIS_MASK);
+
+// Timer0 - Load start value -down counter
+//   Don't leave this 0. The timer will cause starvation...
+PIT->CHANNEL[1].LDVAL = pit_period & PIT_LDVAL_TSV_MASK;
+// Timer0 - Clear Timer Interrupt flag by writing 1
+PIT->CHANNEL[1].TFLG |= PIT_TFLG_TIF_MASK; 
+
+
+// Pit timer interrupts on
+__asm__("CPSID i");
+NVIC_EnableIRQ(PIT_IRQn);
+NVIC_SetPriority(PIT_IRQn, 0);
+__asm__("CPSIE i");
+}
+
+inline void start_pit_timer1() {
+// Reset load value
+PIT->CHANNEL[1].LDVAL = pit_period & PIT_LDVAL_TSV_MASK;
+// Timer0 - Turn on interrupts and enable
+PIT->CHANNEL[1].TCTRL |= (PIT_TCTRL_TIE_MASK | PIT_TCTRL_TEN_MASK);
+} 
+
+inline void stop_pit_timer1() {
+// Timer0 - Turn off interrupts and disable
+PIT->CHANNEL[1].TCTRL &= ~(PIT_TCTRL_TIE_MASK | PIT_TCTRL_TEN_MASK);
+// Timer0 - Clear Timer Interrupt flag by writing 1
+PIT->CHANNEL[1].TFLG |= PIT_TFLG_TIF_MASK; 
+
+} 
+
 
 uint8_t is_pit_timer_running() {
  return (PIT->CHANNEL[0].TCTRL & PIT_TCTRL_TEN_MASK);
@@ -355,19 +402,19 @@ __asm__("CPSIE i");
 
 
 inline uint8_t dma0_memmove_8(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size) {
-return _dma0_memmove(channel, source, dest, size, 8, 0);
+return _dma0_memmove(channel, source, dest, size, 1, 0);
 }
 
 inline uint8_t dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size) {
-return _dma0_memmove(channel, source, dest, size, 32, 0);
+return _dma0_memmove(channel, source, dest, size, 0, 0);
 }
 
 inline uint8_t dma0_memzero(uint8_t channel, uint32_t *dest, uint32_t size) {
-return _dma0_memmove(channel, dest, dest, size, 32, 1);
+return _dma0_memmove(channel, dest, dest, size, 0, 1);
 }
 
 inline uint8_t dma0_memzero_8(uint8_t channel, uint32_t *dest, uint32_t size) {
-return _dma0_memmove(channel, dest, dest, size, 8, 1);
+return _dma0_memmove(channel, dest, dest, size, 1, 1);
 }
 
 uint8_t _dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size, uint8_t tsize, uint8_t memzero) {

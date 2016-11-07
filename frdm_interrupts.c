@@ -10,8 +10,17 @@ extern "C" {
 #endif
     //Should be a weak symbol in the startup files
     void PIT_IRQHandler() {
+
+        //Timer1 - Clear Timer Interrupt flag by writing 1
+        if ( PIT->CHANNEL[1].TFLG ) { 
+            blue_led_toggle();
+            PIT->CHANNEL[1].TFLG |= PIT_TFLG_TIF_MASK;
+        }
+
         //Timer0 - Clear Timer Interrupt flag by writing 1
-        PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
+        if ( PIT->CHANNEL[0].TFLG ) { 
+            PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
+        }
     }
 
     void DMA0_IRQHandler() {

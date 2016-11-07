@@ -13,7 +13,7 @@ typedef enum { SPI_LSBit = 0, SPI_MSBit = 1 } spi_bitorder_e;
 
 extern void spi_ss_low();
 extern void spi_ss_high();
-void spi_set_mode(spi_mode_e m);
+extern void spi_set_mode(spi_mode_e m);
 extern void spi_open_device();
 extern void spi_close_device();
 
