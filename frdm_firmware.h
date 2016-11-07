@@ -94,11 +94,14 @@ void setup_dma0();
 void disable_dma0();
 
 typedef enum _dma_channel_e { DMA_CHANNEL0 =0, DMA_CHANNEL1,DMA_CHANNEL2,DMA_CHANNEL3} dma_channel_e;
-uint8_t _dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size, uint8_t tsize);
+uint8_t _dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size, uint8_t tsize, uint8_t memmove);
 
 uint8_t dma0_memmove_8(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size);
 
 uint8_t dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size);
+
+uint8_t dma0_memzero(uint8_t channel, uint32_t *dest, uint32_t size);
+uint8_t dma0_memzero_8(uint8_t channel, uint32_t *dest, uint32_t size);
 
 uint8_t _is_valid_dma_address(uint32_t *addy);
 uint8_t is_dma_done(uint8_t channel); 

@@ -354,14 +354,22 @@ __asm__("CPSIE i");
 
 
 inline uint8_t dma0_memmove_8(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size) {
-return _dma0_memmove(channel, source, dest, size, 8);
+return _dma0_memmove(channel, source, dest, size, 8, 0);
 }
 
 inline uint8_t dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size) {
-return _dma0_memmove(channel, source, dest, size, 32);
+return _dma0_memmove(channel, source, dest, size, 32, 0);
 }
 
-uint8_t _dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size, uint8_t tsize) {
+inline uint8_t dma0_memzero(uint8_t channel, uint32_t *dest, uint32_t size) {
+return _dma0_memmove(channel, dest, dest, size, 32, 1);
+}
+
+inline uint8_t dma0_memzero_8(uint8_t channel, uint32_t *dest, uint32_t size) {
+return _dma0_memmove(channel, dest, dest, size, 8, 1);
+}
+
+uint8_t _dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size, uint8_t tsize, uint8_t memzero) {
 
     if (channel > 3 ) { return DMA_CHANNEL_ERROR; }
     if (size > 0x000FFFFF ) { return DMA_SIZE_ERROR; }
@@ -369,6 +377,7 @@ uint8_t _dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_
     if (! _is_valid_dma_address(source) ) {return DMA_SRC_ADDRESS_INVALID; }
     if (! _is_valid_dma_address(dest) ) {return DMA_DST_ADDRESS_INVALID; }
 
+if (! memzero ) {
     // Logic for overlapping pieces, reverse transfer order if
     // destination is lower in memory than source
 
@@ -386,6 +395,9 @@ uint8_t _dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_
         dest = source;
         source = tmp_dest;
     }
+} else {
+    *dest = 0;
+}
 
     // Setup Transfer Control Descriptor
 
@@ -409,7 +421,7 @@ uint8_t _dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_
    //                     | DMA_DCR_AA_MASK  //auto align
                         | DMA_DCR_DSIZE(tsize)
                         | DMA_DCR_SSIZE(tsize)
-                        | DMA_DCR_SINC_MASK //increase source count
+                        | ( memzero ? 0 : DMA_DCR_SINC_MASK) //increase source count
                         | DMA_DCR_DINC_MASK //increase dest count
                         | DMA_DCR_EINT_MASK; //interrupt on completion
 
