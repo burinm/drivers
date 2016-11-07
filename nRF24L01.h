@@ -92,7 +92,7 @@
 #define NRF_REG_DYNPD       0x1c
 #define NRF_REG_FEATURE     0x1d
 
-void nrf_config();
+void nrf_open();
 uint8_t nrf_read_register(uint8_t r);
 void nrf_write_1(uint8_t r, uint8_t v); 
 uint8_t nrf_read_status();  // default behavior of write/status in one word
@@ -104,8 +104,8 @@ void nrf_activate();
 void nrf_set_tx_addr(uint32_t);
 uint32_t nrf_read_tx_addr();
 
-void nfr_power_up();
-void nfr_power_down();
+void nrf_power_up();
+void nrf_power_down();
 
 uint8_t nrf_get_rf_setup();
 void nrf_print_rf_setup(uint8_t setup);

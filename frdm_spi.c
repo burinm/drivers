@@ -54,7 +54,7 @@ SIM_SCGC4 |= SIM_SCGC4_SPI0_MASK;
 
 
 spi_set_cpol_cpha(&cpol, &cpha, m);
-SPI_C1_REG(SPI0) |= SPI_C1_SPE_MASK |               // SPI system enable
+SPI_C1_REG(SPI0) = SPI_C1_SPE_MASK |               // SPI system enable
              SPI_C1_MSTR_MASK |                     // SPI master
              //SPI_C1_LSBFE_MASK |                     // transfers LSB first 
              ((cpol == CPOL1) ? SPI_C1_CPOL_MASK : 0) | 
@@ -63,8 +63,11 @@ SPI_C1_REG(SPI0) |= SPI_C1_SPE_MASK |               // SPI system enable
 // prescaler=1, divisor=4 , 24MHz/4 = 6MHz
 //SPI_BR_REG(SPI0) |= (0x1 & SPI_BR_SPR_MASK);
 
+// prescaler=1, divisor=512 , 24MHz/512 = 46875Hz
+//SPI_BR_REG(SPI0) |= (0x8 & SPI_BR_SPR_MASK);
+
 // prescaler=1, divisor=8 , 24MHz/8 = 3MHz
-SPI_BR_REG(SPI0) |= (0x8 & SPI_BR_SPR_MASK);
+SPI_BR_REG(SPI0) = (0x2 & SPI_BR_SPR_MASK);
 }
 
 void spi_open_device() {
@@ -121,8 +124,7 @@ uint8_t swap;
 
 spi_wait_for_SPTEF();
 SPI_D_REG(SPI0) = b;
-//SPI_D_REG(SPI0) = ~b;  //Seems that frdm has the MOSI polarity wrong...
-(void)spi_wait_for_SPRF();
+spi_wait_for_SPRF();
 b = SPI_D_REG(SPI0);
 
 // swap nibbles?
@@ -151,6 +153,7 @@ uint8_t spi_is_SPTEF_set() {
     return (SPI_S_REG(SPI0) & SPI_S_SPTEF_MASK);
 }
 
+/*
 uint8_t spi_wait_for_SPRF() {
 uint8_t read=0;
     do {
@@ -158,6 +161,10 @@ uint8_t read=0;
         __asm__("nop;");
     } while( (read & SPI_S_SPRF_MASK) == 0);
 return read;
+}
+*/
+void spi_wait_for_SPRF() {
+    while( (SPI_S_REG(SPI0) & SPI_S_SPRF_MASK) == 0);
 }
 
 uint8_t spi_is_SPRF_set() {

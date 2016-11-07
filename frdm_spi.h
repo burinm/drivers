@@ -21,7 +21,7 @@ uint8_t spi_read_byte();
 void spi_wait_for_SPTEF();
 uint8_t spi_is_SPTEF_set();
 
-uint8_t spi_wait_for_SPRF();
+void spi_wait_for_SPRF();
 uint8_t spi_is_SPRF_set();
 
 uint8_t spi_is_SPMF_set();
