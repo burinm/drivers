@@ -9,6 +9,7 @@ circbuf_t *UART0_TX_BUF;
 uint8_t uart0_receive_mode=0;
 
 static int8_t current_color=0;
+static uint32_t zero __attribute__((aligned(4))) =0;
 
 color_addr_t COLORS_ADDR[3] = {
 { RED, TPM2, 0, 50, 50},
@@ -396,7 +397,7 @@ if (! memzero ) {
         source = tmp_dest;
     }
 } else {
-    *dest = 0;
+    source=&zero;
 }
 
     // Setup Transfer Control Descriptor
@@ -413,10 +414,10 @@ if (! memzero ) {
     }
 
     // Set Transfer Size
-    DMA_DSR_BCR(channel) |= DMA_DSR_BCR_BCR(size);
+    DMA_DSR_BCR(channel) = DMA_DSR_BCR_BCR(size);
 
     //Start Transfer
-    DMA_DCR(channel) |= DMA_DCR_START_MASK //start transfer
+    DMA_DCR(channel) = DMA_DCR_START_MASK //start transfer
    //                     | DMA_DCR_CS_MASK
    //                     | DMA_DCR_AA_MASK  //auto align
                         | DMA_DCR_DSIZE(tsize)
