@@ -45,6 +45,59 @@ mylib_errno = MYLIB_ERR_OK;
 return 0;
 }
 
+//This routine will move memory in 4 byte blocks. 
+// Both memory sections must have the same offset alignment,
+// or else this can never work.
+int8_t my_memmove_32(uint8_t *src, uint8_t *dst, uint32_t length) {
+mylib_errno = MYLIB_ERR_OK;
+
+    if (src == dst) { return 0; } // case 1)
+
+    uint32_t slength = length - 1; // 0 based length
+    if ( (src + slength < dst) || (dst + slength < src) // case 2)
+               || ((dst + slength > src) && (dst < src)) ) // case 4)
+    {
+        if ( ((uint32_t)dst%4) ) {
+            while (length--) {
+                *dst++ =*src++;
+                if ( ((uint32_t)dst%4) == 0) { break; }
+            }
+        }
+
+        while (length>=4) {
+            *(uint32_t*)dst = *(uint32_t*)src;
+            dst+=4; src+=4;
+            length-=4;
+        }
+
+        while (length--) {
+            *dst++ =*src++;
+        }
+    } else { // Must be case 3)
+        dst= dst + slength;
+        src= src + slength;
+
+        if ( ((uint32_t)dst%4) ) {
+            while (length--) {
+                *dst++ =*src++;
+                if ( ((uint32_t)dst%4) == 0) { break; }
+            }
+        }
+
+        while (length>=4) {
+            *(uint32_t*)dst = *(uint32_t*)src;
+            dst-=4; src-=4;
+            length-=4;
+        }
+
+        while (length--) {
+            dst-=1; src-=1;
+        }
+    }
+    
+return 0;
+}
+
 int8_t my_memzero(uint8_t *src, uint32_t length) {
 mylib_errno = MYLIB_ERR_OK;
     for (int i=0; i<length; i++) {
