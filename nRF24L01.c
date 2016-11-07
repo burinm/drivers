@@ -3,7 +3,7 @@
 #include "util.h"
 
 void nrf_open() {
-    spi_set_mode(SPI_MODE_1);
+    spi_set_mode(SPI_MODE_0);
     spi_set_bitorder(SPI_MSBit);
     spi_open_device();
 }
@@ -12,7 +12,7 @@ uint8_t nrf_read_register(uint8_t r) {
 uint8_t out=0;
     spi_start_transaction();
     (void)spi_readwrite_byte(NRF_CMD_R_REGISTER | r);
-    out = spi_readwrite_byte(SPI_CMD_DUMMY);
+    out = spi_readwrite_byte(NRF_CMD_NOP);
     spi_stop_transaction();
 return out;
 }
@@ -27,7 +27,7 @@ void nrf_write_1(uint8_t r, uint8_t v) {
 uint8_t nrf_read_status() {
 uint8_t status=0;
     spi_start_transaction();
-    status = spi_readwrite_byte(SPI_CMD_DUMMY);
+    status = spi_readwrite_byte(NRF_CMD_NOP);
     spi_stop_transaction();
 return status;
 }
@@ -38,7 +38,7 @@ uint8_t status=0;
     spi_start_transaction();
     (void)spi_readwrite_byte(NRF_CMD_R_REGISTER | NRF_REG_STATUS);
     //The status byte, sent in frame 0, appears in next read...
-    status = spi_readwrite_byte(SPI_CMD_DUMMY);
+    status = spi_readwrite_byte(NRF_CMD_NOP);
     spi_stop_transaction();
 return status;
 }
@@ -46,17 +46,22 @@ return status;
 void nrf_print_status(uint8_t status) {
     LOG0("[Status]\n");
     LOG2X("NRF_RX_DX = ",status & NRF_RX_DX);
+    LOG0("\n");
     LOG2X("NRF_TX_DS = ",status & NRF_TX_DS);
+    LOG0("\n");
     LOG2X("NRF_MAX_RT = ",status & NRF_MAX_RT);
+    LOG0("\n");
     LOG2X("NRF_RX_P_NO = ",(status & NRF_RX_P_NO_MASK));
+    LOG0("\n");
     LOG2X("NRF_TX_FULL = ",status & NRF_TX_FULL);
+    LOG0("\n");
 }
 
 uint8_t nrf_read_config() {
 uint8_t config=0;
     spi_start_transaction();
     (void)spi_readwrite_byte(NRF_CMD_R_REGISTER | NRF_REG_CONFIG);
-    config = spi_readwrite_byte(SPI_CMD_DUMMY);
+    config = spi_readwrite_byte(NRF_CMD_NOP);
     spi_stop_transaction();
 return config;
 }
@@ -64,12 +69,19 @@ return config;
 void nrf_print_config(uint8_t config) {
     LOG0("[Config]\n");
     LOG2X("MASK_RX_DR = ",config & NRF_PRIM_RX);
+    LOG0("\n");
     LOG2X("NRF_MASK_TX_DS = ",config & NRF_MASK_TX_DS);
+    LOG0("\n");
     LOG2X("NRF_MASK_MAX_RT = ",config & NRF_MASK_MAX_RT);
+    LOG0("\n");
     LOG2X("NRF_EN_CRCO = ",config & NRF_EN_CRCO);
+    LOG0("\n");
     LOG2X("NRF_CRCO = ",config & NRF_CRCO);
+    LOG0("\n");
     LOG2X("NRF_PWR_UP = ",config & NRF_PWR_UP);
+    LOG0("\n");
     LOG2X("NRF_PRIM_RX = ",config & NRF_PRIM_RX);
+    LOG0("\n");
 }
 
 void nrf_activate() {
@@ -79,27 +91,38 @@ void nrf_activate() {
     spi_stop_transaction();
 }
 
-void nrf_set_tx_addr(uint32_t addy) {
+void nrf_set_tx_addr(nrf_5byte_t *addy) {
 uint8_t i=0;
+uint8_t *a=(uint8_t*)((uint32_t)addy + 4);
+//LOG2X("address in-->",(uint32_t)addy);
+
     spi_start_transaction();
     (void)spi_readwrite_byte(NRF_CMD_W_REGISTER | NRF_REG_TX_ADDR);
     for (i=0;i<5;i++) {
-        (void)spi_readwrite_byte(addy & 0xff);
-        addy >>=8;
+        (void)spi_readwrite_byte(*a);
+//LOG2X("address of a-->",(uint32_t)a);
+        a--;
     }
     spi_stop_transaction();
 }
 
-uint32_t nrf_read_tx_addr() {
+void nrf_read_tx_addr(nrf_5byte_t *addy) {
 uint8_t i=0;
-uint32_t addy=0;
+uint8_t *a=(uint8_t*)((uint32_t)addy +4);
+
     spi_start_transaction();
     (void)spi_readwrite_byte(NRF_CMD_R_REGISTER | NRF_REG_TX_ADDR);
     for (i=0;i<5;i++) {
-        addy |= (spi_readwrite_byte(SPI_CMD_DUMMY)) & 0xff;
+        *a= spi_readwrite_byte(NRF_CMD_NOP);
+//LOG2X("<--",*a;
+        a--;
     }
     spi_stop_transaction();
-return addy;
+}
+
+void nrf_print_addr(nrf_5byte_t* a) {
+    LOG2X("0x",a->high);
+    LOG2X("",a->low);
 }
 
 void nrf_power_up() {
@@ -107,13 +130,24 @@ uint8_t config=0;
 /*
     spi_start_transaction();
     (void)spi_readwrite_byte(NRF_CMD_R_REGISTER | NRF_REG_CONFIG);
-    config = spi_readwrite_byte(SPI_CMD_DUMMY);
+    config = spi_readwrite_byte(NRF_CMD_NOP);
     spi_stop_transaction();
 */
 
     spi_start_transaction();
     (void)spi_readwrite_byte(NRF_CMD_W_REGISTER | NRF_REG_CONFIG);
     (void)spi_readwrite_byte(NRF_PWR_UP | NRF_EN_CRCO);
+    spi_stop_transaction();
+
+    //nrf_write_1(NRF_REG_CONFIG, nrf_read_register(NRF_REG_CONFIG) | NRF_PWR_UP);
+}
+
+void nrf_power_off() {
+uint8_t config=0;
+
+    spi_start_transaction();
+    (void)spi_readwrite_byte(NRF_CMD_W_REGISTER | NRF_REG_CONFIG);
+    (void)spi_readwrite_byte(NRF_EN_CRCO);
     spi_stop_transaction();
 
     //nrf_write_1(NRF_REG_CONFIG, nrf_read_register(NRF_REG_CONFIG) | NRF_PWR_UP);
@@ -127,7 +161,7 @@ uint8_t nrf_get_rf_setup() {
 uint8_t setup;
     spi_start_transaction();
     (void)spi_readwrite_byte(NRF_CMD_R_REGISTER | NRF_REG_RF_SETUP);
-    setup = spi_readwrite_byte(SPI_CMD_DUMMY);
+    setup = spi_readwrite_byte(NRF_CMD_NOP);
     spi_stop_transaction();
 return setup;
 }

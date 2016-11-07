@@ -3,6 +3,11 @@
 
 #include <stdint.h>
 
+typedef struct {
+            uint8_t high;
+            uint32_t low;
+} __attribute__ ((__packed__))  nrf_5byte_t;
+
 #define SPI_CPOL            IDLE_LOW 
 #define SPI_CPHA            SECOND_EDGE 
 
@@ -101,10 +106,12 @@ void nrf_print_status(uint8_t status);
 uint8_t nrf_read_config();
 void nrf_print_config(uint8_t config);
 void nrf_activate();
-void nrf_set_tx_addr(uint32_t);
-uint32_t nrf_read_tx_addr();
+void nrf_set_tx_addr(nrf_5byte_t*);
+void nrf_read_tx_addr(nrf_5byte_t*);
+void nrf_print_addr(nrf_5byte_t*);
 
 void nrf_power_up();
+void nrf_power_off();
 void nrf_power_down();
 
 uint8_t nrf_get_rf_setup();
