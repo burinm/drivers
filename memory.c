@@ -100,9 +100,31 @@ return 0;
 
 int8_t my_memzero(uint8_t *src, uint32_t length) {
 mylib_errno = MYLIB_ERR_OK;
-    for (int i=0; i<length; i++) {
+    for (uint32_t i=0; i<length; i++) {
         *(src+i)=0;
     }
+return 0;
+}
+
+int8_t my_memzero_32(uint8_t *src, uint32_t length) {
+mylib_errno = MYLIB_ERR_OK;
+
+        if ( ((uint32_t)src%4) ) {
+            while (length--) {
+                *src++ = 0;
+                if ( ((uint32_t)src%4) == 0) { break; }
+            }
+        }
+
+        while (length>=4) {
+            *(uint32_t*)src = 0;
+            src+=4;
+            length-=4;
+        }
+
+        while (length--) {
+            *src++ = 0;
+        }
 return 0;
 }
 
