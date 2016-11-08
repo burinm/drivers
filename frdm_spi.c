@@ -32,7 +32,7 @@ void try_this_spi_setup() {
     SPI_BR_REG(SPI0) = 0x01;
 }
 
-void spi_set_mode(spi_mode_e m) {
+void spi_open_device() {
 
 spi_cpol_e cpol;
 spi_cpha_e cpha;
@@ -53,10 +53,10 @@ PTC_BASE_PTR->PDDR |= 1<<8;
 SIM_SCGC4 |= SIM_SCGC4_SPI0_MASK;
 
 
-spi_set_cpol_cpha(&cpol, &cpha, m);
+spi_set_cpol_cpha(&cpol, &cpha, spi_mode);
 SPI_C1_REG(SPI0) = SPI_C1_SPE_MASK |               // SPI system enable
              SPI_C1_MSTR_MASK |                     // SPI master
-             //SPI_C1_LSBFE_MASK |                     // transfers LSB first 
+             ((spi_bitorder == SPI_LSBit) ? SPI_C1_LSBFE_MASK : 0 ) |
              ((cpol == CPOL1) ? SPI_C1_CPOL_MASK : 0) | 
              ((cpha == CPHA1) ? SPI_C1_CPHA_MASK : 0); 
                          
@@ -68,9 +68,8 @@ SPI_C1_REG(SPI0) = SPI_C1_SPE_MASK |               // SPI system enable
 
 // prescaler=1, divisor=8 , 24MHz/8 = 3MHz
 SPI_BR_REG(SPI0) = (0x2 & SPI_BR_SPR_MASK);
-}
 
-void spi_open_device() {
+//if (spi_bitmode == SPI_LSBit) {SPI_C1_REG(SPI0) |= SPI_C1_LSBFE_MASK;}
 
 spi_ss_high();
 
@@ -105,10 +104,6 @@ spi_wait_for_SPRF();
 
 void spi_close_device() {
     //nop for frdm
-}
-
-void spi_set_bitorder(spi_bitorder_e o) {
-    if (o == SPI_LSBit) {SPI_C1_REG(SPI0) |= SPI_C1_LSBFE_MASK;}
 }
 
 void spi_ss_low() {

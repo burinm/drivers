@@ -1,5 +1,9 @@
 #include "spi.h"
 
+spi_mode_e spi_mode=0;
+spi_bitorder_e spi_bitorder=0;
+
+
 void spi_set_cpol_cpha(spi_cpol_e *cpol, spi_cpha_e *cpha, spi_mode_e m) {
     
 /*
@@ -32,5 +36,13 @@ void spi_start_transaction() {
 
 void spi_stop_transaction() {
     spi_ss_high();
+}
+
+void spi_set_mode(spi_mode_e m) {
+    spi_mode = m;
+}
+
+void spi_set_bitorder(spi_bitorder_e o) {
+    spi_bitorder = o;
 }
 

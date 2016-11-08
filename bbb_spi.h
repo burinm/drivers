@@ -6,7 +6,6 @@
 // Interface function implementation
 void spi_ss_low();
 void spi_ss_high();
-void spi_set_mode(spi_mode_e m);
 void spi_open_device();
 void spi_close_device();
 
@@ -17,8 +16,5 @@ uint8_t spi_readwrite_byte(uint8_t b);
 uint8_t spi_read_byte();
 
 //end interface
-
-
-
 
 #endif

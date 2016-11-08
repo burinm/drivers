@@ -25,9 +25,6 @@ void spi_ss_high() {
     //echo 0 > /sys/class/gpio/gpio48/value
 }
 
-void spi_set_mode(spi_mode_e m) {
-}
-
 void spi_open_device() {
 int8_t error=0;
 
@@ -40,7 +37,7 @@ int8_t error=0;
     LOG2X("file handle to spi is : \n",spi_fd);
 
 LOG2X("spi_dev = ",spi_fd);
-    error = SPI_setClockMode(spi_fd, SPI_MODE_0);
+    error = SPI_setClockMode(spi_fd, (uint8_t)spi_mode);
     if (error == -1 ) { LOG0("couldn't set clock mode\n"); }
     error = 0;
     error = SPI_setMaxFrequency(spi_fd,1000000);
@@ -52,7 +49,7 @@ LOG2X("spi_dev = ",spi_fd);
   //  SPI_setCSActiveLow(spi_fd);
     // We are going to drive our own CS from a GPIO pin
    // if (SPI_disableCS(spi_fd) == -1) { LOG0("couldn't set CS"); }
-SPI_setBitOrder(spi_fd, SPI_MSBFIRST);
+SPI_setBitOrder(spi_fd, spi_bitorder);
 
 }
 
@@ -60,11 +57,6 @@ void spi_close_device() {
     // /dev/spidev1.0
     SPI_close(spi_fd);
     close(spi_gpio_fd);
-}
-
-void spi_set_bitorder(spi_bitorder_e o) {
-//    if (o == SPI_MSBit) { SPI_setBitOrder(spi_fd, SPI_MSBFIRST); }
-//    if (o == SPI_LSBit) { SPI_setBitOrder(spi_fd, SPI_LSBFIRST); }
 }
 
 uint8_t spi_readwrite_byte(uint8_t b) {

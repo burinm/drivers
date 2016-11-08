@@ -24,7 +24,12 @@ extern uint8_t spi_read_byte();
 
 //End interface
 
-//static uint8_t SPI_GLOBAL_BITORDER=SPI_LSBit;
+spi_mode_e spi_mode;
+spi_bitorder_e spi_bitorder;
+
+void spi_set_mode(spi_mode_e m);
+void spi_set_bitorder(spi_bitorder_e o);
+
 void spi_start_transaction();
 void spi_stop_transaction();
 
