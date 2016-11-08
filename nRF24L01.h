@@ -61,8 +61,9 @@ typedef struct {
         #define NRF_POWER_12DB      0x1
         #define NRF_POWER_6DB      0x2
         #define NRF_POWER_0DB       0x3
-    #define RF_DR               (1<<3)
-    #define PLL_LOCK            (1<<4)
+    #define NRF_RF_DR               (1<<3)
+    #define NRF_PLL_LOCK            (1<<4)
+    #define NRF_SETUP_RSV_MASK      0xe0 
 
 #define NRF_REG_STATUS      0x07
     #define NRF_TX_FULL         (1)
@@ -98,10 +99,23 @@ typedef struct {
 #define NRF_REG_FEATURE     0x1d
 
 void nrf_open();
-uint8_t nrf_read_register(uint8_t r);
-void nrf_write_1(uint8_t r, uint8_t v); 
+
+// Read register that is 1 byte wide
+uint8_t nrf_read_register1(uint8_t r);
+
+// Write register that is 1 byte wide
+void nrf_write1(uint8_t r, uint8_t v); 
+
+// Execute command with one byte
+void nrf_command1(uint8_t r, uint8_t cmd);
+
+// Set 5 byte address
+void nrf_set_addr5(nrf_5byte_t *addy, uint8_t r);
+
+// Get 5 byte address
+void nrf_get_addr5(nrf_5byte_t *addy, uint8_t r);
+
 uint8_t nrf_read_status();  // default behavior of write/status in one word
-uint8_t nrf_read_status1(); // Actually use STATUS in command 
 void nrf_print_status(uint8_t status);
 uint8_t nrf_read_config();
 void nrf_print_config(uint8_t config);
