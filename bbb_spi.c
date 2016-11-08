@@ -34,9 +34,7 @@ int8_t error=0;
 
     // /dev/spidev1.0
     spi_fd = SPI_open(1,0);
-    LOG2X("file handle to spi is : \n",spi_fd);
 
-LOG2X("spi_dev = ",spi_fd);
     error = SPI_setClockMode(spi_fd, (uint8_t)spi_mode);
     if (error == -1 ) { LOG0("couldn't set clock mode\n"); }
     error = 0;

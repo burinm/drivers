@@ -69,6 +69,8 @@ typedef struct {
     #define NRF_TX_FULL         (1)
     #define NRF_RX_P_NO         (1<<1)
         #define NRF_RX_P_NO_MASK    0xe
+        #define NRF_RX_P_NO_EPY     0x7 
+        #define NRF_RX_P_NO_NTU     0x6 
     #define NRF_MAX_RT          (1<<4)
     #define NRF_TX_DS           (1<<5)
     #define NRF_RX_DX           (1<<6)
