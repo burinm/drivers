@@ -56,7 +56,7 @@ void mylib_print_binary(uint32_t n);
 #undef LOG1
 #define LOG1(...)
 
-#undef LOG2
+#undef LOG2X
 #define LOG2X(c,x)
 
 #undef LOG2N
