@@ -12,6 +12,7 @@ typedef struct {
 #define SPI_CPHA            SECOND_EDGE 
 
 //Commands
+
 #define NRF_COMMAND_WORD_ORDER      MSB 
 #define NRF_DATA_BYE_ORDER          LSB 
 
@@ -93,7 +94,7 @@ typedef struct {
 #define NRF_REG_RX_PW_P5    0x16
 #define NRF_REG_FIFO_STATUS 0x17
     #define NRF_TX_REUSE        (1<<7)
-    #define NRF_TX_FULL         (1<<6)
+    #define NRF_TX_FIFO_FULL         (1<<6)
     #define NRF_TX_EMPTY        (1<<5)
     #define NRF_FIFO_STAT_RSV_MASK  0xc   
     #define NRF_RX_FULL         (1<<1)
@@ -124,25 +125,34 @@ void nrf_set_addr5(nrf_5byte_t *addy, uint8_t r);
 // Get 5 byte address
 void nrf_get_addr5(nrf_5byte_t *addy, uint8_t r);
 
-uint8_t nrf_read_status();  // default behavior of write/status in one word
-void nrf_print_status(uint8_t status);
+// default behavior of write/status in one word
+uint8_t nrf_read_status();
+
+
 uint8_t nrf_read_config();
-void nrf_print_config(uint8_t config);
+uint8_t nrf_get_rf_setup();
+
+// Activate R_RX_PL_WID, W_ACK_PAYLOAD, W_TX_PAYLOAD_NOACK
 void nrf_activate();
+
+//Set/Get TX_ADDR
 void nrf_set_tx_addr(nrf_5byte_t*);
 void nrf_read_tx_addr(nrf_5byte_t*);
-void nrf_print_addr(nrf_5byte_t*);
 
-void nrf_power_up();
-void nrf_power_off();
-void nrf_power_down();
-
-uint8_t nrf_get_rf_setup();
-void nrf_print_rf_setup(uint8_t setup);
-
+//Set RF Power - NRF_POWER_XX macros
 void nrf_set_rf_power(uint8_t power);
 
-uint8_t proffoz_nrf_status_read(); //testing
+// Power up flag on with CRCO flag - default
+void nrf_power_up();
+// Power off with CRCO flag still on
+void nrf_power_off();
+// Unset power bit
+void nrf_power_down();
 
+// Pretty print status/registers
+void nrf_print_status(uint8_t status);
+void nrf_print_config(uint8_t config);
+void nrf_print_addr(nrf_5byte_t*);
+void nrf_print_rf_setup(uint8_t setup);
 
 #endif

@@ -6,6 +6,7 @@
 typedef enum { P123_ERROR=0, P123_OK=1, P123_ALLOC_ERROR } p123_error_e;
 typedef enum { P123_NO_ALLOC, P123_USR_ALLOC, P123_AUTO_ALLOC } p123_alloc_e;
 
+//Messages
 typedef enum {
     P123_MSG_NOP=0,
     P123_MSG_BLINK_RED,
@@ -19,9 +20,9 @@ typedef enum {
 } p123_cmd_e;
 
 typedef struct {
-    uint8_t cmd; //only LSByte used
-    uint16_t         length;
-    uint8_t        *data;
+    uint8_t cmd;
+    uint16_t        length;
+    uint8_t         *data;
     uint32_t        checksum;
     uint8_t         alloc_type;
 } p123_msg_t;
@@ -34,10 +35,16 @@ extern uint8_t p123_rcv_cmd();
 
 // End interface
 
+// Alloates new message structure
 p123_msg_t* p123_alloc_msg(uint8_t m);
+
+// Attach message data, user tracks memory
 void p123_attach_data(p123_msg_t* p, uint8_t *data, uint16_t length);
+
+// Free message structure
 void p123_free_msg(p123_msg_t* m);
 
+// Internal checksum function
 uint32_t p123_encode_checksum(p123_msg_t *c);
 
 #endif

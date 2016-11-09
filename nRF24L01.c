@@ -196,8 +196,8 @@ void nrf_print_fifo_status(uint8_t status) {
     LOG0( (status & NRF_TX_REUSE) ? "on" : "off");
     LOG0("\n");
 
-    LOG0("NRF_TX_FULL = ");
-    LOG0( (status & NRF_TX_FULL) ? "on" : "off");
+    LOG0("NRF_TX_FIFO_FULL = ");
+    LOG0( (status & NRF_TX_FIFO_FULL) ? "on" : "off");
     LOG0("\n");
 
     LOG0("NRF_TX_EMPTY = ");

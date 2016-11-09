@@ -142,7 +142,7 @@ uint8_t csum=0;
         checksum <<= 8;
     }
 
-LOG0("\n");
+    LOG0("\n");
 
     rcv_c->cmd=cmd;
     rcv_c->length=length;
@@ -162,6 +162,5 @@ LOG0("\n");
         LOG0("\n");
     }
     
-
 return P123_OK;
 }
