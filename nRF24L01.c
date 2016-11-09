@@ -73,6 +73,10 @@ uint8_t nrf_read_config() {
 return nrf_read_register1(NRF_REG_CONFIG); 
 }
 
+uint8_t nrf_read_fifo_status() {
+return nrf_read_register1(NRF_REG_FIFO_STATUS); 
+}
+
 void nrf_activate() {
     nrf_command1(NRF_CMD_ACTIVATE, NRF_ACTIVATE_MAGIC);
 }
@@ -183,6 +187,32 @@ void nrf_print_config(uint8_t config) {
 
     LOG0("NRF_PRIM_RX = ");
     LOG0( (config & NRF_PRIM_RX) ? "on" : "off");
+    LOG0("\n");
+}
+
+void nrf_print_fifo_status(uint8_t status) {
+    LOG0("[FIFO_STATUS]\n");
+    LOG0("NRF_TX_REUSE = ");
+    LOG0( (status & NRF_TX_REUSE) ? "on" : "off");
+    LOG0("\n");
+
+    LOG0("NRF_TX_FULL = ");
+    LOG0( (status & NRF_TX_FULL) ? "on" : "off");
+    LOG0("\n");
+
+    LOG0("NRF_TX_EMPTY = ");
+    LOG0( (status & NRF_TX_EMPTY) ? "on" : "off");
+    LOG0("\n");
+
+    LOG2X("NRF_FIFO_STAT_RSV_MASK = ", (status & NRF_FIFO_STAT_RSV_MASK) >> 2);
+    LOG0("\n");
+
+    LOG0("NRF_RX_FULL = ");
+    LOG0( (status & NRF_RX_FULL) ? "on" : "off");
+    LOG0("\n");
+
+    LOG0("NRF_RX_EMPTY = ");
+    LOG0( (status & NRF_RX_EMPTY) ? "on" : "off");
     LOG0("\n");
 }
 

@@ -40,13 +40,11 @@ int8_t error=0;
     error = 0;
     error = SPI_setMaxFrequency(spi_fd,1000000);
     if (error == -1 ) { LOG0("couldn't set frequency\n"); }
-    //SPI_setMaxFrequency(spi_fd,2000000);
     error = 0;
     error = SPI_setBitsPerWord(spi_fd,8);
     if (error == -1 ) { LOG0("couldn't set bits per word\n"); }
-  //  SPI_setCSActiveLow(spi_fd);
     // We are going to drive our own CS from a GPIO pin
-   // if (SPI_disableCS(spi_fd) == -1) { LOG0("couldn't set CS"); }
+    //if (SPI_disableCS(spi_fd) == -1) { LOG0("couldn't set CS"); }
 SPI_setBitOrder(spi_fd, spi_bitorder);
 
 }

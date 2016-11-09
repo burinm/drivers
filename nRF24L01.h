@@ -92,6 +92,13 @@ typedef struct {
 #define NRF_REG_RX_PW_P4    0x15
 #define NRF_REG_RX_PW_P5    0x16
 #define NRF_REG_FIFO_STATUS 0x17
+    #define NRF_TX_REUSE        (1<<7)
+    #define NRF_TX_FULL         (1<<6)
+    #define NRF_TX_EMPTY        (1<<5)
+    #define NRF_FIFO_STAT_RSV_MASK  0xc   
+    #define NRF_RX_FULL         (1<<1)
+    #define NRF_RX_EMPTY        (1) 
+
 
 #define NRF_REG_ACK_PLD     NRF_SPI_ACK_PLD
 #define NRF_REG_TX_PLD      NRF_SPI_TX_PLD
