@@ -163,6 +163,14 @@ inline void blue_led_off() {
     PTD_BASE_PTR->PSOR |= 1<<1;
 }
 
+inline void green_led_on() {
+    PTB_BASE_PTR->PCOR |= 1<<19;
+}
+
+inline void green_led_off() {
+    PTB_BASE_PTR->PSOR |= 1<<19;
+}
+
 inline void blue_led_toggle() {
     PTD_BASE_PTR->PTOR |= 1<<1;
 }

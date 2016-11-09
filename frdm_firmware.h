@@ -82,6 +82,9 @@ uint8_t set_leds(uint8_t s);
 void led_set_color();
 void blue_led_on();
 void blue_led_off();
+void green_led_on();
+void green_led_off();
+
 void blue_led_toggle();
 
 // colors
