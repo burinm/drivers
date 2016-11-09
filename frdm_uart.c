@@ -285,6 +285,23 @@ uint8_t b=0;
         }
 }
 
+void uart_flush_rx() {
+uint8_t b;
+    LOCK_CBUF
+    while (circbuf_is_poppable(UART0_RX_BUF)) {
+        circbuf_pop(UART0_RX_BUF,&b);
+    }
+    UNLOCK_CBUF
+}
+
+void uart_flush_tx() {
+    LOCK_CBUF
+    while (circbuf_is_poppable(UART0_TX_BUF)) {
+        UART0->C2 |= UART0_C2_TIE(1);
+    }
+    UNLOCK_CBUF
+}
+
 //end Interface
 
 

@@ -7,12 +7,12 @@ typedef enum { P123_ERROR=0, P123_OK=1, P123_ALLOC_ERROR } p123_error_e;
 typedef enum { P123_NO_ALLOC, P123_USR_ALLOC, P123_AUTO_ALLOC } p123_alloc_e;
 
 typedef enum {
-    NOP=0,
-    BLINK_RED,
-    BLINK_BLUE,
-    TXT_MESSAGE,
-    SEND_PNG,
-    PING 
+    P123_MSG_NOP=0,
+    P123_MSG_BLINK_RED,
+    P123_MSG_BLINK_BLUE,
+    P123_MSG_TXT_MESSAGE,
+    P123_MSG_SEND_PNG,
+    P123_MSG_PING 
 } p123_cmd_e;
 
 typedef struct {

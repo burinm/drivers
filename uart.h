@@ -8,6 +8,10 @@ extern void uart_close();
 extern void uart_send_byte(uint8_t);
 extern uint8_t uart_get_byte();
 
+extern void uart_flush_rx();
+extern void uart_flush_tx();
+//end interface
+
 
 
 #endif

@@ -21,6 +21,8 @@
 #include <stdio.h>
 #include <strings.h>
 
+#include <sys/time.h>
+
 #define BAUDRATE B19200
 #define MODEMDEVICE "/dev/ttyACM0"
 
@@ -28,6 +30,7 @@
 
 static int uart_fd;
 struct termios oldtio,newtio;
+struct termios stdin_orig;
 
 void uart_open() {
         
@@ -39,18 +42,14 @@ void uart_open() {
         tcgetattr(uart_fd,&oldtio); /* save current port settings */
         
         bzero(&newtio, sizeof(newtio));
-/*
-        newtio.c_cflag = BAUDRATE |  CS8 | CLOCAL | CREAD;
-        newtio.c_iflag = IGNPAR;
-        newtio.c_oflag = 0;
-*/
+
         //raw mode - from man page: tcgetattr
         newtio.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP
                            | INLCR | IGNCR | ICRNL | IXON);
         newtio.c_oflag &= ~OPOST;
         newtio.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
         newtio.c_cflag &= ~(CSIZE | PARENB);
-        newtio.c_cflag |= CS8; 
+        newtio.c_cflag |=  BAUDRATE | CS8; 
         
         /* set input mode (non-canonical, no echo,...) */
         newtio.c_lflag = 0;
@@ -58,10 +57,22 @@ void uart_open() {
         newtio.c_cc[VTIME]    = 0;   /* inter-character timer unused */
         newtio.c_cc[VMIN]     = 1;   /* blocking read until 1 chars received */
         
-        //tcflush(uart_fd, TCIFLUSH);
+        tcflush(uart_fd, TCIFLUSH);
         tcflush(uart_fd, TCIOFLUSH);
         tcsetattr(uart_fd,TCSANOW,&newtio);
+}
 
+void stdin_canonical() {
+    struct termios t;
+    bzero(&t,sizeof(t));
+    tcgetattr(STDIN_FILENO,&stdin_orig);
+    t=stdin_orig;
+    t.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO,TCSANOW,&t);
+}
+
+void stdin_restore() {
+    tcsetattr(STDIN_FILENO,TCSANOW,&stdin_orig);
 }
 
 void uart_close() {
@@ -70,8 +81,10 @@ void uart_close() {
 }
 
 void uart_send_byte(uint8_t b) {
-    //usleep(70);
-    usleep(500);
+    struct timespec t;
+    t.tv_sec=0;
+    t.tv_nsec=70000;
+    nanosleep(&t,NULL); 
     write(uart_fd, &b,1);
 }
 
@@ -82,4 +95,11 @@ uint8_t b=0;
 return b;
 }
 
+//Mine
+void uart_flush_rx() {
+    tcflush(uart_fd, TCIFLUSH);
+}
 
+void uart_flush_tx() {
+    tcflush(uart_fd, TCOFLUSH);
+}

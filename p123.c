@@ -105,7 +105,7 @@ uint16_t length=0;
 uint16_t i=0;
 uint32_t checksum=0;
 uint32_t checksum_calculated=0;
-uint8_t cmd=NOP;
+uint8_t cmd=P123_MSG_NOP;
 uint8_t *data=NULL;
 uint8_t csum=0;
 
@@ -113,7 +113,7 @@ uint8_t csum=0;
     if (! rcv_c) { LOG0("bork2!!\n"); return P123_ALLOC_ERROR;}
 
     cmd = uart_get_byte();
-    LOG2X("command:",cmd); LOG0("\n");
+    LOG2X("[command: ",cmd); LOG0(" ]\n");
 
     l=0;
     l = uart_get_byte();
@@ -121,7 +121,7 @@ uint8_t csum=0;
     l += uart_get_byte();
 
     length = l;
-    LOG2X("length:",length); LOG0("\n");
+    LOG2X("length:0x",length); LOG0("\n");
 
     data=(uint8_t*)calloc(l,1);
     if (!data) { LOG0("bork!!\n"); return P123_ALLOC_ERROR;}
@@ -131,13 +131,12 @@ uint8_t csum=0;
             l--;
             // MSByte first
             *(uint8_t*)(data + l) = uart_get_byte();
-LOG2X(":",*(uint8_t*)(data + l));
+            LOG2X(":",*(uint8_t*)(data + l));
     }
 
-LOG0("\n");
     for (i=0;i<4;i++) {
         csum = uart_get_byte();
-LOG2X("(c):",csum);
+        LOG2X("(c):",csum);
         checksum += csum;
         if (i == 3) { break; }
         checksum <<= 8;
@@ -153,10 +152,10 @@ LOG0("\n");
 
     if (checksum_calculated == checksum) {
         LOG2X("checksum: ",checksum);
+        LOG0(" is correct\n"); 
         LOG0("\n");
-        LOG0("Hooray!\n"); 
     } else {
-        LOG0("Doh!!\n");
+        LOG0("Checksum failed!\n");
         LOG2X("expected: ",checksum_calculated);
         LOG0("\n");
         LOG2X("got: ",checksum);

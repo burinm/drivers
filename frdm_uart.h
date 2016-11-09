@@ -12,6 +12,9 @@ void uart_close();
 void uart_send_byte(uint8_t);
 uint8_t uart_get_byte();
 
+void uart_flush_rx();
+void uart_flush_tx();
+
 //end Interface
 
 
