@@ -12,6 +12,12 @@ static int8_t current_color=0;
 static uint32_t zero __attribute__((aligned(4))) =0;
 static uint32_t pit_period=0xfffffffe;
 
+//DMA chaining
+uint8_t dma_chain=0;
+uint32_t *dma_chain_source=0;
+uint32_t *dma_chain_dest=0;
+uint32_t dma_chain_size=0; 
+
 color_addr_t COLORS_ADDR[3] = {
 { RED, TPM2, 0, 50, 50},
 { GREEN, TPM2, 1, 50, 50},
@@ -446,10 +452,23 @@ if (! memzero ) {
     {
         //Do nothing
     } else { // Must be case 3)
-        //Swap direction
+        // Since DMA doesn't can't count backwards in this system,
+        //  we must set up two transfers
+
+        // Setup a second DMA to execute after the first
+        dma_chain=1;
+        dma_chain_source=source;
+        dma_chain_dest=dest;
+        dma_chain_size= (uint32_t)dest-(uint32_t)source;
+
+        // Part 1, copy overlap at end of source first
+        //  This starts at dest's address and ends at the
+        //  end of source
         uint32_t *tmp_dest = dest;
-        dest = source;
+        dest = (uint32_t *)((uint32_t)source + slength);
         source = tmp_dest;
+        size = size - ((uint32_t)dest-(uint32_t)source);
+
     }
 } else {
     source=&zero;

@@ -36,6 +36,13 @@ typedef struct {
 } color_addr_t;
 color_addr_t COLORS_ADDR[3];
 
+//DMA chaining
+uint8_t dma_chain;
+uint32_t *dma_chain_source;
+uint32_t *dma_chain_dest;
+uint32_t dma_chain_size;
+
+
 //DMA
 #define DMA_ADDY_MASK       0xfff00000
 #define DMA_MAX_SIZE        0x000fffff

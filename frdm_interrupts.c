@@ -1,5 +1,6 @@
 #include "kl25z.arch/MKL25Z4.h"
 //#include "core_cm0plus.h"
+#include "frdm_firmware.h"
 #include "frdm_uart.h"
 #include "mylib.h"
 
@@ -24,14 +25,22 @@ extern "C" {
     }
 
     void DMA0_IRQHandler() {
-        //Read pit0 timer
-        stop_index = pit_read_timer0();
-        stop_pit_timer();
         // Even though this is set, I think we
         //  have to set it again to clear it.
+
         DMA_DSR_BCR(0) |= DMA_DSR_BCR_DONE_MASK;
-        //blue led off
-        blue_led_off(); 
+        if (dma_chain) { 
+            blue_led_off(); 
+            dma0_memmove(DMA_CHANNEL0,
+                         dma_chain_source,
+                         dma_chain_dest,
+                         dma_chain_size);
+            dma_chain=0;
+        } else {
+            //Read pit0 timer
+            stop_index = pit_read_timer0();
+            stop_pit_timer();
+        }
     }
 
     void UART0_IRQHandler() {
