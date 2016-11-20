@@ -1,9 +1,12 @@
 #ifndef __6522_H__
 #define __6522_H__
 
+#include <stdint.h>
+
 
 
 // 6522 Registers 16 x 8bit
+#define DEVICE_6522_NUM_REG         16
 
 // Port A, read/write - no handshake
 #define DEVICE_6522_REG_RA2         0xf
@@ -120,7 +123,18 @@
 // Port B, read/write 
 #define DEVICE_6522_REG_RB          0x0
 
-//
-void device_6522_init();
+// Interface start
+//  All functions take starting address of peripheral
+extern void device_6522_init(uint8_t* addr);
+// Interface end 
+
+void device_6522_set_dda_out(uint8_t *addr, uint8_t bit_n);
+void device_6522_set_dda_in(uint8_t *addr, uint8_t bit_n);
+void device_6522_set_ddb_out(uint8_t *addr, uint8_t bit_n);
+void device_6522_set_ddb_in(uint8_t *addr, uint8_t bit_n);
+uint8_t device_6522_read_a(uint8_t *addr);
+uint8_t device_6522_read_b(uint8_t *addr);
+void device_6522_write_a(uint8_t *addr, uint8_t b);
+void device_6522_write_b(uint8_t *addr, uint8_t b);
 
 #endif
