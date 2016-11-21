@@ -128,13 +128,33 @@
 extern void device_6522_init(uint8_t* addr);
 // Interface end 
 
-void device_6522_set_dda_out(uint8_t *addr, uint8_t bit_n);
-void device_6522_set_dda_in(uint8_t *addr, uint8_t bit_n);
-void device_6522_set_ddb_out(uint8_t *addr, uint8_t bit_n);
-void device_6522_set_ddb_in(uint8_t *addr, uint8_t bit_n);
-uint8_t device_6522_read_a(uint8_t *addr);
-uint8_t device_6522_read_b(uint8_t *addr);
-void device_6522_write_a(uint8_t *addr, uint8_t b);
-void device_6522_write_b(uint8_t *addr, uint8_t b);
+
+//Unfortunately not all compilers support inline, so 
+// sacrificing type safety for speed/compact code
+
+//Today, I became a C programmer...
+#define DEVICE_6522_SET_DDA_OUT(a, bit_n) \
+    (*(a + DEVICE_6522_REG_DDRA) = *(a + DEVICE_6522_REG_DDRA) | (1<<bit_n))
+
+#define DEVICE_6522_SET_DDA_IN(a, bit_n) \
+    (*(a + DEVICE_6522_REG_DDRA) = *(a + DEVICE_6522_REG_DDRA) & ~(1<<bit_n)); 
+
+#define DEVICE_6522_SET_DDB_OUT(a, bit_n) \
+    (*(a + DEVICE_6522_REG_DDRB) = *(a + DEVICE_6522_REG_DDRB) | (1<<bit_n))
+
+#define DEVICE_6522_SET_DDB_IN(a, bit_n) \
+    (*(a + DEVICE_6522_REG_DDRB) = *(a + DEVICE_6522_REG_DDRB) & ~(1<<bit_n))
+
+#define DEVICE_6522_READ_A(a) \
+    (*(a + DEVICE_6522_REG_RA))
+
+#define DEVICE_6522_READ_B(a) \
+    (*(a + DEVICE_6522_REG_RB))
+
+#define DEVICE_6522_WRITE_A(a, b) \
+    (*(a + DEVICE_6522_REG_RA) = b)
+
+#define DEVICE_6522_WRITE_B(a, b) \
+    (*(a + DEVICE_6522_REG_RB) = b)
 
 #endif
