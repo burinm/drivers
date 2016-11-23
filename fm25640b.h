@@ -1,6 +1,8 @@
 #ifndef __FM25640B_H__
 #define __FM25640B_H__
 
+#include <stdint.h>
+
 #define FM2560B_ADDR_MASK_HI    0x1f  //13 bits
 #define FM2560B_ADDR_MASK_LO    0xff  
 

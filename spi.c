@@ -58,7 +58,7 @@ uint8_t out;
         
         spi_clk_high();
     
-        if (spi_miso_in() == 1) { out | 0x1; }
+        if (spi_miso_in() == 1) { out |= 0x1; }
 
         if (i<7) { out<<=1; }
         spi_clk_low();
