@@ -3,6 +3,11 @@
 
 #include <stdint.h>
 
+typedef enum { FM2560B_BLOCK, FM2560B_MEM } fm25640b_fill_e;
+
+#define FM2560B_SIZE (8 * 1024)
+#define FM2560B_TEST_FILL   0x99
+
 #define FM2560B_ADDR_MASK_HI    0x1f00  //13 bits
 #define FM2560B_ADDR_MASK_LO    0x00ff  
 
@@ -27,7 +32,12 @@
 void fm25640b_open();
 void fm25640b_close();
 
-void fm25640b_write_block(uint16_t addr, uint8_t *b, uint16_t size);
+// Fill with single character pattern
+void fm25640b_write_block(uint16_t addr, uint8_t b, uint16_t size);
+// Copy memory contents
+void fm25640b_write_mem(uint16_t addr, uint8_t *b, uint16_t size);
+
+void fm25640b_write_byte(uint16_t addr, uint8_t b);
 uint8_t fm25640b_read_byte(uint16_t addr);
 
 uint8_t fm25640b_get_status();
@@ -36,6 +46,8 @@ uint8_t fm25640b_get_status();
 void fm25640b_set_write_enable();
 void fm25640b_set_write_disable();
 
+//private
+void __fm25640b_write_block(uint16_t addr, uint8_t *b, uint16_t size, fm25640b_fill_e fill);
 
 
 

@@ -36,7 +36,6 @@ void spi_open_device() {
     //Setup GPIO pin interface
     spi_gpio_mosi=open("/sys/class/gpio/gpio30/value",O_WRONLY);
     spi_gpio_miso=open("/sys/class/gpio/gpio60/value",O_RDONLY);
-printf("spi_gpio_miso %d\n",spi_gpio_miso);
     spi_gpio_clk=open("/sys/class/gpio/gpio31/value",O_WRONLY);
     spi_gpio_ss=open("/sys/class/gpio/gpio50/value",O_WRONLY);
 
