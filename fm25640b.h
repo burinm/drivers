@@ -3,8 +3,9 @@
 
 #include <stdint.h>
 
-#define FM2560B_ADDR_MASK_HI    0x1f  //13 bits
-#define FM2560B_ADDR_MASK_LO    0xff  
+#define FM2560B_ADDR_MASK_HI    0x1f00  //13 bits
+#define FM2560B_ADDR_MASK_LO    0x00ff  
+
 
 #define FM25640B_CMD_WREN   0x06
 #define FM25640B_CMD_WRDI   0x04
@@ -26,7 +27,7 @@
 void fm25640b_open();
 void fm25640b_close();
 
-void fm25640b_write_block(uint16_t addr, uint16_t size, uint8_t *b);
+void fm25640b_write_block(uint16_t addr, uint8_t *b, uint16_t size);
 uint8_t fm25640b_read_byte(uint16_t addr);
 
 uint8_t fm25640b_get_status();

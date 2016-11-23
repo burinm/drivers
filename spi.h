@@ -24,7 +24,7 @@ extern void spi_close_device();
 
 // platform specific read/write - Only for plaforms with native SPI silicon
 extern uint8_t spi_readwrite_byte(uint8_t b);
-extern uint8_t spi_read_byte();
+//extern uint8_t spi_read_byte();
 
 
 // additional interface for bit banged platforms

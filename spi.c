@@ -67,9 +67,11 @@ uint8_t out;
 return out;
 }
 
+#if 0
 uint8_t spi_read_byte() {
 uint8_t out;
 
 return out;
 }
+#endif
 
