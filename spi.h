@@ -22,9 +22,24 @@ extern void spi_ss_high();
 extern void spi_open_device();
 extern void spi_close_device();
 
-// platform specific read/write
+// platform specific read/write - Only for plaforms with native SPI silicon
 extern uint8_t spi_readwrite_byte(uint8_t b);
 extern uint8_t spi_read_byte();
+
+
+// additional interface for bit banged platforms
+
+// Pull the MOSI line low/high
+extern void spi_mosi_low();
+extern void spi_mosi_high();
+
+// read MISO line
+extern uint8_t spi_miso_in();
+
+// Pull the CLK line low/high
+extern void spi_clk_low();
+extern void spi_clk_high();
+
 
 //End interface
 
@@ -42,6 +57,11 @@ void spi_stop_transaction();
 
 // Translates SPI Mode into CPOL and CPHA flags
 void spi_set_cpol_cpha(spi_cpol_e *cpol, spi_cpha_e *cpha, spi_mode_e m);
+
+// SPI read and write byte
+uint8_t spi_readwrite_byte(uint8_t b);
+uint8_t spi_read_byte();
+
 
 
 #endif

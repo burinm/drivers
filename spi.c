@@ -46,3 +46,32 @@ void spi_set_bitorder(spi_bitorder_e o) {
     spi_bitorder = o;
 }
 
+uint8_t spi_readwrite_byte(uint8_t b) {
+uint8_t i;
+uint8_t out;
+
+    out=0;
+    spi_start_transaction();
+    for (i=0;i<8;i++) {
+        b & 0x80 ? spi_mosi_high() : spi_mosi_low();
+        b=b<<1;
+        
+        spi_clk_high();
+    
+        if (spi_miso_in() == 1) { out | 0x1; }
+
+        if (i<7) { out<<=1; }
+        spi_clk_low();
+    }
+    spi_stop_transaction();
+    
+
+return out;
+}
+
+uint8_t spi_read_byte() {
+uint8_t out;
+
+return out;
+}
+

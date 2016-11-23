@@ -69,6 +69,3 @@ uint8_t rx_buffer=0;
 
 return rx_buffer;
 }
-
-
-
