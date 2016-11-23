@@ -30,7 +30,10 @@ void fm25640b_write_block(uint16_t addr, uint16_t size, uint8_t *b);
 uint8_t fm25640b_read_byte(uint16_t addr);
 
 uint8_t fm25640b_get_status();
-void fm25640b_write_status(uint8_t);
+
+//Set in non-volatile memory
+void fm25640b_set_write_enable();
+void fm25640b_set_write_disable();
 
 
 

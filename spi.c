@@ -51,7 +51,6 @@ uint8_t i;
 uint8_t out;
 
     out=0;
-    spi_start_transaction();
     for (i=0;i<8;i++) {
         b & 0x80 ? spi_mosi_high() : spi_mosi_low();
         b=b<<1;
@@ -63,7 +62,6 @@ uint8_t out;
         if (i<7) { out<<=1; }
         spi_clk_low();
     }
-    spi_stop_transaction();
     
 
 return out;
