@@ -34,7 +34,7 @@ void spi_mosi_high(void) {
 }
 
 uint8_t spi_miso_in(void) {
-    return ( 1<<SBC_PIN_MISO & DEVICE_6522_READ_B(VIA_0));
+    return ( !!(1<<SBC_PIN_MISO & DEVICE_6522_READ_B(VIA_0)));
 }
 
 void spi_clk_low(void) {
