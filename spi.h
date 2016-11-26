@@ -43,16 +43,16 @@ extern void spi_clk_high();
 
 //End interface
 
-spi_mode_e spi_mode;
-spi_bitorder_e spi_bitorder;
+//spi_mode_e spi_mode;
+//spi_bitorder_e spi_bitorder;
 
 // These set global flags that can be used in spi_open_device
 void spi_set_mode(spi_mode_e m);
 void spi_set_bitorder(spi_bitorder_e o);
 
 // These are used for start/stop SPI transaction
-void spi_start_transaction();
-void spi_stop_transaction();
+void spi_start_transaction(void);
+void spi_stop_transaction(void);
 
 
 // Translates SPI Mode into CPOL and CPHA flags

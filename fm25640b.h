@@ -29,8 +29,8 @@ typedef enum { FM2560B_BLOCK, FM2560B_MEM } fm25640b_fill_e;
 #define FM25640B_CMD_NOP    0xff
 
 
-void fm25640b_open();
-void fm25640b_close();
+void fm25640b_open(void);
+void fm25640b_close(void);
 
 // Fill with single character pattern
 void fm25640b_write_block(uint16_t addr, uint8_t b, uint16_t size);
@@ -40,11 +40,11 @@ void fm25640b_write_mem(uint16_t addr, uint8_t *b, uint16_t size);
 void fm25640b_write_byte(uint16_t addr, uint8_t b);
 uint8_t fm25640b_read_byte(uint16_t addr);
 
-uint8_t fm25640b_get_status();
+uint8_t fm25640b_get_status(void);
 
 //Set in non-volatile memory
-void fm25640b_set_write_enable();
-void fm25640b_set_write_disable();
+void fm25640b_set_write_enable(void);
+void fm25640b_set_write_disable(void);
 
 //private
 void __fm25640b_write_block(uint16_t addr, uint8_t *b, uint16_t size, fm25640b_fill_e fill);

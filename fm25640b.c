@@ -2,7 +2,7 @@
 #include "spi.h"
 
 
-void fm25640b_open() {
+void fm25640b_open(void) {
 //TODO - implement this, right now works out as Mode 0
 //This device can use 0, or 3
 // Mode 0  - CLK is low, then bring /SS low
@@ -12,14 +12,14 @@ void fm25640b_open() {
     spi_open_device();
 }
 
-void fm25640b_close() {
+void fm25640b_close(void) {
     //Disable writes on device
     spi_start_transaction();
     (void)spi_readwrite_byte(FM25640B_CMD_WRDI);
     spi_stop_transaction();
 }
 
-uint8_t fm25640b_get_status() {
+uint8_t fm25640b_get_status(void) {
 uint8_t out=0;
     spi_start_transaction();
     (void)spi_readwrite_byte(FM25640B_CMD_RDSR);
@@ -28,13 +28,13 @@ uint8_t out=0;
 return out;
 }
 
-void fm25640b_set_write_enable() {
+void fm25640b_set_write_enable(void) {
     spi_start_transaction();
     (void)spi_readwrite_byte(FM25640B_CMD_WREN);
     spi_stop_transaction();
 }
 
-void fm25640b_set_write_disable() {
+void fm25640b_set_write_disable(void) {
     spi_start_transaction();
     (void)spi_readwrite_byte(FM25640B_CMD_WRDI);
     spi_stop_transaction();

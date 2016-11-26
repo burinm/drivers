@@ -30,11 +30,11 @@ void spi_set_cpol_cpha(spi_cpol_e *cpol, spi_cpha_e *cpha, spi_mode_e m) {
     }
 }
 
-void spi_start_transaction() {
+void spi_start_transaction(void) {
     spi_ss_low();
 }
 
-void spi_stop_transaction() {
+void spi_stop_transaction(void) {
     spi_ss_high();
 }
 
