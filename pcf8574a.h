@@ -2,10 +2,10 @@
 #define __PCF8574A_H__
 
 /* Driver for pcf8574a I/O expander
- *
- * This driver extends the i2c module
- *
- */
+
+   Extends i2c.h 
+
+*/
 
 #include <stdint.h>
 

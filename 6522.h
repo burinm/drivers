@@ -1,6 +1,12 @@
 #ifndef __6522_H__
 #define __6522_H__
 
+/* 65c22 VIA I/O expander driver
+
+    This is a memory mapped driver for any
+    2^16 memory space device
+*/ 
+
 #include <stdint.h>
 
 

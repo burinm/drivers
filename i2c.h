@@ -1,6 +1,12 @@
 #ifndef __I2C_H__
 #define __I2C_H__
 
+/* I2C protocol driver
+
+    Implements the protocol for a generic
+    I2C driver
+*/
+
 #include <stdint.h>
 #include <stddef.h> //size_t
 

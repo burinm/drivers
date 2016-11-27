@@ -1,6 +1,12 @@
 #ifndef __X86_64_UART_H__
 #define __X86_64_UART_H__
 
+/* x86_64 platform UART implementation
+
+    Implements uart.h
+
+*/
+
 #include <stdint.h>
 
 //Interface, these must be implemented by platform

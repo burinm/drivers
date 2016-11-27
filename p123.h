@@ -1,6 +1,12 @@
 #ifndef __P123_H__
 #define __P123_H__
 
+/* p123 protocol driver
+
+    Custom protocol for one way transfer of a L.E.D
+    messaging packet over UART
+*/
+
 #include <stdint.h>
 
 typedef enum { P123_ERROR=0, P123_OK=1, P123_ALLOC_ERROR } p123_error_e;

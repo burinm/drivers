@@ -1,6 +1,11 @@
 #ifndef __FM25640B_H__
 #define __FM25640B_H__
 
+/* fm25640b 8K FRAM driver
+
+    extends spi.h
+*/
+
 #include <stdint.h>
 
 typedef enum { FM2560B_BLOCK, FM2560B_MEM } fm25640b_fill_e;
@@ -48,9 +53,5 @@ void fm25640b_set_write_disable(void);
 
 //private
 void __fm25640b_write_block(uint16_t addr, uint8_t *b, uint16_t size, fm25640b_fill_e fill);
-
-
-
-
 
 #endif

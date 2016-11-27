@@ -1,6 +1,11 @@
 #ifndef __NRF24L01_H__
 #define __NRF24L01_H__
 
+/* nrf24L01 Nordic wireless tranceiver driver
+
+    Extends spi.h
+*/
+
 #include <stdint.h>
 
 typedef struct {

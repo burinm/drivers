@@ -1,6 +1,11 @@
 #ifndef __24XX16_H__
 #define __24XX16_H__
 
+/* 24LC16B i2c EEPROM driver
+
+    Extends i2c.h
+*/
+
 #include <stdint.h>
 #include <stdio.h>
 

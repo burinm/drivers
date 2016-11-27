@@ -1,6 +1,5 @@
 #include "spi_raw.h"
 
-//open file...
 #include <stdio.h>
 #include <fcntl.h> //O_WRONLY
 #include <unistd.h>
@@ -8,21 +7,7 @@
 
 #include "util.h" //logging remove later
 
-//This is a bit banged SPI implementation for 
-// the beagle bone
 
-//The overlay is setup like this:
-// Many names for the same 4 pins
-
-//                                              SPI use
-//                                                    |
-// /sys/kernel/debug/pinctrl/44e10800.pinmux/pins     |
-//                                             |      |
-//     offset   mode     BBB                   |      |
-//       0x70    0x7     P9_11  gpio30         28     MOSI
-//       0x78    0x7     P9_12  gpio60         30     MISO
-//       0x74    0x7     P9_13  gpio31         29     CLK
-//       0x48    0x7     P9_14  gpio50         18     SS
 
 
 static int spi_gpio_mosi;

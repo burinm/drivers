@@ -1,6 +1,13 @@
 #ifndef __KL25Z_UART_H__
 #define __KL25Z_UART_H__
 
+
+/* Platform driver for NXP Freedom KL25Z development board
+    
+    UART
+*/
+
+
 #include <stdint.h>
 #include <stdarg.h>
 #include "mylib.h"

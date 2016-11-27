@@ -2,7 +2,21 @@
 #define __HD44780U_H__
 
 /* Driver for hd44780u LCD display
- *
+
+    This is a memory mapped hardware driver for
+    a 16x4 character LCD display
+
+    for 2^16 address space
+
+    Mapping is as follows:
+
+    RS =  A15 & A12
+    R/W = A15 & A13
+
+    E = A15 & ( !/RD # !/WR)
+
+    See defines below:
+
  */
 
 #define HD44780U_CW     0x8000  // command write       RS=0 /W=0

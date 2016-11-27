@@ -1,6 +1,11 @@
 #ifndef __KL25Z_FIRMWARE_H__
 #define __KL25Z_FIRMWARE_H__
 
+/* Platform driver for NXP Freedom KL25Z development board
+
+    32 bit ARM M0+ processor
+*/
+
 #include "kl25z.arch/MKL25Z4.h"
 #include <stdint.h>
 

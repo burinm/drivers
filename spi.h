@@ -1,6 +1,18 @@
 #ifndef __SPI_H__
 #define __SPI_H__
 
+/* SPI protocol driver
+
+    Implements protocol for generic SPI driver
+ 
+    There are two interfaces here:
+
+    1) SPI with on-board SPI device + 1 GPIO for /SS    
+    2) Bit Banged SPI, 4 GPIOS, MOSI,MISO,CLK,/SS
+*/
+
+ 
+
 #include <stdint.h>
 
 #define SPI_CMD_DUMMY   0x0

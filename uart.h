@@ -1,6 +1,12 @@
 #ifndef __UART_H__
 #define __UART_H__
 
+/* Protocol driver for UART
+
+    Implements protocol for generic UART driver
+
+*/
+
 //Interface, these must be implemented by platform
 
 // Device specific open/close

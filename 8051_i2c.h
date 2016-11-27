@@ -1,6 +1,11 @@
 #ifndef __8051_I2C_H__
 #define __8051_I2C_H__
 
+/* 8051 i2c implementation
+
+    implements i2c.h
+*/
+
 #include <stdint.h>
 #include <mcs51reg.h>
 #include "i2c.h"
