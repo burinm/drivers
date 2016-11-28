@@ -1,7 +1,8 @@
-suite_my_atoi.o
-suite_my_endian.o
-suite_my_itoa.o
-suite_my_memmove.o
-suite_my_memory.o
-suite_my_circbuf.o
-suite_my_ftoa.o
+#suite_my_atoi.o
+#suite_my_endian.o
+#suite_my_itoa.o
+#suite_my_memmove.o
+#suite_my_memory.o
+#suite_my_circbuf.o
+suite_my_circbuf_tiny.o
+#suite_my_ftoa.o
