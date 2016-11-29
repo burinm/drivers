@@ -46,6 +46,7 @@ void spi_set_bitorder(spi_bitorder_e o) {
     spi_bitorder = o;
 }
 
+#ifndef FRDM_KL25Z
 uint8_t spi_readwrite_byte(uint8_t b) {
 uint8_t i;
 uint8_t out;
@@ -66,6 +67,7 @@ uint8_t out;
 
 return out;
 }
+#endif
 
 #if 0
 uint8_t spi_read_byte() {

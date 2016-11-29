@@ -4,6 +4,9 @@
 
 #include "util.h" //debugging remove
 
+extern spi_mode_e spi_mode;
+extern spi_bitorder_e spi_bitorder;
+
 void try_this_spi_setup() {
 
     // Turn on port C
