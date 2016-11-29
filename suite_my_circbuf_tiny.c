@@ -2,6 +2,51 @@
 #include "test_suite.h"
 #include "circbuf_tiny.h"
 
+char test_my_circbuf_tiny_empty_read(){
+    SETUP;
+    uint8_t b;
+    uint8_t error;
+    circbuf_tiny_t c;
+    circbuf_tiny_init(&c);
+    error = circbuf_tiny_read(&c,&b);
+    printf("result is: %d\n",error);
+    ASSERT(error == 0);
+    circbuf_tiny_destroy(&c);
+RETURN;
+}
+
+char test_my_circbuf_tiny_empty_readi_write(){
+    SETUP;
+    uint8_t b;
+    uint8_t error;
+    circbuf_tiny_t c;
+    circbuf_tiny_init(&c);
+    error = circbuf_tiny_read(&c,&b);
+    error += circbuf_tiny_read(&c,&b);
+    error += circbuf_tiny_read(&c,&b);
+    printf("result is: %d\n",error);
+    ASSERT(error == 0);
+    circbuf_tiny_destroy(&c);
+RETURN;
+}
+
+char test_my_circbuf_tiny_write1_empty(){
+    SETUP;
+    uint8_t b;
+    uint8_t error;
+    circbuf_tiny_t c;
+    circbuf_tiny_init(&c);
+    error = circbuf_tiny_write(&c,77);
+    error = circbuf_tiny_read(&c,&b);
+    printf("result is: %d\n",error);
+    ASSERT(error == 1);
+    error = circbuf_tiny_read(&c,&b);
+    printf("result is: %d\n",error);
+    ASSERT(error == 0);
+    circbuf_tiny_destroy(&c);
+RETURN;
+}
+
 char test_my_circbuf_tiny_init(){
     SETUP;
     circbuf_tiny_t c;
