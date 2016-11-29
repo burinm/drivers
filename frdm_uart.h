@@ -37,8 +37,13 @@ void uart0_write_n(uint32_t n);
 void uart0_write_f(float f);
 void uart0_write_byte(const char c);
 
+#ifdef CIRCBUF_TINY
+extern circbuf_tiny_t *UART0_RX_BUF;
+extern circbuf_tiny_t *UART0_TX_BUF;
+#else
 extern circbuf_t *UART0_RX_BUF;
 extern circbuf_t *UART0_TX_BUF;
+#endif
 
 #define LOCK_CBUF   __asm__("CPSID i");
 #define UNLOCK_CBUF __asm__("CPSIE i");

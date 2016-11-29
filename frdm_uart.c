@@ -4,8 +4,13 @@
 #include "frdm_firmware.h"
 #include "../mylib/mylib.h"
 
+#ifdef CIRCBUF_TINY
+circbuf_tiny_t *UART0_RX_BUF;
+circbuf_tiny_t *UART0_TX_BUF;
+#else
 circbuf_t *UART0_RX_BUF;
 circbuf_t *UART0_TX_BUF;
+#endif
 
 void setup_uart0() {
 
@@ -94,8 +99,19 @@ void setup_uart0() {
 #endif
 
 // Setup global tx/rx buffers
+#ifdef CIRCBUF_TINY
+
+UART0_RX_BUF=(circbuf_tiny_t*)malloc(sizeof(circbuf_tiny_t));
+UART0_TX_BUF=(circbuf_tiny_t*)malloc(sizeof(circbuf_tiny_t));
+circbuf_tiny_init(UART0_RX_BUF);
+circbuf_tiny_init(UART0_TX_BUF);
+
+#else
+
 UART0_RX_BUF=circbuf_init(1000);
 UART0_TX_BUF=circbuf_init(1000);
+
+#endif
 
 
 // Uart0 interrupts on
@@ -225,10 +241,10 @@ void uart0_write_f(float f) {
 
 void _newline();
 void _newline() {
-    if ( UART0_S1 & UART0_S1_TDRE_MASK) {
+//    if ( UART0_S1 & UART0_S1_TDRE_MASK) {
         uart0_write_byte('\r');
         uart0_write_byte('\n');
-    }
+//    }
 }
 
 void write_uart0(const char* c) {
@@ -246,7 +262,11 @@ void write_uart0(const char* c) {
 void uart0_write_byte(const char c) {
 
     LOCK_CBUF
+#ifdef CIRCBUF_TINY
+    circbuf_tiny_write(UART0_TX_BUF,c);
+#else
     circbuf_push(UART0_TX_BUF,c);
+#endif
     UART0->C2 |= UART0_C2_TIE(1);
     UNLOCK_CBUF
 }
@@ -265,7 +285,11 @@ void uart_close() {
 
 void uart_send_byte(uint8_t b) {
     LOCK_CBUF
+#ifdef CIRCBUF_TINY
+    circbuf_tiny_write(UART0_TX_BUF,b);
+#else
     circbuf_push(UART0_TX_BUF,b);
+#endif
     UART0->C2 |= UART0_C2_TIE(1);
     UNLOCK_CBUF
 }
@@ -276,11 +300,19 @@ uint8_t b=0;
 
         for(;;) {
             LOCK_CBUF
+#ifdef CIRCBUF_TINY
+            if (CIRCBUF_TINY_SIZE(UART0_RX_BUF)) {
+            circbuf_tiny_read(UART0_RX_BUF,&b);
+                UNLOCK_CBUF
+                return b; 
+            }
+#else
             if (circbuf_is_poppable(UART0_RX_BUF)) {
                 circbuf_pop(UART0_RX_BUF,&b);
                 UNLOCK_CBUF
                 return b;
             }
+#endif
             UNLOCK_CBUF
         }
 }
@@ -288,15 +320,23 @@ uint8_t b=0;
 void uart_flush_rx() {
 uint8_t b;
     LOCK_CBUF
+#ifdef CIRCBUF_TINY
+    while(circbuf_tiny_read(UART0_RX_BUF,&b));
+#else
     while (circbuf_is_poppable(UART0_RX_BUF)) {
         circbuf_pop(UART0_RX_BUF,&b);
     }
+#endif
     UNLOCK_CBUF
 }
 
 void uart_flush_tx() {
     LOCK_CBUF
+#ifdef CIRCBUF_TINY
+    while(CIRCBUF_TINY_SIZE(UART0_TX_BUF)) {
+#else
     while (circbuf_is_poppable(UART0_TX_BUF)) {
+#endif
         UART0->C2 |= UART0_C2_TIE(1);
     }
     UNLOCK_CBUF

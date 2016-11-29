@@ -4,8 +4,6 @@
 #include "frdm_uart.h"
 #include "mylib.h"
 
-circbuf_t *UART0_RX_BUF;
-circbuf_t *UART0_TX_BUF;
 uint8_t uart0_receive_mode=0;
 
 static int8_t current_color=0;

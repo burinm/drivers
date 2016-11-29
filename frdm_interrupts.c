@@ -43,6 +43,30 @@ extern "C" {
         }
     }
 
+#ifdef CIRCBUF_TINY
+    void UART0_IRQHandler() {
+        uint8_t i=0;
+
+        //READ
+        if ( UART0_S1 & UART0_S1_RDRF_MASK) {
+            i=UART0_D;
+            circbuf_tiny_write(UART0_RX_BUF,i);
+        }
+
+        //TX
+
+         if ( UART0_S1 & UART0_S1_TDRE_MASK) {
+            // TODO: might need volatile
+            uint8_t c;
+            if(CIRCBUF_TINY_SIZE(UART0_TX_BUF)) {
+            circbuf_tiny_read(UART0_TX_BUF,&c);
+                UART0_D=c;
+                //while( !(UART0_S1 & UART0_S1_TDRE_MASK));
+                //while (!(UART0_S1 & UART0_S1_TC_MASK)) {};
+            }
+            }
+    }
+#else
     void UART0_IRQHandler() {
     uint8_t i=0;
 
@@ -91,6 +115,7 @@ extern "C" {
 
 
 }
+#endif
 #ifdef __cplusplus
 }
 #endif
