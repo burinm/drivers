@@ -20,7 +20,6 @@
 
 #define CIRCBUF_TINY_SIZE(c) ((c->write_i - c->read_i) & (CIRCBUF_TINY_MAX))
 
-
 typedef struct {
         uint8_t write_i;
         uint8_t read_i;

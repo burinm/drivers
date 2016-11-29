@@ -6,6 +6,7 @@
 #include "memory.h"
 #include "reverse.h"
 #include "circbuf.h" 
+#include "circbuf_tiny.h" 
 #include "printf.h"
 
 
