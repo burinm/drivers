@@ -60,7 +60,7 @@ void spi_mosi_high() {
 }
 
 uint8_t spi_miso_in() {
-uint8_t b=17;
+uint8_t b=0;
     lseek(spi_gpio_miso,0,SEEK_SET);
     read(spi_gpio_miso,&b,1);
 return (b == '1' ? 1 : 0); 

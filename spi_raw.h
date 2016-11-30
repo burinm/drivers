@@ -3,7 +3,7 @@
 
 /* BeagleBone Black implementation of Bit Banged SPI driver
 
-    Extends spi.h  bit banged interface
+    Implements spi.h  bit banged interface
 
     Mapped like this:
 

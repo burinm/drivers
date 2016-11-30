@@ -32,6 +32,10 @@ extern void i2c_clock_high();
 extern i2c_level_e i2c_clock_read();
 extern i2c_level_e i2c_data_read();
 
+//BBB only
+extern void i2c_data_dir_in();
+extern void i2c_data_dir_out();
+
 //End interface
 
 //This may have to be adjusted for a fater system

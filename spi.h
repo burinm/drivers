@@ -52,7 +52,6 @@ extern uint8_t spi_miso_in();
 extern void spi_clk_low();
 extern void spi_clk_high();
 
-
 //End interface
 
 // These set global flags that can be used in spi_open_device

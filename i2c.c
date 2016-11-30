@@ -109,13 +109,13 @@ return b;
 uint8_t i2c_ack_acknowledge() {
 uint8_t ack=0;
 
-
         i2c_data_high();
         i2c_clock_high();
 //Wait for slave to ack by pulling data low
 I2C_DELAY
         if (i2c_data_read() == LOW) { ack = 1; }
         i2c_clock_low();
+
 return ack;
 }
 
