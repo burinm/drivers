@@ -1,24 +1,32 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
 #include "circbuf.h"
 #include "util.h"
 #ifdef FRDM_KL25Z
     #include "memory.h"
 #endif
 
+#ifdef PLTFM_8051
+circbuf_t *circbuf_init(uint16_t size) {
+#else
 circbuf_t *circbuf_init(uint32_t size) {
+#endif
+
 circbuf_t *c;
 
     if (size > CBUF_MAX_SIZE) { return NULL; }
-    c=malloc(sizeof(circbuf_t));
+    c=(circbuf_t *)malloc(sizeof(circbuf_t));
     if (!c) { return NULL; }
 #ifdef FRDM_KL25Z
     c->buf=malloc(size);
     my_memzero(c->buf,size);
 #else
-    c->buf=calloc(size,1);
-#endif
+    c->buf=(uint8_t*)malloc(size);
     if (!c->buf) { free(c); return NULL; }
+    memset(c->buf,0,size);
+#endif
     c->size=0;
     c->buf_size=size;
     c->last_index=(uint8_t*)((c->buf)+(size-1));
@@ -35,28 +43,30 @@ void circbuf_destroy(circbuf_t * c) {
 }
 
 void circbuf_print(circbuf_t * c) {
+uint8_t *i=NULL;
+
     if (!c) { return; }
-    for (uint8_t *i=c->buf;i<c->last_index +1;i++) {
+    for (i=c->buf;i<c->last_index +1;i++) {
         printf("%.03d ",*i);
     }
     printf("\n",NULL);
-    for (uint8_t *i=c->buf;i<c->head;i++) {
+    for (i=c->buf;i<c->head;i++) {
         printf("    ",NULL);
     }
     printf("^__head\n",NULL);
 
-    for (uint8_t *i=c->buf;i<c->tail;i++) {
+    for (i=c->buf;i<c->tail;i++) {
         printf("    ",NULL);
     }
     printf("^__tail\n",NULL);
 }
 
-uint8_t circbuf_push(circbuf_t * c, uint8_t data) {
+uint8_t circbuf_push(circbuf_t * c, uint8_t data_in) {
     if (!c) { return CBUF_ERROR; }
     if (c->state == CBUF_FULL) { return c->state; }
     c->state=CBUF_OK;
 
-    *(c->head) = data;
+    *(c->head) = data_in;
     if (c->head == c->last_index) {
         c->head = c->buf;
     } else {
@@ -71,13 +81,14 @@ uint8_t circbuf_push(circbuf_t * c, uint8_t data) {
 return c->state;
 }
 
-uint8_t circbuf_pop(circbuf_t * c, uint8_t *data) {
+uint8_t circbuf_pop(circbuf_t * c, uint8_t *data_out) {
+uint8_t *tail_ptr;
     if (!c) { return CBUF_ERROR; }
     if ( c->state == CBUF_EMPTY ) { return c->state; }
     c->state=CBUF_OK;
 
-    uint8_t *tail_ptr=c->tail;
-    *data = *tail_ptr;
+    tail_ptr=c->tail;
+    *data_out = *tail_ptr;
 /* Test value */
     *tail_ptr =255;
 
@@ -95,20 +106,37 @@ uint8_t circbuf_pop(circbuf_t * c, uint8_t *data) {
 return c->state;
 }
 
-inline uint8_t circbuf_is_poppable(circbuf_t * c) {
+
+#ifdef PLTFM_8051
+#else
+    inline
+#endif
+uint8_t circbuf_is_poppable(circbuf_t * c) {
     return ( c->state == CBUF_OK || c->state == CBUF_FULL) ;
 }
 
-inline uint8_t circbuf_is_pushable(circbuf_t * c) {
+#ifdef PLTFM_8051
+#else
+    inline
+#endif
+uint8_t circbuf_is_pushable(circbuf_t * c) {
     return ( c->state == CBUF_OK || c->state == CBUF_EMPTY) ;
 
 }
 
-inline uint8_t circbuf_is_empty(circbuf_t * c) {
+#ifdef PLTFM_8051
+#else
+    inline
+#endif
+uint8_t circbuf_is_empty(circbuf_t * c) {
     return ( c->state == CBUF_EMPTY) ;
 }
 
-inline uint8_t circbuf_is_full(circbuf_t * c) {
+#ifdef PLTFM_8051
+#else
+    inline
+#endif
+uint8_t circbuf_is_full(circbuf_t * c) {
     return ( c->state == CBUF_FULL) ;
 }
 

@@ -23,8 +23,13 @@ typedef enum { CBUF_NOTINIT=0,
 
 typedef struct {
         uint8_t *buf;
+#ifdef PLTFM_8051
+        uint16_t size;
+        uint16_t buf_size;
+#else
         uint32_t size;
         uint32_t buf_size;
+#endif
         uint8_t *last_index;
         uint8_t *head;
         uint8_t *tail;
@@ -41,7 +46,11 @@ typedef struct {
  *        - NULL if memory not allocated
  *
  */
+#ifdef PLTFM_8051
+circbuf_t *circbuf_init(uint16_t size);
+#else
 circbuf_t *circbuf_init(uint32_t size);
+#endif
 
 /*
  * Destroy circular buffer
