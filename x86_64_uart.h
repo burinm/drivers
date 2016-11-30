@@ -9,6 +9,10 @@
 
 #include <stdint.h>
 
+// For bbb platform
+uint8_t getchar_blocking();
+
+
 //Interface, these must be implemented by platform
 
 extern void uart_open();

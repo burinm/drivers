@@ -24,7 +24,9 @@
 #include <sys/time.h>
 
 #define BAUDRATE B19200
+
 #define MODEMDEVICE "/dev/ttyACM0"
+
 
 //Interface, implementation 
 
@@ -68,6 +70,9 @@ void stdin_canonical() {
     tcgetattr(STDIN_FILENO,&stdin_orig);
     t=stdin_orig;
     t.c_lflag &= ~(ICANON | ECHO);
+//    t.c_lflag &= ~(ICANON);
+    t.c_cc[VTIME] = 0;
+    t.c_cc[VMIN] = 1;
     tcsetattr(STDIN_FILENO,TCSANOW,&t);
 }
 
@@ -96,6 +101,21 @@ return b;
 }
 
 //Mine
+uint8_t getchar_blocking() {
+uint8_t b=0;
+        read(STDIN_FILENO,&b,1);
+//    tcflush(uart_fd, TCIFLUSH);
+return b;
+
+}
+
+uint8_t putchar2(uint8_t b) {
+        write(uart_fd, &b,1);
+return b;
+
+}
+
+
 void uart_flush_rx() {
     tcflush(uart_fd, TCIFLUSH);
 }

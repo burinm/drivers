@@ -1,8 +1,6 @@
 #include "24xx16.h"
 #include "i2c.h"
 
-#include "89c51rc2_driver.h"
-
 //remember to inline all of this
 
 //remember to check for page boundary
