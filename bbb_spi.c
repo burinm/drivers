@@ -5,9 +5,10 @@
 #include <stdio.h>
 #include <fcntl.h> //O_WRONLY
 
-
-
 #include "util.h" //logging remove later
+
+extern spi_mode_e spi_mode;
+extern spi_bitorder_e spi_bitorder;
 
 //This is mainly a library wrapper for 
 // https://github.com/graycatlabs/serbus

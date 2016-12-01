@@ -46,7 +46,8 @@ void spi_set_bitorder(spi_bitorder_e o) {
     spi_bitorder = o;
 }
 
-#ifndef FRDM_KL25Z
+#if defined(FRDM_KL25Z) || defined(BBB_NATIVE_SPI)
+#else
 uint8_t spi_readwrite_byte(uint8_t b) {
 uint8_t i;
 uint8_t out;
