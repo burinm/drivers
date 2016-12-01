@@ -3,6 +3,8 @@
 
 /* 65c02 Single Board Computer SPI driver implementation 
 
+    implements spi.h
+
     memory mapped 65c22 I/O expander GPIO SPI driver
 
     Mapped as follows:
@@ -26,6 +28,7 @@
 #define SBC_PIN_CLK     0
 #define SBC_PIN_SS      1
 
+// Implements interface spi.h
 void spi_ss_low(void);
 void spi_ss_high(void);
 void spi_open_device(void);
@@ -35,5 +38,6 @@ void spi_mosi_high(void);
 uint8_t spi_miso_in(void);
 void spi_clk_low(void);
 void spi_clk_high(void);
+// End interface
 
 #endif

@@ -19,19 +19,13 @@ void device_24XX16_open();
 
 // Read byte from EEPROM
 uint8_t device_24XX16_read_byte(uint16_t addr);
-// Write byte from EEPROM
+// Write byte to EEPROM
 void device_24XX16_write_byte(uint16_t addr, uint8_t b);
 
-// Page write data
+// Page write data. Takes data from memory at b, for s bytes
 void device_24XX16_write_page(uint16_t addy, uint8_t *b, size_t s);
 
-// Write same character into block of memory
+// Write same character into block of memory. Write byte b, s times
 void device_24XX16_write_block(uint16_t addy, uint8_t b, size_t s);
-
-
-
-
-
-
 
 #endif

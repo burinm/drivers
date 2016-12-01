@@ -8,7 +8,6 @@
     Implements i2c.h for the BBB 3.8.13-bone47
 
     Mapped like this:
-
                                               SPI use
                                                     |
  /sys/kernel/debug/pinctrl/44e10800.pinmux/pins     |
@@ -28,6 +27,7 @@
     echo out > /sys/class/gpio/gpio4/direction
 */
 
+// Implements interface in 12c.h
 void i2c_open_device();
 
 void i2c_data_low();
@@ -41,6 +41,7 @@ i2c_level_e i2c_data_read();
 
 void i2c_data_dir_in();
 void i2c_data_dir_out();
+// End implementation
 
 
 #endif

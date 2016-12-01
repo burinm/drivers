@@ -37,17 +37,22 @@ typedef enum { FM2560B_BLOCK, FM2560B_MEM } fm25640b_fill_e;
 void fm25640b_open(void);
 void fm25640b_close(void);
 
-// Fill with single character pattern
+// Fill with single character pattern, byte b, s times
 void fm25640b_write_block(uint16_t addr, uint8_t b, uint16_t size);
-// Copy memory contents
+
+// Copy memory contents at b, for length s
 void fm25640b_write_mem(uint16_t addr, uint8_t *b, uint16_t size);
 
+// Write single byte b
 void fm25640b_write_byte(uint16_t addr, uint8_t b);
+
+// Read single byte b
 uint8_t fm25640b_read_byte(uint16_t addr);
 
+// Read one byte fm25640b status register
 uint8_t fm25640b_get_status(void);
 
-//Set in non-volatile memory
+// Turn on/off write - Set permanently in non-volatile memory
 void fm25640b_set_write_enable(void);
 void fm25640b_set_write_disable(void);
 

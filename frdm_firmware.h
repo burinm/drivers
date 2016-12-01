@@ -47,7 +47,6 @@ uint32_t *dma_chain_source;
 uint32_t *dma_chain_dest;
 uint32_t dma_chain_size;
 
-
 //DMA
 #define DMA_ADDY_MASK       0xfff00000
 #define DMA_MAX_SIZE        0x000fffff
@@ -55,8 +54,6 @@ uint32_t dma_chain_size;
 #define DMA_ADDY_RANGE_1    0x1FF00000
 #define DMA_ADDY_RANGE_2    0x20000000
 #define DMA_ADDY_RANGE_3    0x40000000
-
-
 
 //Initialize all clocks and turn on gates needed for this project
 void frdm_clocks_init();
@@ -68,7 +65,7 @@ void setup_tpm_center(TPM_Type* tpm);
 void tpm_setup_duty(color_addr_t *c);
 void tpm_set_duty(color_addr_t* c);
 
-//Setup PIT timer
+// Setup PIT timer
 void setup_pit_timer();
 void start_pit_timer();
 void stop_pit_timer();
@@ -80,10 +77,13 @@ void start_pit_timer1();
 void stop_pit_timer1();
 
 
+// Set up LEDs
 void red_gpio_mode();
 void green_gpio_mode();
 void blue_gpio_mode();
 
+// Set up LED pins in combination with
+//  TPM modulation
 void red_tpm_mode();
 void green_tpm_mode();
 void blue_tpm_mode();
@@ -99,32 +99,39 @@ void green_led_off();
 
 void blue_led_toggle();
 
-// colors
+// LED colors
 #define NUM_RGB 8
 #define RED_BITS     (0x1)
 #define GREEN_BITS   (0x2)
 #define BLUE_BITS    (0x4)
 
+// Increase/Decrease all components RGB
 void led_brightness_increase(color_addr_t*);
 void led_brightness_decrease(color_addr_t*);
 
-//DMA
+// DMA - turn on/off DMA0
 void setup_dma0();
 void disable_dma0();
 
 typedef enum _dma_channel_e { DMA_CHANNEL0 =0, DMA_CHANNEL1,DMA_CHANNEL2,DMA_CHANNEL3} dma_channel_e;
-uint8_t _dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size, uint8_t tsize, uint8_t memmove);
 
+
+// DMA0 move on 8 byte alignment
 uint8_t dma0_memmove_8(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size);
 
+// DMA0 move on 32 byte alignment
 uint8_t dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size);
 
+// DMA memzoer on 32 byte alignment
 uint8_t dma0_memzero(uint8_t channel, uint32_t *dest, uint32_t size);
+// DMA memzoer on 8 byte alignment
 uint8_t dma0_memzero_8(uint8_t channel, uint32_t *dest, uint32_t size);
 
-uint8_t _is_valid_dma_address(uint32_t *addy);
+// Check DMA0 done flag 
 uint8_t is_dma_done(uint8_t channel); 
 
-
+// Private function
+uint8_t _dma0_memmove(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size, uint8_t tsize, uint8_t memmove);
+uint8_t _is_valid_dma_address(uint32_t *addy);
 
 #endif

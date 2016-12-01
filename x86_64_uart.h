@@ -13,20 +13,21 @@
 uint8_t getchar_blocking();
 
 
-//Interface, these must be implemented by platform
+// Implementation of uart.h
 
-extern void uart_open();
-extern void uart_close();
-extern void uart_send_byte(uint8_t);
-extern uint8_t uart_get_byte();
+void uart_open();
+void uart_close();
+void uart_send_byte(uint8_t);
+uint8_t uart_get_byte();
 
-void uart_flush_rx();
-void uart_flush_tx();
+// End interface
 
-//end interface
-
+// Set stdin to ignore escape characters, echo off
 void stdin_canonical();
+// Undo canonical mode
 void stdin_restore();
+
+// Buffer flushing routines
 void uart_flush_rx();
 void uart_flush_tx();
 

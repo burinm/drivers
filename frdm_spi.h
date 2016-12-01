@@ -3,7 +3,7 @@
 
 /* SPI implementation for Freedom KL25Z development board
 
-    Uses SPI0 , ignores native /SS, SPI0_PCS0 (PTC4)
+    Uses Native SPI , but ignores native /SS, SPI0_PCS0 (PTC4)
     Use GPIO PTC8 for /SS
 
     J1 header
@@ -16,7 +16,7 @@
 #include <stdint.h>
 #include "spi.h"
 
-// Interface function implementation
+// Implements interface in spi.h 
 void spi_ss_low();
 void spi_ss_high();
 void spi_set_mode(spi_mode_e m);
@@ -30,14 +30,18 @@ uint8_t spi_read_byte();
 
 //end interface
 
+
+// Wait for transmit buffer to be ready for new data
 void spi_wait_for_SPTEF();
+// Is transmit buffer ready for new data  
 uint8_t spi_is_SPTEF_set();
 
+// Wait for data in the receive buffer
 void spi_wait_for_SPRF();
+// Is there data in the receive buffer
 uint8_t spi_is_SPRF_set();
 
+// Data in receive buffer is equal to match register
 uint8_t spi_is_SPMF_set();
-
-void try_this_spi_setup(); //testing
 
 #endif

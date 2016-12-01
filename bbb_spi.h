@@ -41,7 +41,7 @@
 
 #include "spi.h"
 
-// Interface function implementation
+// Implements interface in spi.h 
 void spi_ss_low();
 void spi_ss_high();
 void spi_open_device();
@@ -53,6 +53,6 @@ void spi_stop_transaction();
 uint8_t spi_readwrite_byte(uint8_t b);
 uint8_t spi_read_byte();
 
-//end interface
+// End interface
 
 #endif

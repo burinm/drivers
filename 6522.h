@@ -4,12 +4,10 @@
 /* 65c22 VIA I/O expander driver
 
     This is a memory mapped driver for any
-    2^16 memory space device
+    2^16 address space device
 */ 
 
 #include <stdint.h>
-
-
 
 // 6522 Registers 16 x 8bit
 #define DEVICE_6522_NUM_REG         16
@@ -130,7 +128,6 @@
 #define DEVICE_6522_REG_RB          0x0
 
 // Interface start
-//  All functions take starting address of peripheral
 extern void device_6522_init(uint8_t* addr);
 // Interface end 
 
@@ -138,28 +135,39 @@ extern void device_6522_init(uint8_t* addr);
 //Unfortunately not all compilers support inline, so 
 // sacrificing type safety for speed/compact code
 
+//  All functions below take starting address of peripheral (a) uint16_t
+
 //Today, I became a C programmer...
+
+// Set data direction to out for Port A, pin n
 #define DEVICE_6522_SET_DDA_OUT(a, bit_n) \
     (*(a + DEVICE_6522_REG_DDRA) = *(a + DEVICE_6522_REG_DDRA) | (1<<bit_n))
 
+// Set data direction to in for Port A, pin n
 #define DEVICE_6522_SET_DDA_IN(a, bit_n) \
     (*(a + DEVICE_6522_REG_DDRA) = *(a + DEVICE_6522_REG_DDRA) & ~(1<<bit_n)); 
 
+// Set data direction to out for Port B, pin n
 #define DEVICE_6522_SET_DDB_OUT(a, bit_n) \
     (*(a + DEVICE_6522_REG_DDRB) = *(a + DEVICE_6522_REG_DDRB) | (1<<bit_n))
 
+// Set data direction to in for Port B, pin n
 #define DEVICE_6522_SET_DDB_IN(a, bit_n) \
     (*(a + DEVICE_6522_REG_DDRB) = *(a + DEVICE_6522_REG_DDRB) & ~(1<<bit_n))
 
+// Read port A, returns uint8_t
 #define DEVICE_6522_READ_A(a) \
     (*(a + DEVICE_6522_REG_RA))
 
+// Read port B, returns uint8_t
 #define DEVICE_6522_READ_B(a) \
     (*(a + DEVICE_6522_REG_RB))
 
+// Write port A, takes uint8_t
 #define DEVICE_6522_WRITE_A(a, b) \
     (*(a + DEVICE_6522_REG_RA) = b)
 
+// Write port B, takes uint8_t
 #define DEVICE_6522_WRITE_B(a, b) \
     (*(a + DEVICE_6522_REG_RB) = b)
 

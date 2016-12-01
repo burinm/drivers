@@ -7,34 +7,6 @@
 extern spi_mode_e spi_mode;
 extern spi_bitorder_e spi_bitorder;
 
-void try_this_spi_setup() {
-
-    // Turn on port C
-    SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;
-    // Turn on SPI0 clock
-    SIM_SCGC4 |= SIM_SCGC4_SPI0_MASK;
-
-    // Set up ports for SPI0
-    PORTC->PCR[8] |= PORT_PCR_MUX(1); // ss as gpio pin
-    PORTC->PCR[5] |= PORT_PCR_MUX(2);
-    PORTC->PCR[6] |= PORT_PCR_MUX(2);
-    PORTC->PCR[7] |= PORT_PCR_MUX(2);
-
-    // Set port C, pin 8 data direction to output
-    PTC_BASE_PTR->PDDR |= 1<<8;
-
-    SPI_C1_REG(SPI0) = SPI_C1_SPE_MASK;
-    SPI_C2_REG(SPI0) = 0x00;
-
-    SPI_C1_REG(SPI0) = SPI_C1_MSTR_MASK | 
-
-                    SPI_C1_SPE_MASK |
-                    SPI_C1_CPHA_MASK;
-                          
-    // prescaler=1, divisor=4 , 24MHz/4 = 6MHz
-    SPI_BR_REG(SPI0) = 0x01;
-}
-
 void spi_open_device() {
 
 spi_cpol_e cpol;

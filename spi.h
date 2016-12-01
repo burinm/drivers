@@ -11,8 +11,6 @@
     2) Bit Banged SPI, 4 GPIOS, MOSI,MISO,CLK,/SS
 */
 
- 
-
 #include <stdint.h>
 
 #define SPI_CMD_DUMMY   0x0
@@ -22,7 +20,8 @@ typedef enum { CPOL0 = 0, CPOL1 = 1 } spi_cpol_e;
 typedef enum { CPHA0 = 0, CPHA1 = 1 } spi_cpha_e;
 typedef enum { SPI_LSBit = 0, SPI_MSBit = 1 } spi_bitorder_e;
 
-//Interface, these must be implemented by platform
+// SPI Interface Definition:
+// These must be implemented by platform
 
 // Pull the /SS line low
 extern void spi_ss_low();
@@ -36,8 +35,6 @@ extern void spi_close_device();
 
 // platform specific read/write - Only for plaforms with native SPI silicon
 extern uint8_t spi_readwrite_byte(uint8_t b);
-//extern uint8_t spi_read_byte();
-
 
 // additional interface for bit banged platforms
 

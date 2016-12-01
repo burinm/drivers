@@ -70,11 +70,13 @@ void hd44780u_busy_wait();
 // Move current cursor, and set current position
 //  (this actually sets the DDRAM address) 
 void hd44780u_goto_addr(uint8_t p);
+
 // Set the cursor based on a coordinate system
 void hd44780u_goto_xy(uint8_t x, uint8_t y);
+
 // Write characters to current cursor position
-void hd44780u_put_ch(uint8_t b);
-void hd44780u_put_str(char *s);
+void hd44780u_put_ch(uint8_t b); // single character
+void hd44780u_put_str(char *s);  // string
 uint8_t hd44780u_get_ch();
 
 // Move the cursor forward in the coordinate system

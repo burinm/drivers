@@ -133,8 +133,9 @@ void nrf_get_addr5(nrf_5byte_t *addy, uint8_t r);
 // default behavior of write/status in one word
 uint8_t nrf_read_status();
 
-
+// Read configuration byte
 uint8_t nrf_read_config();
+// Read RF setup byte
 uint8_t nrf_get_rf_setup();
 
 // Activate R_RX_PL_WID, W_ACK_PAYLOAD, W_TX_PAYLOAD_NOACK

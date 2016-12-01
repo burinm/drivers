@@ -7,7 +7,7 @@
     32 bit ARM M0+ processor
 */
 
-void PIT_IRQHandler();
-void UART0_IRQHandler();
+void PIT_IRQHandler();   // PIT timer interrupt handler
+void UART0_IRQHandler(); // UART0 interrupts handler
 
 #endif

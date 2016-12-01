@@ -4,7 +4,7 @@
 /* I2C protocol driver
 
     Implements the protocol for a generic
-    I2C driver
+    I2C driver - master side only
 */
 
 #include <stdint.h>
@@ -13,7 +13,9 @@
 static uint8_t i2c_device_id;
 static uint8_t i2c_page_size;
 
-//Interface, these must be implemented by platform
+// I2C Interface Definition:
+//  These must be implemented by platform
+
 typedef enum { LOW=0, HIGH=1 } i2c_level_e;
 typedef enum { WRITE=0, READ=1 } i2c_action_e;
 
@@ -38,7 +40,7 @@ extern void i2c_data_dir_out();
 
 //End interface
 
-//This may have to be adjusted for a fater system
+//This may have to be adjusted for a faster system
 // right now it does nothing
 #define I2C_DELAY
 
@@ -58,23 +60,23 @@ extern void i2c_data_dir_out();
 #define I2C_LSB_BIT_MASK    0x80
 
 
-//My homegrown reset
+// My homegrown reset
 void i2c_reset();
 
-//AN709 official memory reset
+// AN709 official memory reset
 void i2c_mem_device_reset();
 
 // Idle. Clock high, data high
 void i2c_idle();
 
-uint8_t i2c_is_idle(); // 0= busy, 1=idle
-void i2c_start(); // Send start sequence
-void i2c_stop();  // Send stop sequence
-void i2c_send_databit(i2c_level_e); // Send data bit
-i2c_level_e i2c_get_databit(); // Get data bit
-uint8_t i2c_ack_acknowledge(); // Master reply to slave ack 
-uint8_t i2c_did_slave_ack(); // Did slave pull data low? 
-void i2c_wait_for_data_low(); // Wait for slave to pull line low
+uint8_t i2c_is_idle();                  // 0= busy, 1=idle
+void i2c_start();                       // Send start sequence
+void i2c_stop();                        // Send stop sequence
+void i2c_send_databit(i2c_level_e);     // Send data bit
+i2c_level_e i2c_get_databit();          // Get data bit
+uint8_t i2c_ack_acknowledge();          // Master reply to slave ack 
+uint8_t i2c_did_slave_ack();            // Did slave pull data low? 
+void i2c_wait_for_data_low();           // Wait for slave to pull line low
 
 // Ack polling for write. (blocking)
 void i2c_ack_poll(uint16_t addy);

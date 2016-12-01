@@ -6,7 +6,6 @@
     Implements spi.h  bit banged interface
 
     Mapped like this:
-
                                               SPI use
                                                     |
  /sys/kernel/debug/pinctrl/44e10800.pinmux/pins     |
@@ -35,14 +34,14 @@
 
 #include "spi.h"
 
-// Interface function implementation
+// Implementation for spi.h 
 void spi_ss_low();
 void spi_ss_high();
 
 void spi_mosi_low();
 void spi_mosi_high();
 
-extern uint8_t spi_miso_in();
+uint8_t spi_miso_in();
 
 void spi_clk_low();
 void spi_clk_high();
