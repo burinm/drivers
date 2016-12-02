@@ -2,9 +2,17 @@
 #include "memtest8.h"
 #include <stdio.h>
 
+#ifdef PLTFM_8051
+void mem_bitwalk_test( void(*write_f)(uint16_t, uint8_t) __reentrant,
+                      uint8_t(*read_f)(uint16_t) __reentrant,
+                      uint16_t addr,uint16_t count)
+{
+#else
 void mem_bitwalk_test( void(*write_f)(uint16_t, uint8_t),
                       uint8_t(*read_f)(uint16_t),
-                      uint16_t addr,uint16_t count) {
+                      uint16_t addr,uint16_t count)
+{
+#endif
 uint8_t read;
 uint8_t bit;
 uint8_t i;
@@ -23,9 +31,15 @@ uint8_t i;
     }
 }
 
+#ifdef PLTFM_8051
+uint8_t mem_addr_test( void(*write_f)(uint16_t, uint8_t) __reentrant,
+                      uint8_t(*read_f)(uint16_t) __reentrant,
+                      uint32_t addr) {
+#else
 uint8_t mem_addr_test( void(*write_f)(uint16_t, uint8_t),
                       uint8_t(*read_f)(uint16_t),
                       uint32_t addr) {
+#endif
 int8_t bit_count;
 int8_t i;
 int8_t j;

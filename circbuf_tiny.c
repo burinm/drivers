@@ -1,8 +1,6 @@
 #include "circbuf_tiny.h"
 #include <stdlib.h>
 
-
-
 uint8_t circbuf_tiny_init(circbuf_tiny_t *c) {
     if (c) {
         c->data=(uint8_t*)malloc(CIRCBUF_TINY_MAX);
