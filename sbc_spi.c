@@ -9,7 +9,10 @@ void spi_open_device(void) {
     DEVICE_6522_SET_DDB_OUT(VIA_0,SBC_PIN_SS);
 
     // /SS High, all other pins low
-    DEVICE_6522_WRITE_B(VIA_0,1<<SBC_PIN_SS);
+    spi_ss_high();
+    spi_mosi_low();
+    spi_clk_low();
+    
 }
 
 void spi_close_device(void) {
