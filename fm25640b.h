@@ -49,6 +49,9 @@ void fm25640b_write_byte(uint16_t addr, uint8_t b);
 // Read single byte b
 uint8_t fm25640b_read_byte(uint16_t addr);
 
+// Read block - read s bytes into b - fast...
+uint8_t fm25640b_read_block(uint16_t addr, uint16_t size, uint8_t *b);
+
 // Read one byte fm25640b status register
 uint8_t fm25640b_get_status(void);
 

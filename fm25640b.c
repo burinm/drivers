@@ -85,3 +85,19 @@ uint8_t fm25640b_read_byte(uint16_t addr) {
     spi_stop_transaction();
 return out;
 }
+
+// FRAM does not need paging for performance
+uint8_t fm25640b_read_block(uint16_t addr, uint16_t size, uint8_t *b) {
+    uint8_t checksum=0;
+    spi_start_transaction();
+    (void)spi_readwrite_byte(FM25640B_CMD_READ);
+    (void)spi_readwrite_byte((addr & FM2560B_ADDR_MASK_HI) >> 8 );
+    (void)spi_readwrite_byte(addr & FM2560B_ADDR_MASK_LO);
+    while(size) {
+        // FRAM autoincrements address
+        checksum+= *(uint8_t*)b = spi_readwrite_byte(FM25640B_CMD_NOP);
+        b++;
+        size--;
+    }
+return checksum;
+}
