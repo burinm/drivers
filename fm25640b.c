@@ -95,7 +95,8 @@ uint8_t fm25640b_read_block(uint16_t addr, uint16_t size, uint8_t *b) {
     (void)spi_readwrite_byte(addr & FM2560B_ADDR_MASK_LO);
     while(size) {
         // FRAM autoincrements address
-        checksum+= *(uint8_t*)b = spi_readwrite_byte(FM25640B_CMD_NOP);
+        *(uint8_t*)b = spi_readwrite_byte(FM25640B_CMD_NOP);
+        checksum+= *(uint8_t*)b;
         b++;
         size--;
     }
