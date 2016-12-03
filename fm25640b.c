@@ -100,5 +100,6 @@ uint8_t fm25640b_read_block(uint16_t addr, uint16_t size, uint8_t *b) {
         b++;
         size--;
     }
+    spi_stop_transaction();
 return checksum;
 }
