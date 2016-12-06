@@ -41,6 +41,8 @@ extern uint8_t p123_rcv_cmd();
 
 // End interface
 
+// API
+
 // Alloates new message structure
 p123_msg_t* p123_alloc_msg(uint8_t m);
 
@@ -52,5 +54,7 @@ void p123_free_msg(p123_msg_t* m);
 
 // Internal checksum function
 uint32_t p123_encode_checksum(p123_msg_t *c);
+
+// end API
 
 #endif

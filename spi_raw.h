@@ -48,10 +48,6 @@ void spi_clk_high();
 
 void spi_open_device();
 void spi_close_device();
-
-void spi_start_transaction();
-void spi_stop_transaction();
-
 //end interface
 
 #endif

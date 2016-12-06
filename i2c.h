@@ -10,6 +10,26 @@
 #include <stdint.h>
 #include <stddef.h> //size_t
 
+//This may have to be adjusted for a faster system
+// right now it does nothing
+#define I2C_DELAY
+
+// Two wire I2C protocol implementation
+
+#define I2C_ID_MASK         0xf
+#define I2C_ID_BITS         4 
+#define I2C_ID_MSB_BIT_MASK 0x8 
+
+// i2c addressing masks
+#define I2C_MSB_MASK        0x0700
+#define I2C_MSB_BITS        3 
+#define I2C_MSB_BIT_MASK    0x4
+
+#define I2C_LSB_MASK        0xff
+#define I2C_LSB_BITS        8 
+#define I2C_LSB_BIT_MASK    0x80
+
+
 static uint8_t i2c_device_id;
 static uint8_t i2c_page_size;
 
@@ -40,25 +60,8 @@ extern void i2c_data_dir_out();
 
 //End interface
 
-//This may have to be adjusted for a faster system
-// right now it does nothing
-#define I2C_DELAY
 
-// Two wire I2C protocol implementation
-
-#define I2C_ID_MASK         0xf
-#define I2C_ID_BITS         4 
-#define I2C_ID_MSB_BIT_MASK 0x8 
-
-// i2c addressing masks
-#define I2C_MSB_MASK        0x0700
-#define I2C_MSB_BITS        3 
-#define I2C_MSB_BIT_MASK    0x4
-
-#define I2C_LSB_MASK        0xff
-#define I2C_LSB_BITS        8 
-#define I2C_LSB_BIT_MASK    0x80
-
+// API
 
 // My homegrown reset
 void i2c_reset();
@@ -136,6 +139,8 @@ void i2c_device_read_current_byte(uint16_t addy, uint8_t b);
 void i2c_device_read_random(uint16_t addy, uint8_t b);
 void i2c_device_read_sequential(uint16_t addy, uint8_t b);
 #endif
+
+// end API
 
 // Actual write routine, private
 void _i2c_device_write_bytes(uint16_t addy, uint8_t *b, size_t s, uint8_t fill);
