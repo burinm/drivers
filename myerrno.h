@@ -1,3 +1,8 @@
+/* myerrno.h - (c) 2016 - burin
+
+    My standard library error codes
+*/
+
 #ifndef __MYERRORNO_H__
 #define __MYERRORNO_H__
 
@@ -8,6 +13,5 @@
 #define MYLIB_ERR_ARGS               4
 #define MYLIB_ERR_GARBAGE_IN       255
  
-
 #endif
 

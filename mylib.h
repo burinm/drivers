@@ -1,3 +1,10 @@
+/* mylib.h - (c) 2016 - burin
+
+    Main header file to include
+    for my standard library
+    functions
+*/
+
 #ifndef __MYLIB_H__
 #define __MYLIB_H__
 
@@ -8,7 +15,6 @@
 #include "circbuf.h" 
 #include "circbuf_tiny.h" 
 #include "printf.h"
-
 
 #define MYLIB_MAX_DIGITS 33
 
@@ -21,11 +27,11 @@
 int printf(const char *format, ...);
 
 /* New library modules must include the following:
- *
- * module.h
- *   extern uint8_t mylib_errno=0;
- *
- */
+ 
+  module.h
+    extern uint8_t mylib_errno=0;
+ 
+*/
 
 #endif
 

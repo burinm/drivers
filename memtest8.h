@@ -1,3 +1,11 @@
+/* memtest8.h - (c) 2016 - burin
+
+    Memory test routines for RAM
+
+    These tests are for 8bit data
+    and a 16bit address bus max
+*/
+
 #ifndef __MEMTEST_H__
 #define __MEMTEST_H__
 
@@ -7,12 +15,6 @@
 #define MEM_PAT_N   (0x55)
 
 
-/* Memory test routines for RAM
-
-    These tests are for 8bit data
-    and a 16bit address bus max
-
-*/
 
 #define MEM_TEST8_HIGHEST_BIT   0x80
 #define MEM_TEST8_ADDR_BITS     16

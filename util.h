@@ -1,3 +1,11 @@
+/* util.h - (c) 2016 - burin
+
+    Utilites used by my
+    standard library
+    
+    Logging macros
+*/
+
 #ifndef __MYLIB_UTIL_H__
 #define __MYLIB_UTIL_H__
 #include <stdarg.h>

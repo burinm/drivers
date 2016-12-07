@@ -1,3 +1,9 @@
+/* data.h - (c) 2016 - burin
+
+    My standard library routines for 
+    data manipulation
+*/
+
 #ifndef __DATA_H__
 #define __DATA_H__
 
@@ -24,6 +30,5 @@ uint32_t little_to_big(uint32_t data);
                                 MAX_DIGITS_SIGN + \
                                 MAX_DIGITS_NULL
 void my_ftoa(float f, uint8_t *string);
-
 
 #endif

@@ -1,3 +1,9 @@
+/* printf.h - (c) 2016 - burin
+
+    Compiled in to turn off
+    printf on certain platforms
+*/
+
 #ifndef __PRINTF_H__
 #define __PRINTF_H__
 

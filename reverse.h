@@ -1,3 +1,8 @@
+/* reverse.h - (c) 2016 - burin
+
+    self titled
+*/
+
 #ifndef __REVERSE_H__
 #define __REVERSE_H__
 

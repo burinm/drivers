@@ -1,17 +1,23 @@
+/* circbuf.h - (c) 2016 - burin
+
+    Circular Buffer implementation (one piece of memory)
+
+     Holds up to 2^32 8bit numbers - FIFO circular stack
+
+     In this implementation, tail points to the current
+     member to pop off the stack. Head points to the next
+     empty slot. head == tail both on empty and full.
+     So we use "size" to keep track of the current size
+     last_index is an indirect way to keep track of allocated size 
+
+    NOTE: this component needs revisiting for concurrency testing
+*/
+
 #ifndef __CIRCBUF_H__
 #define __CIRCBUF_H__
 
 #include <stdint.h>
 
-/* Circular Buffer implementation (one piece of memory)
- * Holds up to 2^32 8bit numbers - FIFO circular stack
- *
- * In this implementation, tail points to the current
- * member to pop off the stack. Head points to the next
- * empty slot. head == tail both on empty and full.
- * So we use "size" to keep track of the current size
- * last_index is an indirect way to keep track of allocated size 
- */
 
 #define CBUF_MAX_SIZE   5000
 

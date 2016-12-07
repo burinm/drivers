@@ -1,9 +1,9 @@
-#ifndef __CIRCBUF_TINY_H__
-#define __CIRCBUF_TINY_H__
+/* circbuf_tiny.h - burin
 
-#include <stdint.h>
+    Am implementation of the circular buffer
+    described in Making Embedded Systems by Elecia White
 
-/* 255 byte circular buffer of uint8_t
+    255 byte circular buffer of uint8_t
 
     Circular buffer for size/speed contrained
      applications. Also native size for 
@@ -15,6 +15,11 @@
      or empty. In this implementation,
      it means empty.
 */
+#ifndef __CIRCBUF_TINY_H__
+#define __CIRCBUF_TINY_H__
+
+#include <stdint.h>
+
 
 #define CIRCBUF_TINY_MAX   (256 - 1)
 #define CIRCBUF_TINY_SIZE(c) ((c->write_i - c->read_i) & (CIRCBUF_TINY_MAX))

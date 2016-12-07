@@ -1,3 +1,9 @@
+/* memory.h - (c) 2016 - burin
+
+    My standard library memory
+    manipulation routines
+*/
+
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
