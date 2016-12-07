@@ -1,3 +1,5 @@
+/* suite_my_memory.c - (c) 2016 - burin */
+
 #include <stdlib.h>
 #include <string.h>
 #include "test_suite.h"

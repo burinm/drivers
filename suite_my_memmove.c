@@ -1,3 +1,5 @@
+/* suite_my_memmove.c - (c) 2016 - burin */
+
 #include <string.h>
 #include "test_suite.h"
 #include "memory.h"

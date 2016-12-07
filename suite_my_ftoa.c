@@ -1,3 +1,5 @@
+/* suite_my_ftoa.c - (c) 2016 - burin */
+
 #include <stdlib.h>
 #include <string.h>
 #include "test_suite.h"

@@ -1,3 +1,5 @@
+/* suite_my_atoi.c - (c) 2016 - burin */
+
 #include "test_suite.h"
 #include "data.h"
 
