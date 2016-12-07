@@ -1,3 +1,5 @@
+/* memtest8.c - (c) 2016 - burin */ 
+
 #include "memtest8.h"
 #include "memtest8.h"
 #include <stdio.h>

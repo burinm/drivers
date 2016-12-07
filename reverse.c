@@ -1,3 +1,5 @@
+/* reverse.c - (c) 2016 - burin */
+
 #include <stdio.h>
 #include "reverse.h"
 

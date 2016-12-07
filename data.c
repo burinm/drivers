@@ -1,3 +1,4 @@
+/* data.c - (c) 2016 - burin */
 #include <stdlib.h>
 #include <stdio.h>
 #include "data.h"
@@ -29,18 +30,17 @@ mylib_errno = MYLIB_ERR_OK;
 if (str == NULL) { mylib_errno = MYLIB_ERR_NULL; return 0;}
 if (base < 2 || base > 255) { mylib_errno = MYLIB_ERR_ARGS; return 0;}
 
-
 /*
- *   For now implement this with base <=255, one byte per digit
- *   Later see if we can't do bigger bases
- *
- *   A digit is one byte, 8 bits, so the max base = 255
- *   
- *   The longest string of digits would be base2
- *      32 bit number = 32 digits     
- *
- *   +1 digit for the sign = 33
- */
+    For now implement this with base <=255, one byte per digit
+    Later see if we can't do bigger bases
+
+    A digit is one byte, 8 bits, so the max base = 255
+
+    The longest string of digits would be base2
+       32 bit number = 32 digits     
+
+    +1 digit for the sign = 33
+*/
 
 uint8_t alpha[8] = { 'a','b','c','d','e','f'};
 

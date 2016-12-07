@@ -1,3 +1,4 @@
+/* circbuf_tiny.c - 2016 - burin */
 #include "circbuf_tiny.h"
 #include <stdlib.h>
 

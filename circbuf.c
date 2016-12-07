@@ -1,7 +1,8 @@
+/* circbuf.c - (c) 2016 - burin */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
 #include "circbuf.h"
 #include "util.h"
 #ifdef FRDM_KL25Z
@@ -144,4 +145,3 @@ uint8_t circbuf_is_full(circbuf_t * c) {
 uint8_t* __circbuf_dump_core(circbuf_t * c) {
     return (c->buf);
 }
-

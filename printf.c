@@ -1,3 +1,4 @@
+/* printf.c - (c) 2016 - burin */
 #include "printf.h"
 
 #ifdef SILENCE_PRINTF

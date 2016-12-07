@@ -1,3 +1,5 @@
+/* util.c - (c) 2016 - burin */
+
 #include <stdarg.h>
 #include <stdio.h>
 #include "mylib.h"
@@ -21,4 +23,3 @@ void mylib_print_binary(uint32_t n) {
     }
     printf("\n",NULL);
 }
-          

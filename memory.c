@@ -1,9 +1,10 @@
+/* memory.c - (c) 2016 - burin */
+
 #include <stdlib.h>
 #include "memory.h"
 
 int8_t my_memmove(uint8_t *src, uint8_t *dst, uint32_t length) {
 mylib_errno = MYLIB_ERR_OK;
-
 
 //TODO The best we could do is check for wild pointers
 /* memmove will have 4 basic cases
@@ -45,9 +46,10 @@ mylib_errno = MYLIB_ERR_OK;
 return 0;
 }
 
-//This routine will move memory in 4 byte blocks. 
-// Both memory sections must have the same offset alignment,
-// or else this can never work.
+/*  This routine will move memory in 4 byte blocks. 
+     Both memory sections must have the same offset alignment,
+     or else this can never work.
+*/
 int8_t my_memmove_32(uint8_t *src, uint8_t *dst, uint32_t length) {
 mylib_errno = MYLIB_ERR_OK;
 
@@ -129,7 +131,6 @@ return 0;
 }
 
 int8_t my_reverse(uint8_t *src, uint32_t length) {
-//TODO add unittests from HW1
     reverse(src,length);
 return 0;
 }
