@@ -1,3 +1,10 @@
+/* testsuite.h - (c) 2016 - burin
+
+    To create a new inittest suite,
+    this file is included in suite_XXX
+    test files
+*/
+
 #ifndef __TEST_SUITE_H__
 #define __TEST_SUITE_H__
 #include <stdio.h>
