@@ -1,15 +1,13 @@
+/* 24xx16.c - (c) 2016 - burin */
+
 #include "24xx16.h"
 #include "i2c.h"
-
-//remember to inline all of this
-
-//remember to check for page boundary
 
 void device_24XX16_open() {
     i2c_open();
     i2c_mem_device_reset();
 
-//TODO: This needs to not be global - per device!!!
+//TODO: This needs to not be global, per device
     i2c_set_page_size(DEVICE_I2C_24XX16_PAGE_SIZE);
 }
 

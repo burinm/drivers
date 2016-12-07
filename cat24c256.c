@@ -1,3 +1,5 @@
+/* cat24c256.c - (c) 2016 - burin */
+
 #include "cat24c256.h"
 #include "i2c.h"
 

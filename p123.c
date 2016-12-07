@@ -1,8 +1,8 @@
+/* p123.c - (c) 2016 - burin */
+
 #include "p123.h"
 #include "uart.h"
 #include <stdlib.h>
-
-
 #include "util.h"  //debugging remove later
 
 void p123_open() {

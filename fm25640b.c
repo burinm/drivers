@@ -1,12 +1,13 @@
+/* fm25640b.c - (c) 2016 - burin */
+
 #include "fm25640b.h"
 #include "spi.h"
-
 
 void fm25640b_open(void) {
 //TODO - implement this, right now works out as Mode 0
 //This device can use 0, or 3
-// Mode 0  - CLK is low, then bring /SS low
 
+    // Mode 0  - CLK is low, then bring /SS low
     spi_set_mode(SPI_MODE_0);
     spi_set_bitorder(SPI_MSBit);
     spi_open_device();
@@ -39,7 +40,6 @@ void fm25640b_set_write_disable(void) {
     (void)spi_readwrite_byte(FM25640B_CMD_WRDI);
     spi_stop_transaction();
 }
-
 
 void fm25640b_write_block(uint16_t addr, uint8_t b, uint16_t size) {
     __fm25640b_write_block(addr,&b,size,FM2560B_BLOCK);

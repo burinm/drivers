@@ -1,3 +1,5 @@
+/* 8051_i2c.c - (c) 2016 - burin */
+
 #include "8051_i2c.h"
 
 static device_i2c_8051_t i2c_device;

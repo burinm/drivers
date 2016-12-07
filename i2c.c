@@ -1,7 +1,7 @@
+/* i2c.c - (c) 2016 - burin */
+
 #include "i2c.h"
 #include <stdio.h>
-
-//remember to inline all of this
 
 void i2c_open() {
     i2c_open_device();
@@ -10,8 +10,6 @@ void i2c_open() {
 
 void i2c_reset() {
 uint8_t i;
-
-//Better would be to wait for data - high?
 //This is my guess at a reset routine
     for (i=0;i<8;i++) {
         i2c_clock_low();
@@ -237,7 +235,7 @@ uint8_t b;
     b =i2c_get_byte();
         //NACK
         i2c_data_high();
-I2C_DELAY //setup time = ??
+I2C_DELAY //setup time
         i2c_clock_low();
         i2c_clock_high();
 I2C_DELAY
@@ -256,7 +254,7 @@ uint8_t b;
     b =i2c_get_byte();
         //NACK
         i2c_data_high();
-I2C_DELAY //setup time = ??
+I2C_DELAY //setup time
         i2c_clock_low();
         i2c_clock_high();
 I2C_DELAY
@@ -278,42 +276,26 @@ void _i2c_device_write_bytes(uint16_t addy, uint8_t *b, size_t s, uint8_t fill) 
 size_t i=0;
 uint8_t j=0;
 
-while (s) {
-    //Setup for write
-    i2c_start();
-    i2c_prot_setup_read_write(addy, WRITE);
-    i2c_ack_acknowledge();
-    //Send lsb of address, 8 bits
-    i2c_send_byte( (addy & I2C_LSB_MASK) );
-    i2c_ack_acknowledge();
-
-    for(j=addy%i2c_page_size;j<i2c_page_size;j++) {
-        i2c_send_byte(*b);
+    while (s) {
+        //Setup for write
+        i2c_start();
+        i2c_prot_setup_read_write(addy, WRITE);
         i2c_ack_acknowledge();
-        addy++;
-        s--;
-        if (!fill) { b++; }
-        if (s == 0) { break; } 
+        //Send lsb of address, 8 bits
+        i2c_send_byte( (addy & I2C_LSB_MASK) );
+        i2c_ack_acknowledge();
+
+        for(j=addy%i2c_page_size;j<i2c_page_size;j++) {
+            i2c_send_byte(*b);
+            i2c_ack_acknowledge();
+            addy++;
+            s--;
+            if (!fill) { b++; }
+            if (s == 0) { break; } 
+        }
+        i2c_stop();
+        i2c_ack_poll(addy);
+        i2c_stop();
+    I2C_DELAY
     }
-    i2c_stop();
-    i2c_ack_poll(addy);
-    i2c_stop();
-I2C_DELAY
 }
-
-}
-
-
-#if 0
-void i2c_device_read_current_byte(uint16_t addy, uint8_t b) {
-
-}
-
-void i2c_device_read_random(uint16_t addy, uint8_t b) {
-
-}
-
-void i2c_device_read_sequential(uint16_t addy, uint8_t b) {
-
-}
-#endif

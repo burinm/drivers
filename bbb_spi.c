@@ -1,3 +1,5 @@
+/* bbb_spi.c - (c) 2016 - burin */
+
 #include "bbb_spi.h"
 #include "../../../serbus/include/spidriver.h"
 

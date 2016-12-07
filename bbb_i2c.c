@@ -1,5 +1,6 @@
-#include "bbb_i2c.h"
+/* bbb_i2c.c - (c) 2016 - burin */
 
+#include "bbb_i2c.h"
 #include <stdio.h>
 #include <fcntl.h> //O_WRONLY
 #include <unistd.h>
@@ -45,4 +46,3 @@ uint8_t b=0;
 return (b == '1' ? 1 : 0);
 
 }
-

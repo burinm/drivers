@@ -1,3 +1,5 @@
+/* spi.c - (c) 2016 - burin */
+
 #include "spi.h"
 
 spi_mode_e spi_mode=0;

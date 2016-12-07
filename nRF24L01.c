@@ -1,3 +1,5 @@
+/* nRF24L01.c - (c) 2016 - burin */
+
 #include "nRF24L01.h"
 #include "spi.h"
 #include "util.h"
@@ -7,7 +9,6 @@ void nrf_open() {
     spi_set_bitorder(SPI_MSBit);
     spi_open_device();
 }
-
 
 // Generic read/writes
 uint8_t nrf_read_register1(uint8_t r) {
@@ -89,7 +90,6 @@ void nrf_set_tx_addr(nrf_5byte_t *addy) {
 void nrf_read_tx_addr(nrf_5byte_t *addy) {
     nrf_get_addr5(addy, NRF_REG_TX_ADDR);
 }
-
 
 void nrf_power_up() {
     nrf_write1(NRF_REG_CONFIG, NRF_PWR_UP | NRF_EN_CRCO);
@@ -215,7 +215,6 @@ void nrf_print_fifo_status(uint8_t status) {
     LOG0( (status & NRF_RX_EMPTY) ? "on" : "off");
     LOG0("\n");
 }
-
 
 void nrf_print_rf_setup(uint8_t setup) {
     LOG0("[RF_Setup]\n");

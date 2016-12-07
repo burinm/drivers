@@ -1,3 +1,5 @@
+/* frdm_uart.c - (c) 2016 - burin */
+
 #include <stdlib.h>
 #include "kl25z.arch/MKL25Z4.h"
 #include "frdm_uart.h"
@@ -21,20 +23,22 @@ void setup_uart0() {
     UART0_C2 &= ~(UART0_C2_TE(1)); //disable transmitter
     UART0_C2 &= ~(UART0_C2_RE(1)); //disable receiver
 
-//Defaults look fine - all 0s
-//    UART0_BDH &= ~(UART0_BDH_SBNS(1)); //one stop bit
-//    UART0_C1 &= ~(UART0_C1_PE(1)) ; //disable parity
-// 8 bit mode  start + 8 data bits(lsb first) + stop
-//    UART0_C1 &= ~(UART0_C1_M(1)) ;
+/* Defaults look fine - all 0s
 
-// CLOCK_SETUP 1, PEE mode, source external, 96MHz/2 = 48MHZ baud clock
-//
-// baud =  baud clock
-//        -------------
-//        (OSR +1) x BR
-//
-// OSR has to be between 3-31
-// BR has to be between 1-8192
+    UART0_BDH &= ~(UART0_BDH_SBNS(1)); //one stop bit
+    UART0_C1 &= ~(UART0_C1_PE(1)) ; //disable parity
+    8 bit mode  start + 8 data bits(lsb first) + stop
+    UART0_C1 &= ~(UART0_C1_M(1)) ;
+
+    CLOCK_SETUP 1, PEE mode, source external, 96MHz/2 = 48MHZ baud clock
+
+    baud =  baud clock
+    -------------
+    (OSR +1) x BR
+
+    OSR has to be between 3-31
+    BR has to be between 1-8192
+*/
 
 #define UART0_BAUD_19200
 
@@ -190,7 +194,6 @@ UART_Type *u=UART1;
 }
 
 void write_uart0_va(const char* fmt, ...) {
-
 #include <stdio.h>
     va_list ap;
     //TODO: sketchy fix
@@ -241,10 +244,8 @@ void uart0_write_f(float f) {
 
 void _newline();
 void _newline() {
-//    if ( UART0_S1 & UART0_S1_TDRE_MASK) {
         uart0_write_byte('\r');
         uart0_write_byte('\n');
-//    }
 }
 
 void write_uart0(const char* c) {
@@ -343,5 +344,3 @@ void uart_flush_tx() {
 }
 
 //end Interface
-
-

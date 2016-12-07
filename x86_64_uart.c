@@ -1,3 +1,5 @@
+/* x86_64_uart.c - (c) 2016 - burin */
+
 #include "x86_64_uart.h"
 #include "util.h"
 

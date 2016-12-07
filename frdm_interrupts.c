@@ -1,5 +1,6 @@
+/* frdm_interrupts.c - (c) 2016 - burin */
+
 #include "kl25z.arch/MKL25Z4.h"
-//#include "core_cm0plus.h"
 #include "frdm_firmware.h"
 #include "frdm_uart.h"
 #include "mylib.h"

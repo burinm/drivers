@@ -1,3 +1,5 @@
+/* sbc_spi.c - (c) 2016 - burin */
+
 #include "sbc_spi.h"
 #include "6522.h"
 
@@ -12,11 +14,10 @@ void spi_open_device(void) {
     spi_ss_high();
     spi_mosi_low();
     spi_clk_low();
-    
 }
 
 void spi_close_device(void) {
-
+    //nop
 }
 
 void spi_ss_low(void) {

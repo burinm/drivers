@@ -1,3 +1,5 @@
+/* frdm_firmware.c - (c) 2016 - burin */
+
 #include "frdm_firmware.h"
 #include <stdlib.h> //malloc
 #include <stdio.h> //snprintf
@@ -22,9 +24,9 @@ color_addr_t COLORS_ADDR[3] = {
 { BLUE, TPM0, 1, 50, 50}
 };
 
-
 void frdm_clocks_init() {
-//TODO: Let each module call this with the Gates it needs turned on
+//TODO: Let each module call this with
+// an argument and the Gates it needs turned on
 
 SystemCoreClockUpdate();
 
@@ -69,14 +71,15 @@ void setup_tpm_center(TPM_Type* tpm) {
 //TODO: Check that all TPM channels are in CPWM mode,
 //      they all have to be in CPWM mode
 
-// Using Center PWM mode to achieve duty cycle
+    /* Using Center PWM mode to achieve duty cycle
 
-// CCR, MOD, CnV
-// ftimer = fcounter / Prescaler *(CC +1)
+        CCR, MOD, CnV
+        ftimer = fcounter / Prescaler *(CC +1)
 
-    // Center aligned PWM
-    // Waveform period = 2 x MOD
-    // Pulse width = 2 x Cnv
+        Center aligned PWM
+        Waveform period = 2 x MOD
+        Pulse width = 2 x Cnv
+    */
 
     tpm->SC = 0; //known state
     tpm->SC &= ~(TPM_SC_TOIE_MASK); // Disable Timer Overflow Interrupt
@@ -99,9 +102,12 @@ void setup_tpm_center(TPM_Type* tpm) {
 }
 
 void tpm_setup_duty(color_addr_t *c) {
-// These bits have to be set together
-// Clear Output on match-up, Set Output on match-down
-// Force output to match when counting changes direction
+/* These bits have to be set together
+
+    Clear Output on match-up, Set Output on match-down
+    Force output to match when counting changes direction
+
+*/
 (c->TPM)->CONTROLS[c->channel].CnSC |=
     (TPM_CnSC_MSB(0x1) |TPM_CnSC_ELSB(0x1) );
 
@@ -125,8 +131,6 @@ if (c->c == BLUE) {
 }
 
 void tpm_set_duty(color_addr_t* c) {
-//void tpm_set_duty(TPM_Type* tpm, uint8_t channel, uint8_t duty) {
-
     (c->TPM)->CONTROLS[c->channel].CnV =
          TPM_CnV_VAL((c->TPM)->MOD) * (100-(c->duty))/100;
 }
@@ -181,8 +185,9 @@ inline void blue_led_toggle() {
 
 // Pit timer 0, used for profiling. Always set at max
 void setup_pit_timer() {
-//ALL the documentaion conflicts with the API
-// for the PIT module..
+/* ALL the documentaion conflicts with the API
+     for the PIT module..
+*/
 
 //Enables pit memory access as well
 SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
@@ -260,10 +265,8 @@ PIT->CHANNEL[1].TFLG |= PIT_TFLG_TIF_MASK;
 
 } 
 
-
 uint8_t is_pit_timer_running() {
  return (PIT->CHANNEL[0].TCTRL & PIT_TCTRL_TEN_MASK);
-
 } 
 
 inline uint32_t pit_read_timer0() {
@@ -271,20 +274,17 @@ inline uint32_t pit_read_timer0() {
 }
 
 void pit_read_64bit_timer(uint32_t *high, uint32_t *low) {
-
 // 32.3.2 PIT Upper/Lower Lifetime Timer Register
 //  Read in this order
 *high = (PIT->LTMR64H) & PIT_LTMR64H_LTH_MASK;
 *low = (PIT->LTMR64L) & PIT_LTMR64L_LTL_MASK;
-
 } 
 
 //TODO: Move the following into a utility file, not really firmware
 //private functions
-
 uint8_t set_leds(uint8_t s) {
 
-    switch(s) {                 //This isn't frequently hit code...
+    switch(s) { //This isn't frequently hit code...
 
         case 'p':
             led_brightness_decrease(&COLORS_ADDR[RED]);
@@ -412,7 +412,6 @@ NVIC_DisableIRQ(DMA0_IRQn);
 __asm__("CPSIE i");            
 } 
 
-
 inline uint8_t dma0_memmove_8(uint8_t channel, uint32_t *source, uint32_t *dest, uint32_t size) {
 return _dma0_memmove(channel, source, dest, size, 1, 0);
 }
@@ -490,8 +489,6 @@ if (! memzero ) {
 
     //Start Transfer
     DMA_DCR(channel) = DMA_DCR_START_MASK //start transfer
-   //                     | DMA_DCR_CS_MASK
-   //                     | DMA_DCR_AA_MASK  //auto align
                         | DMA_DCR_DSIZE(tsize)
                         | DMA_DCR_SSIZE(tsize)
                         | ( memzero ? 0 : DMA_DCR_SINC_MASK) //increase source count

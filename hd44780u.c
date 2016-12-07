@@ -1,7 +1,8 @@
+/* hd44780u.c - (c) 2016 - burin */
+
 #include <stdint.h>
 #include "hd44780u.h"
 #include "89c51rc2_driver.h"
-
 
 static uint8_t x_pos=0;
 static uint8_t y_pos=0;
@@ -33,7 +34,6 @@ hd44780u_busy_wait();
 *(__xdata uint8_t *)(HD44780U_CW) = HD44780U_CMD_DISPLAY;
 hd44780u_busy_wait();
 
-
 //Clear screen
 *(__xdata uint8_t *)(HD44780U_CW) = HD44780U_CMD_CLEAR;
 hd44780u_busy_wait();
@@ -45,7 +45,7 @@ hd44780u_busy_wait();
 }
 
 void hd44780u_warm_init() {
-
+//TODO:
 }
 
 void  hd44780u_on() {
@@ -57,7 +57,6 @@ hd44780u_busy_wait();
 }
 
 void  hd44780u_off() {
-
 //Turn display off 
 //Not tested
 *(__xdata uint8_t *)(HD44780U_CW) = HD44780U_CMD_DISPLAY;

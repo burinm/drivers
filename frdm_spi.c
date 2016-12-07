@@ -1,3 +1,5 @@
+/* frdm_spi.c - (c) 2016 - burin */
+
 #include "frdm_spi.h"
 #include "frdm_firmware.h"
 #include "kl25z.arch/MKL25Z4.h"
@@ -8,10 +10,8 @@ extern spi_mode_e spi_mode;
 extern spi_bitorder_e spi_bitorder;
 
 void spi_open_device() {
-
 spi_cpol_e cpol;
 spi_cpha_e cpha;
-
 
 // Turn on port C
 SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;
@@ -71,19 +71,6 @@ SPI_D_REG(SPI0) = b;
 spi_wait_for_SPRF();
 b = SPI_D_REG(SPI0);
 
-// swap nibbles?
-//swap= (b & 0xf0) >> 4;
-//b >>= 4;
-//b |=swap;
-return b;
-}
-
-uint8_t spi_read_byte() {
-uint8_t b=0;
-
-//untested
-spi_wait_for_SPRF();
-b=SPI_D_REG(SPI0);
 return b;
 }
 
@@ -97,16 +84,6 @@ uint8_t spi_is_SPTEF_set() {
     return (SPI_S_REG(SPI0) & SPI_S_SPTEF_MASK);
 }
 
-/*
-uint8_t spi_wait_for_SPRF() {
-uint8_t read=0;
-    do {
-        read = SPI_S_REG(SPI0);
-        __asm__("nop;");
-    } while( (read & SPI_S_SPRF_MASK) == 0);
-return read;
-}
-*/
 void spi_wait_for_SPRF() {
     while( (SPI_S_REG(SPI0) & SPI_S_SPRF_MASK) == 0);
 }

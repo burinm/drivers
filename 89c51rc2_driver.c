@@ -1,4 +1,5 @@
-// 89c51rc2_driver.c - Micheal Burin
+/* 89c51rc2_driver.c - (c) 2016 - burin */
+
 #include "89c51rc2_driver.h"
 
 extern void blink_p1_0();

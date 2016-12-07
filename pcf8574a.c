@@ -1,3 +1,5 @@
+/* pcf8574a.c - (c) 2016 - burin */
+
 #include "pcf8574a.h"
 #include "i2c.h"
 
@@ -47,6 +49,3 @@ uint8_t pcf8574a_read_port() {
     i2c_set_device_id(DEVICE_I2C_PCF8574A);
 return i2c_device_simple_read_byte(DEVICE_I2C_PCF8574A_ADDR);;
 }
-
-
-

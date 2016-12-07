@@ -1,22 +1,18 @@
-#include "spi_raw.h"
+/* spi_raw.c - (c) 2016 - burin */
 
+#include "spi_raw.h"
 #include <stdio.h>
 #include <fcntl.h> //O_WRONLY
 #include <unistd.h>
-
-
 #include "util.h" //logging remove later
-
-
-
 
 static int spi_gpio_mosi;
 static int spi_gpio_miso;
 static int spi_gpio_clk;
 static int spi_gpio_ss;
 
-
 void spi_open_device() {
+// For first cut, SPI Mode 0 only
 
     //Setup GPIO pin interface
     spi_gpio_mosi=open("/sys/class/gpio/gpio30/value",O_WRONLY);
@@ -25,14 +21,6 @@ void spi_open_device() {
     spi_gpio_ss=open("/sys/class/gpio/gpio50/value",O_WRONLY);
 
     spi_ss_high();
-
-
-    // Set clock Mode
-    // Set Frequency
-    // Set bits per word
-    // Set bit order
-
-    // For first cut, SPI Mode 0 only
 
 }
 
