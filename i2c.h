@@ -1,11 +1,14 @@
-#ifndef __I2C_H__
-#define __I2C_H__
+/* i2c.h - (c) 2016 - burin
 
-/* I2C protocol driver
+    I2C protocol driver
 
     Implements the protocol for a generic
     I2C driver - master side only
 */
+
+#ifndef __I2C_H__
+#define __I2C_H__
+
 
 #include <stdint.h>
 #include <stddef.h> //size_t

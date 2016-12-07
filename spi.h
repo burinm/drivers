@@ -1,7 +1,6 @@
-#ifndef __SPI_H__
-#define __SPI_H__
+/* spi.h - (c) 2016 - burin
 
-/* SPI protocol driver
+    SPI protocol driver
 
     Implements protocol for generic SPI driver
  
@@ -10,6 +9,10 @@
     1) SPI with on-board SPI device + 1 GPIO for /SS    
     2) Bit Banged SPI, 4 GPIOS, MOSI,MISO,CLK,/SS
 */
+
+#ifndef __SPI_H__
+#define __SPI_H__
+
 
 #include <stdint.h>
 

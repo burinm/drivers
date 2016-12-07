@@ -1,9 +1,6 @@
-#ifndef __BBB_I2C_H__
-#define __BBB_I2C_H__
+/* bbb_i2c.h - (c) 2016 - burin
 
-#include "i2c.h"
-
-/* BeagleBone Black SPI implementation
+    BeagleBone Black SPI implementation
 
     Implements i2c.h for the BBB 3.8.13-bone47
 
@@ -26,6 +23,12 @@
     echo out > /sys/class/gpio/gpio5/direction
     echo out > /sys/class/gpio/gpio4/direction
 */
+
+#ifndef __BBB_I2C_H__
+#define __BBB_I2C_H__
+
+#include "i2c.h"
+
 
 // Implements interface in 12c.h
 void i2c_open_device();

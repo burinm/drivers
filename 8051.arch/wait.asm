@@ -1,3 +1,9 @@
+;wait.asm - (c) 2016 - burin
+;
+; various delay functions for the 8051
+; TODO: parameterize these into one/two
+;       generic functions
+
 .area CSEG    (CODE)
 _wait_5us::
     nop
@@ -53,5 +59,3 @@ loop4:
     mov r1,#255
     djnz r2,loop4
     ret
-    
-

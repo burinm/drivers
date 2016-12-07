@@ -1,9 +1,11 @@
-#ifndef __DRIVER_H__
-#define __DRIVER_H__
+/* 89c51rc2_driver.h - (c) 2016 - burin
 
-/* Platform driver for the 8051 and 89C51RC2
+    Platform driver for the 8051 and 89C51RC2
     microprocessor. 
 */
+
+#ifndef __DRIVER_H__
+#define __DRIVER_H__
 
 #include <stdint.h>
 #include <at89c51ed2.h>

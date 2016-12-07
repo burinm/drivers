@@ -1,7 +1,6 @@
-#ifndef __FRDM_SPI_H__
-#define __FRDM_SPI_H__
+/* frdm_spi.h - (c) 2016 - burin
 
-/* SPI implementation for Freedom KL25Z development board
+    SPI implementation for Freedom KL25Z development board
 
     Uses Native SPI , but ignores native /SS, SPI0_PCS0 (PTC4)
     Use GPIO PTC8 for /SS
@@ -12,6 +11,9 @@
         11 -        MOSI
         14 - PTC8   /SS
 */
+
+#ifndef __FRDM_SPI_H__
+#define __FRDM_SPI_H__
 
 #include <stdint.h>
 #include "spi.h"

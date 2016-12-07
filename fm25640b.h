@@ -1,10 +1,13 @@
-#ifndef __FM25640B_H__
-#define __FM25640B_H__
+/* fm25640b.h - (c) 2016 - burin
 
-/* fm25640b 8K FRAM driver
+    fm25640b 8K FRAM driver
 
     extends spi.h
 */
+
+#ifndef __FM25640B_H__
+#define __FM25640B_H__
+
 
 #include <stdint.h>
 

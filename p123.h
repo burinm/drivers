@@ -1,11 +1,13 @@
-#ifndef __P123_H__
-#define __P123_H__
+/* p123.h - (c) 2016 - burin
 
-/* p123 protocol driver
+    p123 protocol driver
 
     Custom protocol for one way transfer of a L.E.D
     messaging packet over UART
 */
+
+#ifndef __P123_H__
+#define __P123_H__
 
 #include <stdint.h>
 

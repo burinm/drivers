@@ -1,7 +1,6 @@
-#ifndef __SBC_SPI_H__
-#define __SBC_SPI_H__
+/* sbc_spi.h - (c) 2016 - burin
 
-/* 65c02 Single Board Computer SPI driver implementation 
+    65c02 Single Board Computer SPI driver implementation 
 
     implements spi.h
 
@@ -17,6 +16,9 @@
     SBC_PIN_SS      PB1
 */
  
+#ifndef __SBC_SPI_H__
+#define __SBC_SPI_H__
+
 #include <stdint.h>
 
 #define VIA_0 (uint8_t*)(0x8010)

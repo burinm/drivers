@@ -1,8 +1,6 @@
-#ifndef __CAT24C256_H__
-#define __CAT24C256_H__
+/* cat24c256.h - (c) 2016 - burin
 
-
-/* CAT24C256 i2c EEPROM driver
+    CAT24C256 i2c EEPROM driver
 
     Extends i2c.h
 
@@ -11,6 +9,11 @@
 
             Also, having problems with ACK
 */
+
+#ifndef __CAT24C256_H__
+#define __CAT24C256_H__
+
+
 
 #include <stdint.h>
 #include <stdio.h>

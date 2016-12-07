@@ -1,10 +1,13 @@
-#ifndef __NRF24L01_H__
-#define __NRF24L01_H__
+/* nRF24L01.h - (c) 2016 - burin
 
-/* nrf24L01 Nordic wireless tranceiver driver
+    nrf24L01 Nordic wireless tranceiver driver
 
     Extends spi.h
 */
+
+#ifndef __NRF24L01_H__
+#define __NRF24L01_H__
+
 
 #include <stdint.h>
 

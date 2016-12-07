@@ -1,7 +1,6 @@
-#ifndef __HD44780U_H__
-#define __HD44780U_H__
+/* hd44780u.h - (c) 2016 - burin
 
-/* Driver for hd44780u LCD display
+    Driver for hd44780u LCD display
 
     This is a memory mapped hardware driver for
     a 16x4 character LCD display
@@ -18,6 +17,10 @@
     See defines below:
 
  */
+
+#ifndef __HD44780U_H__
+#define __HD44780U_H__
+
 
 #define HD44780U_CW     0x8000  // command write       RS=0 /W=0
 #define HD44780U_CR     0xA000  // command read (busy) RS=0 /W=1

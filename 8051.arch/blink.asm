@@ -1,3 +1,8 @@
+;blink.asm - (c) 2016 - burin
+;
+; Blinking for out of memory errors
+;  in 89c51rc2 driver
+
 P1_0 = 0x90
 P1_1 = 0x91
 P1_2 = 0x92

@@ -1,7 +1,6 @@
-#ifndef __SPI_RAW_H__
-#define __SPI_RAW_H__
+/* spi_raw.h - (c) 2016 - burin
 
-/* BeagleBone Black implementation of Bit Banged SPI driver
+    BeagleBone Black implementation of Bit Banged SPI driver
 
     Implements spi.h  bit banged interface
 
@@ -31,6 +30,10 @@
         echo out > /sys/class/gpio/gpio31/direction
         echo out > /sys/class/gpio/gpio50/direction
 */
+
+#ifndef __SPI_RAW_H__
+#define __SPI_RAW_H__
+
 
 #include "spi.h"
 

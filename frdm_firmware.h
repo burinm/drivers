@@ -1,10 +1,13 @@
-#ifndef __KL25Z_FIRMWARE_H__
-#define __KL25Z_FIRMWARE_H__
+/* frdm_firmware.h - (c) 2016 - burin
 
-/* Platform driver for NXP Freedom KL25Z development board
+    Platform driver for NXP Freedom KL25Z development board
 
     32 bit ARM M0+ processor
 */
+
+#ifndef __KL25Z_FIRMWARE_H__
+#define __KL25Z_FIRMWARE_H__
+
 
 #include "kl25z.arch/MKL25Z4.h"
 #include <stdint.h>

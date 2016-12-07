@@ -1,11 +1,12 @@
-#ifndef __KL25Z_UART_H__
-#define __KL25Z_UART_H__
+/* frdm_uart.h - (c) 2016 - burin
 
-/* Platform driver for NXP Freedom KL25Z development board
+    Platform driver for NXP Freedom KL25Z development board
     
     UART0, UART1 setup, control fucntions
 */
 
+#ifndef __KL25Z_UART_H__
+#define __KL25Z_UART_H__
 
 #include <stdint.h>
 #include <stdarg.h>

@@ -1,11 +1,13 @@
-#ifndef __PCF8574A_H__
-#define __PCF8574A_H__
+/* pcf8574a.h - (c) 2016 - burin
 
-/* Driver for pcf8574a I/O expander
+    Driver for pcf8574a I/O expander
 
-   Extends i2c.h 
+    Extends i2c.h 
 
 */
+
+#ifndef __PCF8574A_H__
+#define __PCF8574A_H__
 
 #include <stdint.h>
 

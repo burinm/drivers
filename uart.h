@@ -1,13 +1,15 @@
-#ifndef __UART_H__
-#define __UART_H__
+/* uart.h - (c) 2016 - burin
 
-/* Protocol driver for UART
+    Protocol driver for UART
 
     Implements protocol for generic UART driver
 
 */
 
-// UART Interfacei Definition:
+#ifndef __UART_H__
+#define __UART_H__
+
+// UART Interface Definition
 //  These must be implemented by platform
 
 // Device specific open/close

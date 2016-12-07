@@ -1,11 +1,13 @@
-#ifndef __X86_64_UART_H__
-#define __X86_64_UART_H__
+/* x86_64_uart.h - (c) 2016 - burin
 
-/* x86_64 platform UART implementation
+    x86_64 platform UART implementation
 
     Implements uart.h
 
 */
+
+#ifndef __X86_64_UART_H__
+#define __X86_64_UART_H__
 
 #include <stdint.h>
 

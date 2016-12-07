@@ -1,7 +1,6 @@
-#ifndef __BBB_SPI_H__
-#define __BBB_SPI_H__
+/* bbb_spi.h
 
-/* BeagleBone Black SPI implementation
+    BeagleBone Black SPI implementation
 
     Implements spi.h for the BBB 3.8.13-bone47
     with /lib/firmware/BB-SPIDEV0-00A0.dtbo
@@ -38,6 +37,9 @@
         echo 0 > /sys/class/gpio/gpio48/value
 
 */
+
+#ifndef __BBB_SPI_H__
+#define __BBB_SPI_H__
 
 #include "spi.h"
 

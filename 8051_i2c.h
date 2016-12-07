@@ -1,10 +1,13 @@
-#ifndef __8051_I2C_H__
-#define __8051_I2C_H__
+/* 8051_i2c.h - (c) 2016 - burin
 
-/* 8051 i2c implementation
+    8051 i2c implementation
 
     implements i2c.h
 */
+
+
+#ifndef __8051_I2C_H__
+#define __8051_I2C_H__
 
 #include <stdint.h>
 #include <mcs51reg.h>
