@@ -1,5 +1,6 @@
 #include "tsl2651.h"
 #include "i2c.h"
+#include "i2c_emf32.h"
 
 void tsl2651_open() {
     i2c_open();
