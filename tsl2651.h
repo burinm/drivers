@@ -11,6 +11,9 @@
 #include <stdint.h>
 
 #define DEVICE_I2C_TSL2651  0x9 //1001b
+#define TSL2651_SEL_ADDR_FLOAT   0x3 // floating selection on baoed
+#define TSL2651_SEL_ADDR_GND     0x2 // floating selection on baoed
+#define TSL2651_SEL_ADDR_VDD     0x4 // floating selection on baoed
 
 #define TSL2651_REG_CMD           (1<<7)
 #define TSL2651_REG_CLEAR         (1<<6)
@@ -18,6 +21,7 @@
 #define TSL2651_REG_BLOCK         (1<<4)
 #define TSL2651_REG_ADDR_MASK     0xf
 
+// Register addresses                    0x0 - 0xf
 #define TSL2651_ADDR_CONTROL             0x0
     #define TSL2651_CONTROL_RESV_MASK           0xfc
     #define TSL2651_CONTROL_POWER_MASK          0x3
@@ -73,17 +77,20 @@
 // Called to initialize and reset sensor 
 void tsl2651_open();
 
+// Turn on device
+void tsl2651_on();
+
 // Read register from sensor 
-uint8_t tsl2651_read_register(uint8_t reg);
+uint8_t tsl2651_read_register(uint16_t addy, uint8_t reg);
 
 // Write register to sensor
-void tsl2651_write_register(uint8_t reg, uint8_t b);
+void tsl2651_write_register(uint16_t addy, uint8_t reg, uint8_t b);
 
 // Read 2 byte register from sensor 
-uint16_t tsl2651_read_register16(uint16_t reg);
+uint16_t tsl2651_read_register16(uint16_t addy, uint16_t reg);
 
 // Write 2 byte register to sensor
-void tsl2651_write_register16(uint16_t reg, uint16_t b);
+void tsl2651_write_register16(uint16_t addy, uint16_t reg, uint16_t b);
 
 
 #endif

@@ -6,18 +6,30 @@
 #include "em_i2c.h"
 
 void i2c_open_device() {
+uint8_t i=0;
 
-//Tur
-//Fix correct mode for pullups??
     CMU_ClockEnable(cmuClock_GPIO, true);
-    GPIO_PinModeSet(GECKO_I2C_SDA_PORT, GECKO_I2C_SDA_PORT_NUM,
-                        gpioModeDisabled, 0);
-    GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
-                        gpioModeDisabled, 0);
 
-    CMU_ClockEnable(cmuClock_I2C0, true);
-    // Select pins PC5,PC4 alternative I2C functionality
-    I2C1->ROUTE=0;
+//Reset any devices on line 
+for (i=0;i<9;i++) {
+    GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
+                        gpioModeWiredAndPullUp, 0);
+    GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
+                        gpioModeWiredAndPullUp, 1);
+}
+    GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
+                        gpioModeWiredAndPullUp, 0);
+
+
+    GPIO_PinModeSet(GECKO_I2C_SDA_PORT, GECKO_I2C_SDA_PORT_NUM,
+                        gpioModeWiredAndPullUp, 1);
+    GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
+                        gpioModeWiredAndPullUp, 1);
+
+    CMU_ClockEnable(cmuClock_I2C1, true);
+    // Select pins PC5,PC4 alternative I2C functionality, turn on SDA,SCL
+    I2C1->ROUTE = (_I2C_ROUTE_LOCATION_LOC0 << _I2C_ROUTE_LOCATION_SHIFT) |
+            I2C_ROUTE_SDAPEN | I2C_ROUTE_SCLPEN;
 
     const I2C_Init_TypeDef i2c_init = {
             .enable = true,                  /* Enable when init done */ 
@@ -52,10 +64,17 @@ void i2c_cmd_ack() {
 }
 
 void i2c_set_txdata(uint8_t tx) {
+    // Wait for TX buffer to empty
+    while(I2C1->STATUS & I2C_STATUS_TXC == 0);
+
     I2C1->TXDATA = tx; 
 }
 
-uint8_t i2c_is_ack() {
+uint8_t i2c_is_ack_addy() {
+return ((I2C1->STATE & I2C_STATE_STATE_ADDRACK));
+}
+
+uint8_t i2c_is_ack_data() {
 return ((I2C1->STATE & I2C_STATE_STATE_DATAACK));
 }
 
