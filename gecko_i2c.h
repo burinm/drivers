@@ -44,8 +44,8 @@ void i2c_cmd_start();
 void i2c_cmd_stop();
 void i2c_cmd_ack();
 void i2c_set_txdata(uint8_t tx);
-uint8_t i2c_is_ack_addy();
-uint8_t i2c_is_ack_data();
+uint8_t i2c_is_ack();
+void i2c_clear_ack();
 uint8_t i2c_get_rxdata();
 
 

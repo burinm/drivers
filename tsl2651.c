@@ -12,13 +12,12 @@ void tsl2651_on() {
 
     i2c_cmd_start();
     i2c_prot_setup_read_write(TSL2651_SEL_ADDR_FLOAT << I2C_ID_MSB_BIT_MASK, WRITE);
-    i2c_ack_acknowledge_addy();
-
+    i2c_ack_acknowledge();
     i2c_set_txdata(TSL2651_ADDR_CONTROL | TSL2651_REG_CMD);
-    i2c_ack_acknowledge_data();
+    i2c_ack_acknowledge();
 
     i2c_set_txdata(TSL2651_CONTROL_POWER_MASK);
-    i2c_ack_acknowledge_data();
+    i2c_ack_acknowledge();
     i2c_cmd_stop();
 
 }

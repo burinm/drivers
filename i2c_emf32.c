@@ -35,22 +35,13 @@ void i2c_stop() {
     i2c_cmd_stop();
 }
 
+// Blocking ACKs - fix to not block after testing
 uint8_t i2c_ack_acknowledge() {
-//    if (i2c_is_ack_addy() || i2c_is_ack_data()) {
-        i2c_cmd_ack();
- //   }
-}
-
-// Blocking ACKs
-uint8_t i2c_ack_acknowledge_addy() {
-while(i2c_is_ack_addy() == 0);
+    while(i2c_is_ack() == 0);
+    i2c_clear_ack();
 return 1;
 }
 
-uint8_t i2c_ack_acknowledge_data() {
-while(i2c_is_ack_data() == 0);
-return 1;
-}
 
 void i2c_send_control_byte(uint8_t msb_addy ,i2c_action_e a) {
     uint8_t tx=0;
@@ -76,17 +67,16 @@ uint8_t i2c_device_read_reg(uint16_t addy, uint8_t reg) {
 uint8_t b;
     i2c_start(); //This can be put after TXfill as enhancement later...
     i2c_prot_setup_read_write(addy, WRITE);
- //   i2c_ack_acknowledge_addy();
+    i2c_ack_acknowledge_addy();
 
     // Set "Command Code", which is just the register
     i2c_set_txdata(reg);
-  //  i2c_ack_acknowledge_data();
+    i2c_ack_acknowledge_data();
 
     i2c_start();
     i2c_prot_setup_read_write(addy, READ);
-   // i2c_ack_acknowledge_data(); //which kind?
+    i2c_ack_acknowledge_data(); //which kind?
 
-//    i2c_cmd_ack(); 
 
     b =i2c_get_rxdata();
     i2c_cmd_ack(); 

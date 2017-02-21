@@ -10,6 +10,10 @@ uint8_t i=0;
 
     CMU_ClockEnable(cmuClock_GPIO, true);
 
+    GPIO_PinModeSet(GECKO_I2C_SDA_PORT, GECKO_I2C_SDA_PORT_NUM,
+                        gpioModeWiredAndPullUp, 1);
+    GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
+                        gpioModeWiredAndPullUp, 1);
 //Reset any devices on line 
 for (i=0;i<9;i++) {
     GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
@@ -35,7 +39,8 @@ for (i=0;i<9;i++) {
             .enable = true,                  /* Enable when init done */ 
             .master = true,                  /* Set to master mode */ 
             .refFreq = 0,                    /* Use currently configured reference clock */
-            .freq = I2C_FREQ_STANDARD_MAX,   /* Set to standard rate assuring being */ 
+            //.freq = I2C_FREQ_STANDARD_MAX,   /* Set to standard rate assuring being */ 
+            .freq = 40000,   /* Set to standard rate assuring being */ 
             .clhr = i2cClockHLRStandard      /* Set to use 4:4 low/high duty cycle */
     };
 
@@ -64,18 +69,19 @@ void i2c_cmd_ack() {
 }
 
 void i2c_set_txdata(uint8_t tx) {
-    // Wait for TX buffer to empty
-    while(I2C1->STATUS & I2C_STATUS_TXC == 0);
-
+    // Clear Transmit
+    //while( (I2C1->IF & I2C_IF_TXBL) == 0);
+    //while( (I2C1->STATUS & I2C_STATUS_TXC) == 0);
+    //I2C1->IFC = I2C_IFC_TXC;
     I2C1->TXDATA = tx; 
 }
 
-uint8_t i2c_is_ack_addy() {
-return ((I2C1->STATE & I2C_STATE_STATE_ADDRACK));
+uint8_t i2c_is_ack() {
+return ((I2C1->IF & I2C_IF_ACK));
 }
 
-uint8_t i2c_is_ack_data() {
-return ((I2C1->STATE & I2C_STATE_STATE_DATAACK));
+void i2c_clear_ack() {
+    I2C1->IFC = I2C_IFC_ACK;
 }
 
 uint8_t i2c_get_rxdata() {
