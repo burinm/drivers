@@ -68,11 +68,11 @@ void i2c_cmd_ack() {
     I2C1->CMD = I2C_CMD_ACK;
 }
 
+void i2c_cmd_nack() {
+    I2C1->CMD = I2C_CMD_NACK;
+}
+
 void i2c_set_txdata(uint8_t tx) {
-    // Clear Transmit
-    //while( (I2C1->IF & I2C_IF_TXBL) == 0);
-    //while( (I2C1->STATUS & I2C_STATUS_TXC) == 0);
-    //I2C1->IFC = I2C_IFC_TXC;
     I2C1->TXDATA = tx; 
 }
 
@@ -85,6 +85,7 @@ void i2c_clear_ack() {
 }
 
 uint8_t i2c_get_rxdata() {
+    while((I2C1->IF & I2C_IF_RXDATAV) ==0);
 return (I2C1->RXDATA);
 }
 

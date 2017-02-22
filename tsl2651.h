@@ -5,6 +5,8 @@
     Extends i2c.h
 */
 
+#include "i2c.h"
+
 #ifndef __TSL2651_H__
 #define __TSL2651_H__
 
@@ -14,6 +16,8 @@
 #define TSL2651_SEL_ADDR_FLOAT   0x3 // floating selection on baoed
 #define TSL2651_SEL_ADDR_GND     0x2 // floating selection on baoed
 #define TSL2651_SEL_ADDR_VDD     0x4 // floating selection on baoed
+
+#define TSL2651_ADDRESS         (TSL2651_SEL_ADDR_FLOAT<< I2C_ID_MSB_BIT_MASK)
 
 #define TSL2651_REG_CMD           (1<<7)
 #define TSL2651_REG_CLEAR         (1<<6)
@@ -77,8 +81,8 @@
 // Called to initialize and reset sensor 
 void tsl2651_open();
 
-// Turn on device
-void tsl2651_on();
+// Turn on/off device
+void tsl2651_on(uint8_t on);
 
 // Read register from sensor 
 uint8_t tsl2651_read_register(uint16_t addy, uint8_t reg);

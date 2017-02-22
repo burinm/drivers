@@ -17,6 +17,7 @@ uint8_t i;
     if (i2c_busy()) {
         i2c_abort();
     }
+
 }
 
 void i2c_set_device_id(uint8_t d) {
@@ -67,19 +68,18 @@ uint8_t i2c_device_read_reg(uint16_t addy, uint8_t reg) {
 uint8_t b;
     i2c_start(); //This can be put after TXfill as enhancement later...
     i2c_prot_setup_read_write(addy, WRITE);
-    i2c_ack_acknowledge_addy();
+    i2c_ack_acknowledge();
 
     // Set "Command Code", which is just the register
     i2c_set_txdata(reg);
-    i2c_ack_acknowledge_data();
+    i2c_ack_acknowledge();
 
     i2c_start();
     i2c_prot_setup_read_write(addy, READ);
-    i2c_ack_acknowledge_data(); //which kind?
-
+    i2c_ack_acknowledge();
 
     b =i2c_get_rxdata();
-    i2c_cmd_ack(); 
+    i2c_cmd_nack(); 
     i2c_stop();
 return b;
 }

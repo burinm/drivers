@@ -43,6 +43,7 @@ void i2c_abort(); // Force i2c out of busy state
 void i2c_cmd_start();
 void i2c_cmd_stop();
 void i2c_cmd_ack();
+void i2c_cmd_nack();
 void i2c_set_txdata(uint8_t tx);
 uint8_t i2c_is_ack();
 void i2c_clear_ack();
