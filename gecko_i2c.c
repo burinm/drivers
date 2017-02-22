@@ -47,6 +47,13 @@ for (i=0;i<9;i++) {
     I2C_Init(I2C1, &i2c_init);
 }
 
+void i2c_close_device() {
+    GPIO_PinModeSet(GECKO_I2C_SDA_PORT, GECKO_I2C_SDA_PORT_NUM,
+                        gpioModeDisabled, 0);
+    GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
+                        gpioModeDisabled, 0);
+}
+
 // Hardware specific
 uint8_t i2c_busy() {
 return (I2C1->STATE & I2C_STATE_BUSY);

@@ -10,6 +10,7 @@
 #include <stdio.h>
 
 void i2c_open();
+void i2c_close();
 void i2c_reset();
 void i2c_set_device_id(uint8_t d);
 void i2c_set_device_msb_addy(uint8_t a);

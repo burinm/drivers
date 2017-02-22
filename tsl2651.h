@@ -74,13 +74,16 @@
     #define TSL2651_ID_PARTNO_MASK             0xf0
     #define TSL2651_ID_REVNO_MASK              0x0f
 #define TSL2651_ADDR_RES_3               0xb
-#define TSL2651_ADDR_DATA0LOW            0xc
-#define TSL2651_ADDR_DATA0HIGH           0xd
-#define TSL2651_ADDR_DATA1LOW            0xe
-#define TSL2651_ADDR_DATA1HIGH           0xf
+#define TSL2651_ADDR_DATA0_LOWB          0xc
+#define TSL2651_ADDR_DATA0_HIGHB         0xd
+#define TSL2651_ADDR_DATA1_LOWB          0xe
+#define TSL2651_ADDR_DATA1_HIGHB         0xf
 
 // Called to initialize and reset sensor 
 void tsl2651_open();
+
+// Called to turn off I2C GPIOs 
+void tsl2651_close(); 
 
 // Turn on/off device
 void tsl2651_on(uint8_t on);

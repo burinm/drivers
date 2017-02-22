@@ -12,6 +12,10 @@ void i2c_open() {
     i2c_open_device();
 }
 
+void i2c_close() {
+    i2c_close_device();
+}
+
 void i2c_reset() {
 uint8_t i;
     if (i2c_busy()) {

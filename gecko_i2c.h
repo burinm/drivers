@@ -22,6 +22,7 @@
 
 // Implements interface in i2c.h
 void i2c_open_device();
+void i2c_close_device(); //Not standard 
 
 void i2c_data_low();
 void i2c_data_high();

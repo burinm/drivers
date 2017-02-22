@@ -8,6 +8,10 @@ void tsl2651_open() {
     i2c_reset();
 }
 
+void tsl2651_close() {
+    i2c_close();
+}
+
 void tsl2651_on(uint8_t on) {
 
     i2c_cmd_start();
