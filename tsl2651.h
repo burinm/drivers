@@ -38,17 +38,18 @@
          #define TSL2651_TIMING_INTEG_13_7_MS          0x0
          #define TSL2651_TIMING_INTEG_101_MS           0x1
          #define TSL2651_TIMING_INTEG_402_MS           0x2
-#define TSL2651_ADDR_THRESHLOWLOW        0x2
-#define TSL2651_ADDR_THRESHLOWHIGH       0x3
-#define TSL2651_ADDR_THRESHHIGHLOW       0x4
-#define TSL2651_ADDR_THRESHHIGHHIGH      0x5
+#define TSL2651_ADDR_THRESHLOW_LOWB      0x2
+#define TSL2651_ADDR_THRESHLOW_HIGHB     0x3
+#define TSL2651_ADDR_THRESHHIGH_LOWB     0x4
+#define TSL2651_ADDR_THRESHHIGH_HIGHB    0x5
 #define TSL2651_ADDR_INT                 0x6
     #define TSL2651_INT_RESV_MASK               0xc0 
     #define TSL2651_INT_CTRL_MASK               0x30
-        #define TSL2651_INT_CTRL_DISABLE               0x0
-        #define TSL2651_INT_CTRL_LEVEL                 0x1
-        #define TSL2651_INT_CTRL_SMB_CMPLY             0x2
-        #define TSL2651_INT_CTRL_TEST                  0x3
+    #define TSL2651_INT_CTRL_SHIFT              4 
+        #define TSL2651_INT_CTRL_DISABLE               (0x0 << TSL2651_INT_CTRL_SHIFT)
+        #define TSL2651_INT_CTRL_LEVEL                 (0x1 << TSL2651_INT_CTRL_SHIFT)
+        #define TSL2651_INT_CTRL_SMB_CMPLY             (0x2 << TSL2651_INT_CTRL_SHIFT)
+        #define TSL2651_INT_CTRL_TEST                  (0x3 << TSL2651_INT_CTRL_SHIFT)
     #define TSL2651_INT_PERSIST_MASK            0xf
         #define TSL2651_INT_PERSIST_EVERY              0x0
         #define TSL2651_INT_PERSIST_ANY                0x1
@@ -84,11 +85,15 @@ void tsl2651_open();
 // Turn on/off device
 void tsl2651_on(uint8_t on);
 
+// Clear interrupt
+void tsl2651_int_clear();
+
+
 // Read register from sensor 
-uint8_t tsl2651_read_register(uint16_t addy, uint8_t reg);
+uint8_t tsl2651_read_register(uint8_t reg);
 
 // Write register to sensor
-void tsl2651_write_register(uint16_t addy, uint8_t reg, uint8_t b);
+void tsl2651_write_register(uint8_t reg, uint8_t b);
 
 // Read 2 byte register from sensor 
 uint16_t tsl2651_read_register16(uint16_t addy, uint16_t reg);
