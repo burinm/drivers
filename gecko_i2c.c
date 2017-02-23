@@ -11,24 +11,24 @@ uint8_t i=0;
     CMU_ClockEnable(cmuClock_GPIO, true);
 
     GPIO_PinModeSet(GECKO_I2C_SDA_PORT, GECKO_I2C_SDA_PORT_NUM,
-                        gpioModeWiredAndPullUp, 1);
+                        gpioModeWiredAnd, 1);
     GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
-                        gpioModeWiredAndPullUp, 1);
+                        gpioModeWiredAnd, 1);
 //Reset any devices on line 
 for (i=0;i<9;i++) {
     GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
-                        gpioModeWiredAndPullUp, 0);
+                        gpioModeWiredAnd, 0);
     GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
-                        gpioModeWiredAndPullUp, 1);
+                        gpioModeWiredAnd, 1);
 }
     GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
-                        gpioModeWiredAndPullUp, 0);
+                        gpioModeWiredAnd, 0);
 
 
     GPIO_PinModeSet(GECKO_I2C_SDA_PORT, GECKO_I2C_SDA_PORT_NUM,
-                        gpioModeWiredAndPullUp, 1);
+                        gpioModeWiredAnd, 1);
     GPIO_PinModeSet(GECKO_I2C_SCL_PORT, GECKO_I2C_SCL_PORT_NUM,
-                        gpioModeWiredAndPullUp, 1);
+                        gpioModeWiredAnd, 1);
 
     CMU_ClockEnable(cmuClock_I2C1, true);
     // Select pins PC5,PC4 alternative I2C functionality, turn on SDA,SCL
