@@ -1,4 +1,5 @@
 /* i2c_emf32.h - (c) 2017 - burin 
+
     EMF32 i2c "protocol" using builtin i2c hardware
         Non standard protocol half hardware/half software
 */
@@ -7,7 +8,6 @@
 #define __I2CEMF32_H__
 
 #include "i2c.h"
-#include <stdio.h>
 
 void i2c_open();
 void i2c_close();
@@ -25,10 +25,5 @@ uint16_t i2c_device_read_reg16(uint16_t addy, uint8_t reg);
 void i2c_device_write_reg16(uint16_t addy, uint8_t reg, uint16_t data);
 
 uint8_t i2c_ack_acknowledge();
-
-// Blocking ACKs
-uint8_t i2c_ack_acknowledge_addy();
-uint8_t i2c_ack_acknowledge_data();
-
 
 #endif

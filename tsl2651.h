@@ -98,10 +98,10 @@ uint8_t tsl2651_read_register(uint8_t reg);
 // Write register to sensor
 void tsl2651_write_register(uint8_t reg, uint8_t b);
 
-// Read 2 byte register from sensor 
+// Untested -  Read 2 byte register from sensor 
 uint16_t tsl2651_read_register16(uint16_t addy, uint16_t reg);
 
-// Write 2 byte register to sensor
+// Untested - Write 2 byte register to sensor
 void tsl2651_write_register16(uint16_t addy, uint16_t reg, uint16_t b);
 
 

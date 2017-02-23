@@ -40,15 +40,14 @@ void i2c_data_dir_out();
 // Other hardware specific functions for Gecko
 uint8_t i2c_busy(); // Bus is busy, will be set on reset
 
-void i2c_abort(); // Force i2c out of busy state
-void i2c_cmd_start();
-void i2c_cmd_stop();
-void i2c_cmd_ack();
-void i2c_cmd_nack();
-void i2c_set_txdata(uint8_t tx);
-uint8_t i2c_is_ack();
-void i2c_clear_ack();
-uint8_t i2c_get_rxdata();
-
+void i2c_abort();       // Force i2c out of busy state
+void i2c_cmd_start();   // Send internal start
+void i2c_cmd_stop();    // Send internal stop
+void i2c_cmd_ack();     // Send internal ACK
+void i2c_cmd_nack();    // Send internal NACK
+void i2c_set_txdata(uint8_t tx);    //Send I2C byte
+uint8_t i2c_is_ack();               //Check hardware interrupt flag for ACK
+void i2c_clear_ack();               //Clear hardware ACK flag
+uint8_t i2c_get_rxdata();           //Receive I2C byte
 
 #endif

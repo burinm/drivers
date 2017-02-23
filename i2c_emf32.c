@@ -102,21 +102,20 @@ void i2c_device_write_reg(uint16_t addy, uint8_t reg, uint8_t data) {
     i2c_stop();
 }
 
+// Untested
 uint16_t i2c_device_read_reg16(uint16_t addy, uint8_t reg) {
 uint16_t b;
-    // Gecko requires preloading Address in the TX Buffer, start will happen first
-    // Address is "0", since this is not a memory device
-    i2c_prot_setup_read_write(addy, WRITE);
     i2c_start();
-    i2c_ack_acknowledge_addy();
+    i2c_prot_setup_read_write(addy, WRITE);
+    i2c_ack_acknowledge();
 
     // Set "Command Code", which is just the register
     i2c_set_txdata(reg);
-    i2c_ack_acknowledge_data();
+    i2c_ack_acknowledge();
 
     i2c_prot_setup_read_write(addy, READ);
     i2c_start();
-    i2c_ack_acknowledge_data();
+    i2c_ack_acknowledge();
     i2c_cmd_ack(); 
 
     b =i2c_get_rxdata();
@@ -127,21 +126,20 @@ uint16_t b;
 return b;
 }
 
+// Untested
 void i2c_device_write_reg16(uint16_t addy, uint8_t reg, uint16_t data) {
-    // Gecko requires preloading Address in the TX Buffer, start will happen first
-    // Address is "0", since this is not a memory device
-    i2c_prot_setup_read_write(addy, WRITE);
     i2c_start();
-    i2c_ack_acknowledge_addy();
+    i2c_prot_setup_read_write(addy, WRITE);
+    i2c_ack_acknowledge();
 
     // Set "Command Code", which is just the register
     i2c_set_txdata(reg);
-    i2c_ack_acknowledge_data();
+    i2c_ack_acknowledge();
 
 //Put in defines....
     i2c_set_txdata(data & 0xf);
-    i2c_ack_acknowledge_data();
+    i2c_ack_acknowledge();
     i2c_set_txdata(data >> 4);
-    i2c_ack_acknowledge_data();
+    i2c_ack_acknowledge();
     i2c_stop();
 }
