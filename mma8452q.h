@@ -118,6 +118,8 @@
 #define MMA8452Q_REG_FF_MT_THS          0x17
     #define MMA8452Q_FF_MT_THS_MASK             0x7f         
     #define MMA8452Q_FF_MT_THS_DBCNTM           (1<<7)         
+    #define MMA8452Q_FF_MT_THS_DBCNTM_CLEAR           0x1         
+    #define MMA8452Q_FF_MT_THS_DBCNTM_DECREMENT       0x0         
 #define MMA8452Q_REG_FF_MT_COUNT        0x18
 #define MMA8452Q_REG_RES3               0x19
 #define MMA8452Q_REG_RES4               0x1a
@@ -171,8 +173,22 @@
     #define MMA8452Q_CTRL_REG1_ACTIVE           (1<<0) 
     #define MMA8452Q_CTRL_REG1_F_READ           (1<<1) 
     #define MMA8452Q_CTRL_REG1_LNOISE           (1<<2) 
+    #define MMA8452Q_CTRL_REG1_DR_SHIFT         3 
     #define MMA8452Q_CTRL_REG1_DR_MASK          0x38 
+        #define MMA8452Q_CTRL_REG1_DR_800               0x0
+        #define MMA8452Q_CTRL_REG1_DR_400               0x1
+        #define MMA8452Q_CTRL_REG1_DR_200               0x2
+        #define MMA8452Q_CTRL_REG1_DR_100               0x3
+        #define MMA8452Q_CTRL_REG1_DR_50                0x4
+        #define MMA8452Q_CTRL_REG1_DR_12_5              0x5
+        #define MMA8452Q_CTRL_REG1_DR_6_25              0x6
+        #define MMA8452Q_CTRL_REG1_DR_1_56              0x7
+    #define MMA8452Q_CTRL_REG1_ASLP_RATE_SHIFT  6 
     #define MMA8452Q_CTRL_REG1_ASLP_RATE_MASK   0xc0 
+        #define MMA8452Q_CTRL_REG1_ASLP_RATE_50         0x0 
+        #define MMA8452Q_CTRL_REG1_ASLP_RATE_12_5       0x1 
+        #define MMA8452Q_CTRL_REG1_ASLP_RATE_6_25       0x2 
+        #define MMA8452Q_CTRL_REG1_ASLP_RATE_1_56       0x3 
 #define MMA8452Q_REG_CTRL_REG2          0x2b
     #define MMA8452Q_CTRL_REG2_MODS_MASK        0x3 
     #define MMA8452Q_CTRL_REG2_SLPE             (1<<2) 
