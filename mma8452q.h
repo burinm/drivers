@@ -12,11 +12,22 @@
 
 #include <stdint.h>
 
-#define DEVICE_I2C_MMA8452Q  0x3 //0011b
-#define_MMA8452Q_SEL_VDD     0x5 //101b - SA0 open, pulled high,  0011101 = 0x1D
-#define_MMA8452Q_SEL_GND     0x4 //100b - SA0 closed, pulled low, 0011100 = 0x1C
+/* TODO: This whole addressing scheme needs to be redone
+    It was originally written for an I2C eeprom, but does
+    not fit into the general I2C addressing. Leaving for
+    now because tsl2651 driver needs to be corrected too
+*/
+ 
+#define MMA8452Q_MSB        0x1 //001
+#define MMA8452Q_ADDRESS    (MMA8452Q_MSB << I2C_LSB_BITS) 
 
-#define MMA8452Q_ADDRESS  (#define_MMA8452Q_SEL_VDD << I2C_LSB_BITS) 
+//1101b - SA0 = 1  (sparkfun board open = pulled high),  0011101 = 0x1D
+#define MMA8452Q_SEL_VDD     0xd
+//1100b - SA0 = 0  (sparkfun board closed = pulled low),  0011100 = 0x1C
+#define MMA8452Q_SEL_GND     0xc
+
+#define DEVICE_I2C_MMA8452Q  MMA8452Q_SEL_VDD 
+
 
 // Register addresses                   0x0 - 0x31
 #define MMA8452Q_REG_STATUS             0x0
@@ -142,7 +153,7 @@
 #define MMA8452Q_REG_PULSE_SRC          0x22
     #define MMA8452Q_PULSE_SRC_POLX             (1<<0) 
     #define MMA8452Q_PULSE_SRC_POLY             (1<<1) 
-    #define MMA8452Q_PULSE_SRC_POLX             (1<<2) 
+    #define MMA8452Q_PULSE_SRC_POLZ             (1<<2) 
     #define MMA8452Q_PULSE_SRC_DPE              (1<<3) 
     #define MMA8452Q_PULSE_SRC_AXX              (1<<4) 
     #define MMA8452Q_PULSE_SRC_AXY              (1<<5) 
@@ -201,7 +212,11 @@ void mma8452q_open();
 void mma8452q_close(); 
 
 // Turn on/off device
-void mma8452q_on(uint8_t on);
+/* Checks for device WHO_AM_I 0x2a
+       returns true on ON, if I2C communication success with ID
+       returns false on OFF, always 
+*/ 
+uint8_t mma8452q_on(uint8_t on);
 
 // Clear interrupt
 void mma8452q_int_clear();
