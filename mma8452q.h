@@ -12,8 +12,11 @@
 
 #include <stdint.h>
 
-#define DEVICE_I2C_MMA8452Q  0x1D //11101b - SA0 open, pulled high
-//#define DEVICE_I2C_MMA8452Q  0x1C //11100b - SA0 closed, pulled low
+#define DEVICE_I2C_MMA8452Q  0x3 //0011b
+#define_MMA8452Q_SEL_VDD     0x5 //101b - SA0 open, pulled high,  0011101 = 0x1D
+#define_MMA8452Q_SEL_GND     0x4 //100b - SA0 closed, pulled low, 0011100 = 0x1C
+
+#define MMA8452Q_ADDRESS  (#define_MMA8452Q_SEL_VDD << I2C_LSB_BITS) 
 
 // Register addresses                   0x0 - 0x31
 #define MMA8452Q_REG_STATUS             0x0
@@ -192,22 +195,21 @@
 
 
 // Called to initialize and reset sensor 
-void  mma8452q_open();
+void mma8452q_open();
 
 // Called to turn off I2C GPIOs 
-void  mma8452q_close(); 
+void mma8452q_close(); 
 
 // Turn on/off device
-void  mma8452q_on(uint8_t on);
+void mma8452q_on(uint8_t on);
 
 // Clear interrupt
-void  mma8452q_int_clear();
-
+void mma8452q_int_clear();
 
 // Read register from sensor 
-uint8_t  mma8452q_read_register(uint8_t reg);
+uint8_t mma8452q_read_register(uint8_t reg);
 
 // Write register to sensor
-void  mma8452q_write_register(uint8_t reg, uint8_t b);
+void mma8452q_write_register(uint8_t reg, uint8_t b);
 
 #endif
