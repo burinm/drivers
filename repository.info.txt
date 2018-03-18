@@ -1,0 +1,52 @@
+This repository was restructured from another in the following manner:
+
+----Move drivers main src
+git clone https://github.com/burinm/drivers_old.git
+cd drivers_old/
+git filter-branch --prune-empty --subdirectory-filter src/driver master
+
+mkdir  platform, protocol, device
+move files into platform, protocol, and device per requirements
+
+git remote -v
+git remote set-url origin https://github.com/burinm/drivers.git
+git remote -v
+
+git pull
+git push
+
+----Move mylib main src
+git clone https://github.com/burinm/drivers_old.git
+cd drivers_old/
+git filter-branch --prune-empty --subdirectory-filter src/mylib/ master
+
+mkdir mylib
+mv * mylib
+
+git add .
+git commit
+
+git remote -v
+git remote set-url origin https://github.com/burinm/drivers.git
+git remote -v
+
+git pull
+git push
+
+----Pull over unit tests
+git clone https://github.com/burinm/drivers_old.gi
+cd drivers_old/
+git filter-branch --prune-empty --subdirectory-filter src/unittest master
+
+mkdir unittest
+mv * unittest/
+
+git add .
+git commit
+
+git remote -v
+git remote set-url origin https://github.com/burinm/drivers.git
+git remote -v
+
+git pull
+git push
